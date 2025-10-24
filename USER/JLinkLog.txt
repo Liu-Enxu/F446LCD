@@ -1,0 +1,47 @@
+T4C94 001:554.308   SEGGER J-Link V8.40 Log File
+T4C94 001:556.515   DLL Compiled: Jun  4 2025 12:06:45
+T4C94 001:556.527   Logging started @ 2025-08-29 02:22
+T4C94 001:556.538   Process: D:\_____ENGINEERING_____\stm32\Keil5 MDK\Keil_v5\UV4\UV4.exe
+T4C94 001:557.259 - 1556.548ms 
+T4C94 001:557.558 JLINK_SetWarnOutHandler(...)
+T4C94 001:557.573 - 0.296ms 
+T4C94 001:557.587 JLINK_OpenEx(...)
+T4C94 001:560.774   
+  ***** Error: 
+T4C94 001:560.801   Cannot connect to J-Link.
+T4C94 001:561.403 - 3.815ms returns "Cannot connect to J-Link."
+T4C94 001:561.733 
+  ***** Warning: 
+T4C94 001:561.755 API Error: API JLINK_GetHardwareVersion function called before JLINKARM_Open()
+T4C94 001:561.772 JLINK_GetHardwareVersion()
+T4C94 001:563.200   
+  ***** Error: 
+T4C94 001:563.209   Cannot connect to J-Link.
+T4C94 001:563.331 - 1.558ms 
+T4C94 002:578.100 JLINK_IsOpen()
+T4C94 002:578.120 - 0.016ms returns 0x00
+T4C94 002:578.125 JLINK_EMU_SelectByUSBSN(SerialNo = 0)
+T4C94 002:578.831 - 0.705ms returns 0xFFFFFFFF
+T4C94 002:578.840 JLINK_EnableLog(...)
+T4C94 002:578.843 - 0.003ms 
+T4C94 002:578.847 JLINK_SetLogFile(...)
+T4C94 002:578.850 - 0.003ms 
+T4C94 002:578.854 JLINK_SetWarnOutHandler(...)
+T4C94 002:578.858 - 0.003ms 
+T4C94 002:578.861 JLINK_OpenEx(...)
+T4C94 002:580.286   
+  ***** Error: 
+T4C94 002:580.296   Cannot connect to J-Link.
+T4C94 002:580.465 - 1.603ms returns "Cannot connect to J-Link."
+T4C94 002:580.642 
+  ***** Warning: 
+T4C94 002:580.650 API Error: API JLINK_GetHardwareVersion function called before JLINKARM_Open()
+T4C94 002:580.655 JLINK_GetHardwareVersion()
+T4C94 002:581.957   
+  ***** Error: 
+T4C94 002:581.966   Cannot connect to J-Link.
+T4C94 002:582.088 - 1.432ms 
+T4C94 005:493.841 JLINK_Close()
+T4C94 005:494.117 - 0.275ms
+T4C94 005:495.501   
+T4C94 005:495.521   Closed
