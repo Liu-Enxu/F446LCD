@@ -31,7 +31,7 @@ void Adc_init(void){
 }
 
 u16 Get_Adc(u8 ch){
-	ADC_RegularChannelConfig(ADC1, ch, 1, ADC_SampleTime_3Cycles);
+	ADC_RegularChannelConfig(ADC1, ch, 1, ADC_SampleTime_15Cycles);
 	ADC_SoftwareStartConv(ADC1);
 	while(!ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC));
 	return ADC_GetConversionValue(ADC1);

@@ -11,6 +11,8 @@
 #include "ff.h"  
 #include "exfuns.h" 
 #include "adc.h"
+#include "piclib.h"
+
 
 #include "stdio.h"
 #include "stdlib.h"
@@ -21,17 +23,28 @@ int main(void)
 		vu16 len;	
 		u16 times=0;
 		u8 stringBuf[50];
-		u8* buf;u8* buf_temp;
 		
 		// SD
+		u8* buf;u8* buf_temp;
 		u32 sd_size;
 		u8 *p=0;
 		// FATFS
 		u32 total,free;
 		u8 res;
+		// pic
+		u8 frame_idx = 0;
 		// adc
 		u16 adc;
 		u16 adcY, adcX, adcZ;
+		
+		vu16 mouseX;
+		vu16 mouseY;
+		vu16 last_mX = 0;
+		vu16 last_mY = 0;
+		vu8 mouse_moved = 0;
+	
+	
+	
 //		while(1);
 	// must haves ------------------------
 	delay_init();	    	 //延时函数初始化	  
@@ -129,7 +142,7 @@ int main(void)
 			while(1);
 		}
 	}
-	
+		
 	if(f_stat("0:/test_folder/hello.txt",&fileinfo)){
 		res = f_open(file, "0:/test_folder/hello.txt", FA_CREATE_NEW | FA_WRITE);
 	}else{
@@ -147,32 +160,58 @@ int main(void)
 	}
 	f_close(file);
 	
-
+	mouseX = lcddev.width-220;
+	mouseY = 0;
+	
+	piclib_init();
+	res = ai_load_picfile("0:/listen.gif",mouseX, mouseY, 220, 160, 1);
+	if(res)printf("error:%04X",res);
+	
+	for(t=0;t<4;t++){
+		LCD_Fill(280+t*50,280,280+t*50+40,320,WHITE);
+	}
   while(1) 
 	{		 
-		if(times%10==0){
+		if(times%10==0)
+		{
 			
 			enableZ();
 			adcX = Get_Adc(ADC_Channel_4);
 			adcY = Get_Adc(ADC_Channel_1);
 			adcZ = 1023 - (adcY-adcX);
-			if(MIN_PRESSURE<=adcZ && adcZ<=MAX_PRESSURE){
-				disableY();
-				enableX();
-				adcX = Get_Adc_Average(ADC_Channel_4,5);
-				disableX();
-		
-				enableY();
-				adcY = Get_Adc_Average(ADC_Channel_1,5);
-				disableY();
-				
-				LCD_ShowNum(27*8+30,280,adcX,3,16);
-				LCD_ShowNum(31*8+30,280,adcY,3,16);
-			}
+			if(MIN_PRES<=adcZ && adcZ<=MAX_PRES){ // disregard the movement of longpress I.E. if Z>min_pres continues, do not update mouse
+				if(!mouse_moved){
+					disableY();
+					enableX();
+					adcX = Get_Adc_Average(ADC_Channel_4,5);
+					disableX();
+			
+					enableY();
+					adcY = Get_Adc_Average(ADC_Channel_1,5);
+					disableY();
+					
+					last_mX = mouseX;last_mY = mouseY;
+					mouseX = (vu16)(((adcX-70)*lcddev.width)/(930-70));
+					mouseY = lcddev.height-(vu16)((adcY-100)*lcddev.height/(925-100));
+//					LCD_Draw_Circle(mouseX, mouseY, 50);
+					
+					LCD_ShowNum(27*8+30,280,mouseX,3,16);
+					LCD_ShowNum(31*8+30,280,mouseY,3,16);
+					LCD_ShowNum(35*8+30,280,adcZ,3,16);
+					
+					mouse_moved = 1;	
+				}
+			}else{mouse_moved = 0;}
+			
 			LCD_DATA_OUT();
+			
 		}
 		
-		
+//		if(times%30==0)
+//		{
+//			LCD_draw_raw(lcddev.width-128,0,128,128,idle_Frames[frame_idx++]);
+//			frame_idx%=idle_framesNum;
+//		}
 		
 		if(USART_RX_STA&0x8000){					   
 			len=USART_RX_STA&0x3fff;//得到此次接收到的数据长度
@@ -198,14 +237,12 @@ int main(void)
 				LCD_ShowString(30,220,300,16,16,"              ");
 				LCD_ShowString(30,220,300,16,16,(char*)p);
 				
-				
 				// read and print
 				res = f_open(file, "0:/test_folder/hello.txt", FA_READ);
 				if(res){
 					LCD_ShowString(30,240,300,16,16,"Read file open failure!");
 					while(1);
 				}
-				
 				res = f_read(file,fatbuf,15,&br);
 				if(br!=15){
 					LCD_ShowString(30,240,300,16,16,"File reading failure!");
@@ -214,18 +251,9 @@ int main(void)
 				f_close(file);
 				LCD_ShowString(30,240,260,16,16,"The file content is:");
 				LCD_ShowString(30,260,260,40,16,fatbuf);
-				
-				
-				
-				
-				
-				
-					
 			}
 			
 		}
-		delay_ms(10);
-
-		   
+		delay_ms(10);   
 	} 
 }

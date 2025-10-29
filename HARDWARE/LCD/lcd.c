@@ -336,40 +336,24 @@ void LCD_Scan_Dir(u8 dir)
     
 
     //设置显示区域(开窗)大小
-		lcddev.ratio = 0;
-		if (lcddev.ratio!=0){
-			lcddev.winwsta = lcddev.width/lcddev.ratio;
-			lcddev.winhsta = lcddev.height/lcddev.ratio;
-			lcddev.winwend = lcddev.width*(lcddev.ratio-1)/lcddev.ratio;
-			lcddev.winhend = lcddev.height*(lcddev.ratio-1)/lcddev.ratio;
-			LCD_WR_CMD(lcddev.setxcmd);		
-			LCD_WR_DATA((lcddev.width*1/lcddev.ratio - 1) >> 8);															// SP high
-			LCD_WR_DATA((lcddev.width*1/lcddev.ratio - 1) & 0XFF);															// SP low
-			LCD_WR_DATA((lcddev.winwend - 1) >> 8);				// EP high
-			LCD_WR_DATA((lcddev.winwend - 1) & 0XFF);			// EP low
-			
-			LCD_WR_CMD(lcddev.setycmd);									
-			LCD_WR_DATA((lcddev.height*1/lcddev.ratio - 1) >> 8);															// SP high
-			LCD_WR_DATA((lcddev.height*1/lcddev.ratio - 1) & 0XFF);															// SP low
-			LCD_WR_DATA((lcddev.winhend - 1) >> 8);			// EP high
-			LCD_WR_DATA((lcddev.winhend - 1) & 0XFF);		// EP low
-		} else {
-			lcddev.winwsta = 0;
-			lcddev.winhsta = 0;
-			lcddev.winwend = lcddev.width;
-			lcddev.winhend = lcddev.height;
-			LCD_WR_CMD(lcddev.setxcmd);		
-			LCD_WR_DATA(0);															// SP high
-			LCD_WR_DATA(0);															// SP low
-			LCD_WR_DATA((lcddev.width - 1) >> 8);				// EP high
-			LCD_WR_DATA((lcddev.width - 1) & 0XFF);			// EP low
-			
-			LCD_WR_CMD(lcddev.setycmd);									
-			LCD_WR_DATA(0);															// SP high
-			LCD_WR_DATA(0);															// SP low
-			LCD_WR_DATA((lcddev.height - 1) >> 8);			// EP high
-			LCD_WR_DATA((lcddev.height - 1) & 0XFF);		// EP low
-		}
+		lcddev.winwsta = 0;
+		lcddev.winhsta = 0;
+		lcddev.winwend = lcddev.width;
+		lcddev.winhend = lcddev.height;
+		lcddev.workw = lcddev.width;
+		lcddev.workh = lcddev.height;
+		LCD_WR_CMD(lcddev.setxcmd);		
+		LCD_WR_DATA(0);															// SP high
+		LCD_WR_DATA(0);															// SP low
+		LCD_WR_DATA((lcddev.width - 1) >> 8);				// EP high
+		LCD_WR_DATA((lcddev.width - 1) & 0XFF);			// EP low
+		
+		LCD_WR_CMD(lcddev.setycmd);									
+		LCD_WR_DATA(0);															// SP high
+		LCD_WR_DATA(0);															// SP low
+		LCD_WR_DATA((lcddev.height - 1) >> 8);			// EP high
+		LCD_WR_DATA((lcddev.height - 1) & 0XFF);		// EP low
+		
 
 }
 
@@ -437,7 +421,11 @@ void LCD_Display_Dir(u8 dir)
 //窗体大小:width*height.
 void LCD_Set_Window(u16 sx, u16 sy, u16 width, u16 height)
 {
-    lcddev.winwend = sx + width - 1;
+		lcddev.workw = width;
+		lcddev.workh = height;
+		lcddev.winwsta = sx;
+		lcddev.winhsta = sy;
+		lcddev.winwend = sx + width - 1;
     lcddev.winhend = sy + height - 1;
 
     LCD_WR_CMD(lcddev.setxcmd);
@@ -448,8 +436,8 @@ void LCD_Set_Window(u16 sx, u16 sy, u16 width, u16 height)
     LCD_WR_CMD(lcddev.setycmd);
     LCD_WR_DATA(sy >> 8);
     LCD_WR_DATA(sy & 0XFF);
-    LCD_WR_DATA(lcddev.winhend >> 8);
-    LCD_WR_DATA(lcddev.winhend & 0XFF);
+    LCD_WR_DATA(lcddev.winwend >> 8);
+    LCD_WR_DATA(lcddev.winwend & 0XFF);
 }
 
 //初始化lcd
@@ -628,15 +616,9 @@ void LCD_Init(void)
 void LCD_Clear(u16 color)
 {
     u32 index = 0;u32 totalpoint;
-		if(!lcddev.ratio){
-			totalpoint = lcddev.width*lcddev.height;
-		}else{
-			totalpoint = lcddev.width*(lcddev.ratio-2)/lcddev.ratio;
-			totalpoint *= lcddev.height*(lcddev.ratio-2)/lcddev.ratio;//得到总点数
-		}
-		
+		totalpoint = lcddev.workw*lcddev.workh;
 
-		printf("totalpoint:%u;%u",lcddev.winwend,lcddev.winhend);
+//		printf("totalpoint:%u;%u",lcddev.winwend,lcddev.winhend);
     LCD_SetCursor(lcddev.winwsta, lcddev.winhsta);    //设置光标位置
     LCD_WriteRAM_Prepare();         //开始写入GRAM
 		
@@ -653,14 +635,11 @@ void LCD_Clear(u16 color)
 }	
 
 
-void LCD_Fast_Clear(u16 color){
+void LCD_Fast_Clear(u16 color)
+{
 	u32 index = 0;u32 totalpoint;
-	if(!lcddev.ratio){
-		totalpoint = lcddev.width*lcddev.height;
-	}else{
-		totalpoint = lcddev.width*(lcddev.ratio-2)/lcddev.ratio;
-		totalpoint *= lcddev.height*(lcddev.ratio-2)/lcddev.ratio;//得到总点数
-	}
+	totalpoint = lcddev.workw*lcddev.workh;
+
 	LCD_SetCursor(lcddev.winwsta, lcddev.winhsta);    //设置光标位置
   LCD_WriteRAM_Prepare(); 
 	
@@ -689,6 +668,34 @@ void LCD_Fast_Clear(u16 color){
 	LCD_CS = 1;
 }
 
+void LCD_draw_raw(u16 sx, u16 sy, u16 width, u16 height, u16* frame)
+{
+	u32 index;
+	u32 totalpoint;
+	// set position
+	LCD_Set_Window(sx,sy,width,height);
+	// fill in bytes
+	totalpoint = width*height;
+	LCD_WriteRAM_Prepare(); 
+	
+	LCD_CS = 0;
+	
+	
+	for (index = 0; index < totalpoint; index++)
+	{
+		DatabusWrite(frame[index]>>8);
+		LCD_WR = 0;
+		LCD_WR = 1;
+		DatabusWrite(frame[index] & 0xFF);
+		LCD_WR = 0;
+		LCD_WR = 1;
+
+	}
+	
+	LCD_CS = 1;
+	
+	LCD_Set_Window(0,0,lcddev.width,lcddev.height);
+}
 //在指定区域内填充指定颜色
 //区域大小:(xend-xsta+1)*(yend-ysta+1)
 //xsta
@@ -727,8 +734,6 @@ void LCD_Color_Fill(u16 sx, u16 sy, u16 ex, u16 ey, u16 *color)
     {
         LCD_SetCursor(sx, sy + i);  //设置光标位置
         LCD_WriteRAM_Prepare();     //开始写入GRAM
-//				LCD_WriteRAM_Continue();
-
         for (j = 0; j < width; j++)
         {
             LCD_WriteRAM(color[i * width + j]);  //写入数据

@@ -57,3 +57,8 @@
 ..\obj\main.o: ..\FATFS\src\ffconf.h
 ..\obj\main.o: ..\FATFS\exfuns\exfuns.h
 ..\obj\main.o: ..\HARDWARE\ADC\adc.h
+..\obj\main.o: ..\PICS\piclib.h
+..\obj\main.o: ..\PICS\bmp.h
+..\obj\main.o: ..\PICS\tjpgd.h
+..\obj\main.o: ..\PICS\integer.h
+..\obj\main.o: ..\PICS\gif.h

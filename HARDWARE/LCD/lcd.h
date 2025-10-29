@@ -16,11 +16,19 @@ typedef struct
 		u16 wramcontd;
     u16 setxcmd;    //ÉèÖÃx×ø±êÖ¸Áî
     u16 setycmd;   //ÉèÖÃy×ø±êÖ¸Áî
-		u8 ratio;
+		
 		u16 winwsta;
 		u16 winhsta;
 		u16 winwend;		//¿ª´°¿í¶È¼«Öµ¾ø¶ÔÎ»ÖÃ
 		u16 winhend;		//¿ª´°¸ß¶È¼«Öµ¾ø¶ÔÎ»ÖÃ
+		
+		u16 workw;
+		u16 workh;
+//		u16 workwsta;
+//		u16 workhsta;
+//		u16 workwend;
+//		u16 workhend;
+	
 } _lcd_dev;
 
 //LCD²ÎÊý
@@ -170,6 +178,8 @@ void LCD_Scan_Dir(u8 dir);                                  //ÉèÖÃÆÁÉ¨Ãè·½Ïò
 void LCD_Display_Dir(u8 dir);                               //ÉèÖÃÆÁÄ»ÏÔÊ¾·½Ïò
 void LCD_Set_Window(u16 sx, u16 sy, u16 width, u16 height); //ÉèÖÃ´°¿Ú//LCD·Ö±æÂÊÉèÖÃ
 
+void LCD_draw_raw(u16 sx, u16 sy, u16 width, u16 height, u16* frame);
+
 //LCD·Ö±æÂÊÉèÖÃ
 #define SSD_HOR_RESOLUTION      480     //LCDË®Æ½·Ö±æÂÊ
 #define SSD_VER_RESOLUTION      320     //LCD´¹Ö±·Ö±æÂÊ
@@ -199,8 +209,8 @@ void LCD_Set_Window(u16 sx, u16 sy, u16 width, u16 height); //ÉèÖÃ´°¿Ú//LCD·Ö±æÂ
 #define disableY() {GPIOA->MODER&=0XFFFCFFF3;GPIOA->MODER|=0X00010004;PAout(1)=1;PAout(8)=0;}
 #define enableZ() {GPIOA->MODER&=0XFFFCFCF3;GPIOB->MODER&=0XFFCFFFFF;GPIOA->MODER|=0X0001030C;GPIOB->MODER|=0X00100000;PBout(10)=0;PAout(8)=1;}
 
-#define MIN_PRESSURE 200
-#define MAX_PRESSURE 1000
+#define MIN_PRES 300
+#define MAX_PRES 1000
 
 #endif  
 
