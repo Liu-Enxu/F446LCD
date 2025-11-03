@@ -52,7 +52,7 @@ u8 exfuns_init(void)
 	ftemp=(FIL*)mymalloc(sizeof(FIL));		//为ftemp申请内存
 	fatbuf=(u8*)mymalloc(512);				//为fatbuf申请内存
 	if((i==_VOLUMES)&&file&&ftemp&&fatbuf)return 0;  //申请有一个失败,即失败.
-	else return 1;	
+	else return 1;
 }
 
 //将小写字母转为大写字母,如果是数字,则保持不变.

@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F446xx,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\CORE;..\USER;..\STM32F4xx_FWLib\inc;..\HARDWARE\LED;..\HARDWARE\KEY;..\HARDWARE\LCD;..\HARDWARE\TIMER;..\HARDWARE\SPI;..\HARDWARE\SD;..\HARDWARE\ADC;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\MALLOC;..\FATFS\exfuns;..\FATFS\src;..\FATFS\src\option;..\PICS</IncludePath>
+              <IncludePath>..\CORE;..\USER;..\STM32F4xx_FWLib\inc;..\HARDWARE\LED;..\HARDWARE\KEY;..\HARDWARE\LCD;..\HARDWARE\TIMER;..\HARDWARE\SPI;..\HARDWARE\SD;..\HARDWARE\ADC;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\MALLOC;..\FATFS\exfuns;..\FATFS\src;..\FATFS\src\option;..\PICS;..\APP</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -759,6 +759,21 @@
               <FileName>app.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\APP\app.c</FilePath>
+            </File>
+            <File>
+              <FileName>fatsd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\APP\fatsd.c</FilePath>
+            </File>
+            <File>
+              <FileName>gui.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\APP\gui.c</FilePath>
+            </File>
+            <File>
+              <FileName>mouse.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\APP\mouse.c</FilePath>
             </File>
           </Files>
         </Group>

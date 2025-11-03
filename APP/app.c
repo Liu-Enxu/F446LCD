@@ -1,2 +1,1 @@
-#include "gui.h"
-#include "sd_info.h"
+#include "app.h"

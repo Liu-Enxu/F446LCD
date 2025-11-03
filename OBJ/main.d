@@ -50,15 +50,17 @@
 ..\obj\main.o: D:\_____ENGINEERING_____\stm32\Keil5 MDK\Keil_v5\ARM\ARMCCv506u7\Bin\..\include\stdio.h
 ..\obj\main.o: ..\HARDWARE\TIMER\timer.h
 ..\obj\main.o: ..\HARDWARE\SPI\spi.h
-..\obj\main.o: ..\HARDWARE\SD\sd.h
 ..\obj\main.o: ..\MALLOC\malloc.h
+..\obj\main.o: ..\PICS\piclib.h
 ..\obj\main.o: ..\FATFS\src\ff.h
 ..\obj\main.o: ..\FATFS\src\integer.h
 ..\obj\main.o: ..\FATFS\src\ffconf.h
 ..\obj\main.o: ..\FATFS\exfuns\exfuns.h
-..\obj\main.o: ..\HARDWARE\ADC\adc.h
-..\obj\main.o: ..\PICS\piclib.h
 ..\obj\main.o: ..\PICS\bmp.h
 ..\obj\main.o: ..\PICS\tjpgd.h
 ..\obj\main.o: ..\PICS\integer.h
 ..\obj\main.o: ..\PICS\gif.h
+..\obj\main.o: ..\APP\fatsd.h
+..\obj\main.o: ..\APP\gui.h
+..\obj\main.o: ..\APP\mouse.h
+..\obj\main.o: ..\HARDWARE\ADC\adc.h

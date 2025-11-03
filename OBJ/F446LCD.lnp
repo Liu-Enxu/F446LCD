@@ -65,6 +65,9 @@
 "..\obj\piclib.o"
 "..\obj\tjpgd.o"
 "..\obj\app.o"
+"..\obj\fatsd.o"
+"..\obj\gui.o"
+"..\obj\mouse.o"
 --strict --scatter "..\OBJ\F446LCD.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
