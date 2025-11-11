@@ -1,18 +1,7 @@
 #include "timer.h"
 #include "led.h"
 #include "usart.h"
-//////////////////////////////////////////////////////////////////////////////////	 
-//本程序只供学习使用，未经作者许可，不得用于其它任何用途
-//ALIENTEK Mini STM32开发板
-//PWM  驱动代码			   
-//正点原子@ALIENTEK
-//技术论坛:www.openedv.com
-//修改日期:2010/12/03
-//版本：V1.0
-//版权所有，盗版必究。
-//Copyright(C) 正点原子 2009-2019
-//All rights reserved
-////////////////////////////////////////////////////////////////////////////////// 	  
+#include "lvgl/lvgl.h"
 
 //通用定时器中断初始化
 //这里时钟选择为APB1的2倍，而APB1为36M
@@ -24,7 +13,7 @@ u8 UPDATE_CNT = 0;
 u16 TIMER_CNT = 0;
 u32 ELAPSE = 0;
 
-void TIM2_Int_Init(u16 arr,u16 psc)
+void TIM2_Int_Init(u16 arr,u16 psc) // PCLK1 = HCLK / 4 = 45M, but  APB1 timer clocks if (APB1 presc = 1) x1 else x2 so 90Mhz
 {
   TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
 	NVIC_InitTypeDef NVIC_InitStructure;
@@ -44,7 +33,7 @@ void TIM2_Int_Init(u16 arr,u16 psc)
 		);
 	NVIC_InitStructure.NVIC_IRQChannel = TIM2_IRQn;  //TIM2中断
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;  //先占优先级0级
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;  //从优先级3级
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;  //从优先级3级
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE; //IRQ通道被使能
 	NVIC_Init(&NVIC_InitStructure);  //根据NVIC_InitStruct中指定的参数初始化外设NVIC寄存器
 
@@ -56,9 +45,10 @@ void TIM2_Int_Init(u16 arr,u16 psc)
 void TIM2_IRQHandler(void)   //TIM2中断
 {
 	if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET) //检查指定的TIM中断发生与否:TIM 中断源 
-		{
+	{
 		TIM_ClearITPendingBit(TIM2, TIM_IT_Update  );  //清除TIMx的中断待处理位:TIM 中断源 
-		UPDATE_CNT++;
-//		LED0=!LED0;
-		}
+//		UPDATE_CNT++;
+		lv_tick_inc(1);
+		
+	}
 }

@@ -178,7 +178,8 @@ void LCD_Scan_Dir(u8 dir);                                  //设置屏扫描方向
 void LCD_Display_Dir(u8 dir);                               //设置屏幕显示方向
 void LCD_Set_Window(u16 sx, u16 sy, u16 width, u16 height); //设置窗口//LCD分辨率设置
 
-void LCD_draw_raw(u16 sx, u16 sy, u16 width, u16 height, u16* frame);
+void LCD_draw_raw16(u16 sx, u16 sy, u16 width, u16 height, u16* frame);
+void LCD_draw_raw8(u16 sx, u16 sy, u16 width, u16 height, u8* frame);
 
 //LCD分辨率设置
 #define SSD_HOR_RESOLUTION      480     //LCD水平分辨率

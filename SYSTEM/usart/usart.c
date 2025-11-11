@@ -18,7 +18,8 @@ struct __FILE
 
 }; 
 
-FILE __stdout;       
+FILE __stdout;     
+
 //定义_sys_exit()以避免使用半主机模式    
 void _sys_exit(int x) 
 { 
@@ -34,15 +35,16 @@ int fputc(int ch, FILE *f)
 #endif 
 
 /*使用microLib的方法*/
- /* 
+/* 
 int fputc(int ch, FILE *f)
 {
 	USART_SendData(USART2, (uint8_t) ch);
 
 	while (USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET) {}	
    
-    return ch;
-}
+  return ch;
+
+} 
 int GetKey (void)  { 
 
     while (!(USART2->SR & USART_FLAG_RXNE));
@@ -135,6 +137,12 @@ void USART2_IRQHandler(void)                	//串口1中断服务程序
 #if SYSTEM_SUPPORT_OS 	//如果SYSTEM_SUPPORT_OS为真，则需要支持OS.
 	OSIntExit();  											 
 #endif
-} 
+}
+
+void my_log_cb(lv_log_level_t level, const char * buf)
+{
+	printf("%s",buf);
+}
+
 #endif	
 

@@ -6,8 +6,8 @@
 #include "timer.h"
 
 //LCD的画笔颜色和背景色
-u16 POINT_COLOR=WHITE;         //画笔颜色
-u16 BACK_COLOR=BLACK;          //背景色 
+u16 POINT_COLOR=BLACK;         //画笔颜色
+u16 BACK_COLOR=WHITE;          //背景色 
   
 //管理LCD重要参数
 //默认为竖屏
@@ -505,29 +505,29 @@ void LCD_Init(void)
     lcddev.id <<= 8;
     lcddev.id |= LCD_RD_DATA();         //读取0X86
 		
-		printf(" LCD ID:%x\r\n", lcddev.id);
+//		printf(" LCD ID:%x\r\n", lcddev.id);
 		
 		vu8 temp;
 		LCD_WR_CMD(0X04);
 		temp = LCD_RD_DATA();		// dummy data
 		temp = LCD_RD_DATA();		// manufacturer ID
-		printf(" Manufacturer ID:%x\r\n", temp);
+//		printf(" Manufacturer ID:%x\r\n", temp);
 		temp = LCD_RD_DATA();		// module/driver version ID
-		printf(" Module/driver version ID:%x\r\n", temp);
+//		printf(" Module/driver version ID:%x\r\n", temp);
 		temp = LCD_RD_DATA();		// module/driver ID
-		printf(" Module/driver ID:%x\r\n", temp);
+//		printf(" Module/driver ID:%x\r\n", temp);
 		
 		LCD_WR_CMD(0X0C);
 		temp = LCD_RD_DATA();		// dummy data
 		temp = LCD_RD_DATA();		// pixel format
-		printf("Pixel format and CPU format ID:%x before set\r\n", temp);
+//		printf("Pixel format and CPU format ID:%x before set\r\n", temp);
 		
 		LCD_WR_CMD(0X3A);
 		LCD_WR_DATA(0x55);		// pixel format
 		LCD_WR_CMD(0X0C);
 		temp = LCD_RD_DATA();		// dummy data
 		temp = LCD_RD_DATA();		// pixel format
-		printf("Pixel format and CPU format ID:%x after set\r\n", temp);
+//		printf("Pixel format and CPU format ID:%x after set\r\n", temp);
 		
 		if(lcddev.id!=0X9486){
 			return;
@@ -605,10 +605,10 @@ void LCD_Init(void)
 		
 		
 		
-		LCD_Display_Dir(1);         //默认为竖屏
+		LCD_Display_Dir(1);         //默认为横屏
     
 //		LCD_Clear(BACK_COLOR);
-		LCD_Fast_Clear(BACK_COLOR);
+		LCD_Fast_Clear(RED);
 }  
 
 //清屏函数
@@ -668,18 +668,20 @@ void LCD_Fast_Clear(u16 color)
 	LCD_CS = 1;
 }
 
-void LCD_draw_raw(u16 sx, u16 sy, u16 width, u16 height, u16* frame)
+void LCD_draw_raw16(u16 sx, u16 sy, u16 width, u16 height, u16* frame)
 {
 	u32 index;
 	u32 totalpoint;
+	
+	LCD_DATA_OUT();
 	// set position
 	LCD_Set_Window(sx,sy,width,height);
 	// fill in bytes
 	totalpoint = width*height;
+	
 	LCD_WriteRAM_Prepare(); 
 	
 	LCD_CS = 0;
-	
 	
 	for (index = 0; index < totalpoint; index++)
 	{
@@ -694,8 +696,40 @@ void LCD_draw_raw(u16 sx, u16 sy, u16 width, u16 height, u16* frame)
 	
 	LCD_CS = 1;
 	
-	LCD_Set_Window(0,0,lcddev.width,lcddev.height);
+//	LCD_Set_Window(0,0,lcddev.width,lcddev.height);
 }
+
+void LCD_draw_raw8(u16 sx, u16 sy, u16 width, u16 height, u8* frame)
+{
+	u32 index;
+	u32 totalpoint;
+	
+	LCD_DATA_OUT();
+	// set position
+	LCD_Set_Window(sx,sy,width,height);
+	// fill in bytes
+	totalpoint = width*height;
+	
+	LCD_WriteRAM_Prepare(); 
+	
+	LCD_CS = 0;
+	
+	for (index = 0; index < totalpoint; index+=2)
+	{
+		DatabusWrite(frame[index]);
+		LCD_WR = 0;
+		LCD_WR = 1;
+		DatabusWrite(frame[index+1]);
+		LCD_WR = 0;
+		LCD_WR = 1;
+
+	}
+	
+	LCD_CS = 1;
+	
+//	LCD_Set_Window(0,0,lcddev.width,lcddev.height);
+}
+
 //在指定区域内填充指定颜色
 //区域大小:(xend-xsta+1)*(yend-ysta+1)
 //xsta

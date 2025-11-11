@@ -1,0 +1,57 @@
+..\obj\touch.o: ..\APP\touch.c
+..\obj\touch.o: ..\APP\touch.h
+..\obj\touch.o: ..\SYSTEM\sys\sys.h
+..\obj\touch.o: ..\USER\stm32f4xx.h
+..\obj\touch.o: ..\CORE\core_cm4.h
+..\obj\touch.o: D:\_____ENGINEERING_____\stm32\Keil5 MDK\Keil_v5\ARM\ARMCCv506u7\Bin\..\include\stdint.h
+..\obj\touch.o: ..\CORE\core_cmInstr.h
+..\obj\touch.o: ..\CORE\core_cmFunc.h
+..\obj\touch.o: ..\CORE\core_cmSimd.h
+..\obj\touch.o: ..\USER\system_stm32f4xx.h
+..\obj\touch.o: ..\USER\stm32f4xx_conf.h
+..\obj\touch.o: ..\STM32F4xx_FWLib\inc\stm32f4xx_adc.h
+..\obj\touch.o: ..\USER\stm32f4xx.h
+..\obj\touch.o: ..\STM32F4xx_FWLib\inc\stm32f4xx_crc.h
+..\obj\touch.o: ..\STM32F4xx_FWLib\inc\stm32f4xx_dbgmcu.h
+..\obj\touch.o: ..\STM32F4xx_FWLib\inc\stm32f4xx_dma.h
+..\obj\touch.o: ..\STM32F4xx_FWLib\inc\stm32f4xx_exti.h
+..\obj\touch.o: ..\STM32F4xx_FWLib\inc\stm32f4xx_flash.h
+..\obj\touch.o: ..\STM32F4xx_FWLib\inc\stm32f4xx_gpio.h
+..\obj\touch.o: ..\STM32F4xx_FWLib\inc\stm32f4xx_i2c.h
+..\obj\touch.o: ..\STM32F4xx_FWLib\inc\stm32f4xx_iwdg.h
+..\obj\touch.o: ..\STM32F4xx_FWLib\inc\stm32f4xx_pwr.h
+..\obj\touch.o: ..\STM32F4xx_FWLib\inc\stm32f4xx_rcc.h
+..\obj\touch.o: ..\STM32F4xx_FWLib\inc\stm32f4xx_rtc.h
+..\obj\touch.o: ..\STM32F4xx_FWLib\inc\stm32f4xx_sdio.h
+..\obj\touch.o: ..\STM32F4xx_FWLib\inc\stm32f4xx_spi.h
+..\obj\touch.o: ..\STM32F4xx_FWLib\inc\stm32f4xx_syscfg.h
+..\obj\touch.o: ..\STM32F4xx_FWLib\inc\stm32f4xx_tim.h
+..\obj\touch.o: ..\STM32F4xx_FWLib\inc\stm32f4xx_usart.h
+..\obj\touch.o: ..\STM32F4xx_FWLib\inc\stm32f4xx_wwdg.h
+..\obj\touch.o: ..\STM32F4xx_FWLib\inc\misc.h
+..\obj\touch.o: ..\STM32F4xx_FWLib\inc\stm32f4xx_cryp.h
+..\obj\touch.o: ..\STM32F4xx_FWLib\inc\stm32f4xx_hash.h
+..\obj\touch.o: ..\STM32F4xx_FWLib\inc\stm32f4xx_rng.h
+..\obj\touch.o: ..\STM32F4xx_FWLib\inc\stm32f4xx_can.h
+..\obj\touch.o: ..\STM32F4xx_FWLib\inc\stm32f4xx_dac.h
+..\obj\touch.o: ..\STM32F4xx_FWLib\inc\stm32f4xx_dcmi.h
+..\obj\touch.o: ..\STM32F4xx_FWLib\inc\stm32f4xx_dma2d.h
+..\obj\touch.o: ..\STM32F4xx_FWLib\inc\stm32f4xx_fmc.h
+..\obj\touch.o: ..\STM32F4xx_FWLib\inc\stm32f4xx_ltdc.h
+..\obj\touch.o: ..\STM32F4xx_FWLib\inc\stm32f4xx_sai.h
+..\obj\touch.o: ..\STM32F4xx_FWLib\inc\stm32f4xx_qspi.h
+..\obj\touch.o: ..\STM32F4xx_FWLib\inc\stm32f4xx_fmpi2c.h
+..\obj\touch.o: ..\STM32F4xx_FWLib\inc\stm32f4xx_spdifrx.h
+..\obj\touch.o: ..\STM32F4xx_FWLib\inc\stm32f4xx_cec.h
+..\obj\touch.o: ..\HARDWARE\LCD\lcd.h
+..\obj\touch.o: D:\_____ENGINEERING_____\stm32\Keil5 MDK\Keil_v5\ARM\ARMCCv506u7\Bin\..\include\stdlib.h
+..\obj\touch.o: ..\HARDWARE\ADC\adc.h
+..\obj\touch.o: ..\APP\fatsd.h
+..\obj\touch.o: ..\FATFS\exfuns\exfuns.h
+..\obj\touch.o: ..\FATFS\src\ff.h
+..\obj\touch.o: ..\FATFS\src\integer.h
+..\obj\touch.o: ..\FATFS\src\ffconf.h
+..\obj\touch.o: ..\SYSTEM\delay\delay.h
+..\obj\touch.o: ..\MALLOC\malloc.h
+..\obj\touch.o: D:\_____ENGINEERING_____\stm32\Keil5 MDK\Keil_v5\ARM\ARMCCv506u7\Bin\..\include\stdio.h
+..\obj\touch.o: D:\_____ENGINEERING_____\stm32\Keil5 MDK\Keil_v5\ARM\ARMCCv506u7\Bin\..\include\stdbool.h

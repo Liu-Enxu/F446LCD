@@ -1,8 +1,7 @@
 ..\obj\app.o: ..\APP\app.c
 ..\obj\app.o: ..\APP\app.h
-..\obj\app.o: ..\APP\gui.h
-..\obj\app.o: ..\HARDWARE\LCD\lcd.h
-..\obj\app.o: ..\SYSTEM\sys\sys.h
+..\obj\app.o: ..\APP\fatsd.h
+..\obj\app.o: ..\FATFS\exfuns\exfuns.h
 ..\obj\app.o: ..\USER\stm32f4xx.h
 ..\obj\app.o: ..\CORE\core_cm4.h
 ..\obj\app.o: D:\_____ENGINEERING_____\stm32\Keil5 MDK\Keil_v5\ARM\ARMCCv506u7\Bin\..\include\stdint.h
@@ -45,14 +44,15 @@
 ..\obj\app.o: ..\STM32F4xx_FWLib\inc\stm32f4xx_fmpi2c.h
 ..\obj\app.o: ..\STM32F4xx_FWLib\inc\stm32f4xx_spdifrx.h
 ..\obj\app.o: ..\STM32F4xx_FWLib\inc\stm32f4xx_cec.h
-..\obj\app.o: D:\_____ENGINEERING_____\stm32\Keil5 MDK\Keil_v5\ARM\ARMCCv506u7\Bin\..\include\stdlib.h
-..\obj\app.o: ..\APP\fatsd.h
-..\obj\app.o: ..\FATFS\exfuns\exfuns.h
 ..\obj\app.o: ..\FATFS\src\ff.h
 ..\obj\app.o: ..\FATFS\src\integer.h
 ..\obj\app.o: ..\FATFS\src\ffconf.h
+..\obj\app.o: ..\HARDWARE\LCD\lcd.h
+..\obj\app.o: ..\SYSTEM\sys\sys.h
+..\obj\app.o: D:\_____ENGINEERING_____\stm32\Keil5 MDK\Keil_v5\ARM\ARMCCv506u7\Bin\..\include\stdlib.h
 ..\obj\app.o: ..\SYSTEM\delay\delay.h
 ..\obj\app.o: ..\MALLOC\malloc.h
 ..\obj\app.o: D:\_____ENGINEERING_____\stm32\Keil5 MDK\Keil_v5\ARM\ARMCCv506u7\Bin\..\include\stdio.h
-..\obj\app.o: ..\APP\mouse.h
+..\obj\app.o: ..\APP\touch.h
 ..\obj\app.o: ..\HARDWARE\ADC\adc.h
+..\obj\app.o: D:\_____ENGINEERING_____\stm32\Keil5 MDK\Keil_v5\ARM\ARMCCv506u7\Bin\..\include\stdbool.h

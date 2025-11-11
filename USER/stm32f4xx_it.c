@@ -23,7 +23,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx_it.h"
 #include "main.h"
-
+#include "usart.h"
 /** @addtogroup Template_Project
   * @{
   */
@@ -56,6 +56,7 @@ void NMI_Handler(void)
 void HardFault_Handler(void)
 {
   /* Go to infinite loop when Hard Fault exception occurs */
+	printf("hardfault?");
   while (1)
   {
   }
