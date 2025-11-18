@@ -43,7 +43,6 @@
 ..\obj\timer.o: ..\STM32F4xx_FWLib\inc\stm32f4xx_fmpi2c.h
 ..\obj\timer.o: ..\STM32F4xx_FWLib\inc\stm32f4xx_spdifrx.h
 ..\obj\timer.o: ..\STM32F4xx_FWLib\inc\stm32f4xx_cec.h
-..\obj\timer.o: ..\HARDWARE\LED\led.h
 ..\obj\timer.o: ..\SYSTEM\usart\usart.h
 ..\obj\timer.o: D:\_____ENGINEERING_____\stm32\Keil5 MDK\Keil_v5\ARM\ARMCCv506u7\Bin\..\include\stdio.h
 ..\obj\timer.o: ..\LVGL\lvgl/lvgl.h

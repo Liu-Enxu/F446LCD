@@ -337,10 +337,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls></MiscControls>
+              <MiscControls>--info sizes --info totals --info stack</MiscControls>
               <Define>STM32F446xx,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\CORE;..\USER;..\STM32F4xx_FWLib\inc;..\HARDWARE\LED;..\HARDWARE\KEY;..\HARDWARE\LCD;..\HARDWARE\TIMER;..\HARDWARE\SPI;..\HARDWARE\SD;..\HARDWARE\ADC;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\MALLOC;..\FATFS\exfuns;..\FATFS\src;..\FATFS\src\option;..\PICS;..\APP;..\APP\ui;..\LVGL;..\LVGL\lvgl;..\LVGL\lvgl\src;..\LVGL\lvgl\src\core;..\LVGL\lvgl\src\display;..\LVGL\lvgl\src\draw;..\LVGL\lvgl\src\draw\convert;..\LVGL\lvgl\src\draw\sw;..\LVGL\lvgl\src\draw\sw\blend;..\LVGL\lvgl\src\font;..\LVGL\lvgl\src\indev;..\LVGL\lvgl\src\layouts;..\LVGL\lvgl\src\layouts\flex;..\LVGL\lvgl\src\layouts\grid;..\LVGL\lvgl\src\libs;..\LVGL\lvgl\src\misc;..\LVGL\lvgl\src\misc\cache;..\LVGL\lvgl\src\misc\cache\class;..\LVGL\lvgl\src\misc\cache\instance;..\LVGL\lvgl\src\osal;..\LVGL\lvgl\src\others;..\LVGL\lvgl\src\stdlib;..\LVGL\lvgl\src\stdlib\builtin;..\LVGL\lvgl\src\themes;..\LVGL\lvgl\src\themes\default;..\LVGL\lvgl\src\themes\mono;..\LVGL\lvgl\src\themes\simple;..\LVGL\lvgl\src\tick;..\LVGL\lvgl\src\widgets;..\LVGL\lvgl\src\widgets\label;..\LVGL\lvgl\src\widgets\span</IncludePath>
+              <IncludePath>..\CORE;..\USER;..\STM32F4xx_FWLib\inc;..\HARDWARE\LED;..\HARDWARE\KEY;..\HARDWARE\LCD;..\HARDWARE\TIMER;..\HARDWARE\SPI;..\HARDWARE\SD;..\HARDWARE\ADC;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\MALLOC;..\FATFS\exfuns;..\FATFS\src;..\FATFS\src\option;..\PICS;..\APP;..\APP\ui;..\LVGL;..\LVGL\lvgl;..\LVGL\lvgl\src;..\LVGL\lvgl\src\core;..\LVGL\lvgl\src\display;..\LVGL\lvgl\src\draw;..\LVGL\lvgl\src\draw\convert;..\LVGL\lvgl\src\draw\sw;..\LVGL\lvgl\src\draw\sw\blend;..\LVGL\lvgl\src\font;..\LVGL\lvgl\src\indev;..\LVGL\lvgl\src\layouts;..\LVGL\lvgl\src\layouts\flex;..\LVGL\lvgl\src\layouts\grid;..\LVGL\lvgl\src\libs;..\LVGL\lvgl\src\misc;..\LVGL\lvgl\src\misc\cache;..\LVGL\lvgl\src\misc\cache\class;..\LVGL\lvgl\src\misc\cache\instance;..\LVGL\lvgl\src\osal;..\LVGL\lvgl\src\others;..\LVGL\lvgl\src\stdlib;..\LVGL\lvgl\src\stdlib\builtin;..\LVGL\lvgl\src\themes;..\LVGL\lvgl\src\themes\default;..\LVGL\lvgl\src\themes\mono;..\LVGL\lvgl\src\themes\simple;..\LVGL\lvgl\src\tick;..\LVGL\lvgl\src\widgets;..\LVGL\lvgl\src\widgets\label;..\LVGL\lvgl\src\widgets\span;..\LVGL\lvgl\examples\porting</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -789,6 +789,21 @@
               <FileName>ui.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\APP\ui\ui.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>LVGL/example/porting</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_port_disp_template.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\LVGL\lvgl\examples\porting\lv_port_disp_template.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_port_indev_template.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\LVGL\lvgl\examples\porting\lv_port_indev_template.c</FilePath>
             </File>
           </Files>
         </Group>

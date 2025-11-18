@@ -5,7 +5,7 @@
 ..\obj\lv_port_disp_template.o: ..\LVGL\lvgl/src/lv_init.h
 ..\obj\lv_port_disp_template.o: ..\LVGL\lvgl/src/lv_conf_internal.h
 ..\obj\lv_port_disp_template.o: ..\LVGL\lvgl/src/lv_conf_kconfig.h
-..\obj\lv_port_disp_template.o: ..\LVGL\lvgl\examples\porting\../../lv_conf.h
+..\obj\lv_port_disp_template.o: ..\LVGL\lvgl/src/../../lv_conf.h
 ..\obj\lv_port_disp_template.o: ..\LVGL\lvgl/src/misc/lv_types.h
 ..\obj\lv_port_disp_template.o: D:\_____ENGINEERING_____\stm32\Keil5 MDK\Keil_v5\ARM\ARMCCv506u7\Bin\..\include\stdint.h
 ..\obj\lv_port_disp_template.o: D:\_____ENGINEERING_____\stm32\Keil5 MDK\Keil_v5\ARM\ARMCCv506u7\Bin\..\include\stddef.h
@@ -204,7 +204,7 @@
 ..\obj\lv_port_disp_template.o: ..\LVGL\lvgl/src/lv_api_map_v9_1.h
 ..\obj\lv_port_disp_template.o: ..\LVGL\lvgl/src/lv_api_map_v9_2.h
 ..\obj\lv_port_disp_template.o: ..\LVGL\lvgl/src/lv_api_map_v9_3.h
-..\obj\lv_port_disp_template.o: ..\HARDWARE\LCD\lcd.h
+..\obj\lv_port_disp_template.o: ..\HARDWARE\ADC\adc.h
 ..\obj\lv_port_disp_template.o: ..\SYSTEM\sys\sys.h
 ..\obj\lv_port_disp_template.o: ..\USER\stm32f4xx.h
 ..\obj\lv_port_disp_template.o: ..\CORE\core_cm4.h
@@ -247,5 +247,8 @@
 ..\obj\lv_port_disp_template.o: ..\STM32F4xx_FWLib\inc\stm32f4xx_fmpi2c.h
 ..\obj\lv_port_disp_template.o: ..\STM32F4xx_FWLib\inc\stm32f4xx_spdifrx.h
 ..\obj\lv_port_disp_template.o: ..\STM32F4xx_FWLib\inc\stm32f4xx_cec.h
+..\obj\lv_port_disp_template.o: ..\HARDWARE\LCD\lcd.h
 ..\obj\lv_port_disp_template.o: D:\_____ENGINEERING_____\stm32\Keil5 MDK\Keil_v5\ARM\ARMCCv506u7\Bin\..\include\stdlib.h
-..\obj\lv_port_disp_template.o: ..\HARDWARE\ADC\adc.h
+..\obj\lv_port_disp_template.o: ..\SYSTEM\usart\usart.h
+..\obj\lv_port_disp_template.o: D:\_____ENGINEERING_____\stm32\Keil5 MDK\Keil_v5\ARM\ARMCCv506u7\Bin\..\include\stdio.h
+..\obj\lv_port_disp_template.o: ..\SYSTEM\delay\delay.h

@@ -71,6 +71,8 @@
 "..\obj\screens.o"
 "..\obj\styles.o"
 "..\obj\ui.o"
+"..\obj\lv_port_disp_template.o"
+"..\obj\lv_port_indev_template.o"
 "..\obj\lv_init.o"
 "..\obj\lv_group.o"
 "..\obj\lv_obj.o"
