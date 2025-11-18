@@ -260,6 +260,7 @@
 ..\obj\main.o: ..\HARDWARE\TIMER\timer.h
 ..\obj\main.o: ..\APP\touch.h
 ..\obj\main.o: ..\HARDWARE\ADC\adc.h
+..\obj\main.o: ..\LVGL\lvgl\examples\porting\lv_port_indev_template.h
 ..\obj\main.o: ..\LVGL\lvgl\examples\porting\lv_port_disp_template.h
 ..\obj\main.o: ..\APP\ui\ui.h
 ..\obj\main.o: ..\APP\ui\screens.h

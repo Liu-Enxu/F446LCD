@@ -3,7 +3,6 @@
 #include "sys.h"
 #include "lcd.h"
 #include "adc.h"
-#include "fatsd.h"
 #include <stdbool.h>
 
 extern u16 adc;

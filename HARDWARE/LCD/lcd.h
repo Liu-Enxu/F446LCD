@@ -23,12 +23,7 @@ typedef struct
 		u16 winhend;		//开窗高度极值绝对位置
 		
 		u16 workw;
-		u16 workh;
-//		u16 workwsta;
-//		u16 workhsta;
-//		u16 workwend;
-//		u16 workhend;
-	
+		u16 workh;	
 } _lcd_dev;
 
 //LCD参数
@@ -177,27 +172,29 @@ void LCD_WriteRAM(u16 RGB_Code);
 void LCD_Scan_Dir(u8 dir);                                  //设置屏扫描方向
 void LCD_Display_Dir(u8 dir);                               //设置屏幕显示方向
 void LCD_Set_Window(u16 sx, u16 sy, u16 width, u16 height); //设置窗口//LCD分辨率设置
+void LCD_Set_Window_xy(u16 sx, u16 sy, u16 ex, u16 ey); 
 
-void LCD_draw_raw16(u16 sx, u16 sy, u16 width, u16 height, u16* frame);
-void LCD_draw_raw8_LE(u16 sx, u16 sy, u16 width, u16 height, u8* frame);
-void LCD_draw_raw8_BE(u16 sx, u16 sy, u16 width, u16 height, u8* frame);
+//void LCD_draw_raw16(u16 sx, u16 sy, u16 width, u16 height, u16* frame);
+//void LCD_draw_raw8_LE(u16 sx, u16 sy, u16 width, u16 height, u8* frame);
+void LCD_draw_raw8_BE(u16 sx, u16 sy, u16 ex, u16 ey, u8* frame);
+//void LCD_draw_bw(u16 sx, u16 sy, u16 ex, u16 ey, u8* frame)
 
-//LCD分辨率设置
-#define SSD_HOR_RESOLUTION      480     //LCD水平分辨率
-#define SSD_VER_RESOLUTION      320     //LCD垂直分辨率
-//LCD驱动参数设置
-#define SSD_HOR_PULSE_WIDTH     1       //水平脉宽
-#define SSD_HOR_BACK_PORCH      46      //水平前廊
-#define SSD_HOR_FRONT_PORCH     210     //水平后廊
+////LCD分辨率设置
+#define HOR_RESOLUTION      480     //LCD水平分辨率
+#define VER_RESOLUTION      320     //LCD垂直分辨率
+////LCD驱动参数设置
+//#define SSD_HOR_PULSE_WIDTH     1       //水平脉宽
+//#define SSD_HOR_BACK_PORCH      46      //水平前廊
+//#define SSD_HOR_FRONT_PORCH     210     //水平后廊
 
-#define SSD_VER_PULSE_WIDTH     1       //垂直脉宽
-#define SSD_VER_BACK_PORCH      23      //垂直前廊
-#define SSD_VER_FRONT_PORCH     22      //垂直前廊
-//如下几个参数，自动计算
-#define SSD_HT  (SSD_HOR_RESOLUTION+SSD_HOR_BACK_PORCH+SSD_HOR_FRONT_PORCH)
-#define SSD_HPS (SSD_HOR_BACK_PORCH)
-#define SSD_VT  (SSD_VER_RESOLUTION+SSD_VER_BACK_PORCH+SSD_VER_FRONT_PORCH)
-#define SSD_VPS (SSD_VER_BACK_PORCH)
+//#define SSD_VER_PULSE_WIDTH     1       //垂直脉宽
+//#define SSD_VER_BACK_PORCH      23      //垂直前廊
+//#define SSD_VER_FRONT_PORCH     22      //垂直前廊
+////如下几个参数，自动计算
+//#define SSD_HT  (SSD_HOR_RESOLUTION+SSD_HOR_BACK_PORCH+SSD_HOR_FRONT_PORCH)
+//#define SSD_HPS (SSD_HOR_BACK_PORCH)
+//#define SSD_VT  (SSD_VER_RESOLUTION+SSD_VER_BACK_PORCH+SSD_VER_FRONT_PORCH)
+//#define SSD_VPS (SSD_VER_BACK_PORCH)
 
 // Touch --------------------------------------------------------------------------
 //XP - LCD6 - PB10 - IN

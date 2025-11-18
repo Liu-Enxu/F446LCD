@@ -21,12 +21,12 @@
  *********************/
 //#ifndef MY_DISP_HOR_RES
 //    #warning Please define or replace the macro MY_DISP_HOR_RES with the actual screen width, default value 320 is used for now.
-    #define MY_DISP_HOR_RES    480
+    #define MY_DISP_HOR_RES    HOR_RESOLUTION
 //#endif
 
 //#ifndef MY_DISP_VER_RES
 //    #warning Please define or replace the macro MY_DISP_VER_RES with the actual screen height, default value 240 is used for now.
-    #define MY_DISP_VER_RES    320
+    #define MY_DISP_VER_RES    VER_RESOLUTION
 //#endif
 
 #define BYTE_PER_PIXEL (LV_COLOR_FORMAT_GET_SIZE(LV_COLOR_FORMAT_RGB565)) /*will be 2 for RGB565 */
@@ -131,7 +131,7 @@ static void disp_flush(lv_display_t * disp_drv, const lv_area_t * area, uint8_t 
 {
 //    if(disp_flush_enabled) {
         /*The most simple case (but also the slowest) to put all pixels to the screen one-by-one*/
-				printf("Flush: x1=%d y1=%d x2=%d y2=%d\n",area->x1, area->y1, area->x2, area->y2);
+//				printf("Flush: x1=%d y1=%d x2=%d y2=%d\n",area->x1, area->y1, area->x2, area->y2);
 //        int32_t x;
 //        int32_t y;
 //        for(y = area->y1; y <= area->y2; y++) {
@@ -141,7 +141,7 @@ static void disp_flush(lv_display_t * disp_drv, const lv_area_t * area, uint8_t 
 //                px_map+=2;
 //            }
 //        }
-				LCD_draw_raw8_BE(area->x1, area->y1, (area->x2)-(area->x1)+1, (area->y2)-(area->y1)+1, px_map);
+				LCD_draw_raw8_BE(area->x1, area->y1, area->x2, area->y2, px_map);
 //    }
 
     /*IMPORTANT!!!

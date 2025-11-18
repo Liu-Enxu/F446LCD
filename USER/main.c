@@ -19,7 +19,7 @@
 #include "timer.h"
 #include "touch.h"
 #include "lvgl/lvgl.h"
-//#include "lv_port_indev_template.h"
+#include "lv_port_indev_template.h"
 #include "lv_port_disp_template.h"
 #include "ui.h"
 
@@ -106,17 +106,26 @@ int main(void)
 	uart_init(115200);	 	//串口初始化为115200
 	TIM2_Int_Init(999,89); // 180M/180=1Mhz --> 1us, 9999+1-->10ms
 	printf("begin!\n");	
-//	LCD_Init();
 	
 	lv_log_register_print_cb(my_log_cb);
 	lv_init();
 	
 	lv_port_disp_init();       
-//  lv_display_set_buffers(disp, buf_1_1, NULL, sizeof(buf_1_1), LV_DISPLAY_RENDER_MODE_PARTIAL); // MUST CALL THIS IN MAIN.C!!! WHY?? --- STACK SIZE NOT ENOUGH!!!!!!!!!!!!!!
+//  lv_display_set_buffers(disp, buf_1_1, NULL, sizeof(buf_1_1), LV_DISPLAY_RENDER_MODE_PARTIAL); // MUST CALL THIS IN MAIN.C!!! WHY?? --- STACK SIZE NOT ENOUGH!!!!!!!!!!!!!!	
+	lv_port_indev_init();
 	
-//	lv_port_indev_init();
+//	ui_init();
 
-	ui_init();
+	lv_obj_t* switch_obj = lv_switch_create(lv_scr_act());
+	lv_obj_set_size(switch_obj, 100,50);
+	lv_obj_align(switch_obj, LV_ALIGN_LEFT_MID, 0, 0);
+
+	lv_obj_t* spinner_obj = lv_spinner_create(lv_scr_act());
+	lv_obj_set_size(spinner_obj, 100, 50);
+	lv_obj_align(spinner_obj, LV_ALIGN_RIGHT_MID,0,0);
+	
+	
+	
 	printf("loop!\n");	
 	 while(1) 
 	{	

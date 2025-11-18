@@ -1,5 +1,5 @@
 #include "touch.h"
-
+#include "delay.h"
 
 u16 adc;
 u16 adcY, adcX, adcZ;
@@ -31,9 +31,15 @@ bool get_touchXY(void){
 			mouseY = lcddev.height-(vu16)((adcY-100)*lcddev.height/(925-100));
 			
 //			LCD_DATA_OUT();
+			for(i=0;i<100;i++){
+				delay_ms(10);
+			}
 			return true;
 	}
 //	LCD_DATA_OUT();
+	for(i=0;i<100;i++){
+		delay_ms(10);
+	}
 	return false;
 
 }

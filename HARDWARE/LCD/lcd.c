@@ -440,6 +440,26 @@ void LCD_Set_Window(u16 sx, u16 sy, u16 width, u16 height)
     LCD_WR_DATA(lcddev.winwend & 0XFF);
 }
 
+void LCD_Set_Window_xy(u16 sx, u16 sy, u16 ex, u16 ey)
+{
+		lcddev.workw = ex-sx+1;
+		lcddev.workh = ey-sy+1;
+		lcddev.winwsta = sx;
+		lcddev.winhsta = sy;
+		lcddev.winwend = ex;
+    lcddev.winhend = ey;
+
+    LCD_WR_CMD(lcddev.setxcmd);
+    LCD_WR_DATA(sx >> 8);
+    LCD_WR_DATA(sx & 0XFF);
+    LCD_WR_DATA(lcddev.winwend >> 8);
+    LCD_WR_DATA(lcddev.winwend & 0XFF);
+    LCD_WR_CMD(lcddev.setycmd);
+    LCD_WR_DATA(sy >> 8);
+    LCD_WR_DATA(sy & 0XFF);
+    LCD_WR_DATA(lcddev.winwend >> 8);
+    LCD_WR_DATA(lcddev.winwend & 0XFF);
+}
 //初始化lcd
 //该初始化函数可以初始化各种ILI93XX液晶,但是其他函数是基于ILI9320的!!!
 //在其他型号的驱动芯片上没有测试!
@@ -668,78 +688,78 @@ void LCD_Fast_Clear(u16 color)
 	LCD_CS = 1;
 }
 
-void LCD_draw_raw16(u16 sx, u16 sy, u16 width, u16 height, u16* frame)
+//void LCD_draw_raw16(u16 sx, u16 sy, u16 width, u16 height, u16* frame)
+//{
+//	u32 index;
+//	u32 totalpoint;
+//	
+//	LCD_DATA_OUT();
+//	// set position
+//	LCD_Set_Window(sx,sy,width,height);
+//	// fill in bytes
+//	totalpoint = width*height;
+//	
+//	LCD_WriteRAM_Prepare(); 
+//	
+//	LCD_CS = 0;
+//	
+//	for (index = 0; index < totalpoint; index++)
+//	{
+//		DatabusWrite(frame[index]>>8);
+//		LCD_WR = 0;
+//		LCD_WR = 1;
+//		DatabusWrite(frame[index] & 0xFF);
+//		LCD_WR = 0;
+//		LCD_WR = 1;
+
+//	}
+//	
+//	LCD_CS = 1;
+//	
+////	LCD_Set_Window(0,0,lcddev.width,lcddev.height);
+//}
+
+//void LCD_draw_raw8_LE(u16 sx, u16 sy, u16 width, u16 height, u8* frame)
+//{
+//	u32 index;
+//	u32 totalpoint;
+//	
+//	LCD_DATA_OUT();
+//	// set position
+//	LCD_Set_Window(sx,sy,width,height);
+//	// fill in bytes
+//	totalpoint = width*height;
+//	
+//	LCD_WriteRAM_Prepare(); 
+//	
+//	LCD_CS = 0;
+//	
+//	for (index = 0; index < totalpoint*2; index+=2)
+//	{
+//		DatabusWrite(frame[index]);
+//		LCD_WR = 0;
+//		LCD_WR = 1;
+//		DatabusWrite(frame[index+1]);
+//		LCD_WR = 0;
+//		LCD_WR = 1;
+
+//	}
+//	
+//	LCD_CS = 1;
+//	
+////	LCD_Set_Window(0,0,lcddev.width,lcddev.height);
+//}
+
+void LCD_draw_raw8_BE(u16 sx, u16 sy, u16 ex, u16 ey, u8* frame)
 {
 	u32 index;
 	u32 totalpoint;
 	
 	LCD_DATA_OUT();
 	// set position
-	LCD_Set_Window(sx,sy,width,height);
+	LCD_Set_Window_xy(sx,sy,ex,ey);
 	// fill in bytes
-	totalpoint = width*height;
-	
-	LCD_WriteRAM_Prepare(); 
-	
-	LCD_CS = 0;
-	
-	for (index = 0; index < totalpoint; index++)
-	{
-		DatabusWrite(frame[index]>>8);
-		LCD_WR = 0;
-		LCD_WR = 1;
-		DatabusWrite(frame[index] & 0xFF);
-		LCD_WR = 0;
-		LCD_WR = 1;
-
-	}
-	
-	LCD_CS = 1;
-	
-//	LCD_Set_Window(0,0,lcddev.width,lcddev.height);
-}
-
-void LCD_draw_raw8_LE(u16 sx, u16 sy, u16 width, u16 height, u8* frame)
-{
-	u32 index;
-	u32 totalpoint;
-	
-	LCD_DATA_OUT();
-	// set position
-	LCD_Set_Window(sx,sy,width,height);
-	// fill in bytes
-	totalpoint = width*height;
-	
-	LCD_WriteRAM_Prepare(); 
-	
-	LCD_CS = 0;
-	
-	for (index = 0; index < totalpoint*2; index+=2)
-	{
-		DatabusWrite(frame[index]);
-		LCD_WR = 0;
-		LCD_WR = 1;
-		DatabusWrite(frame[index+1]);
-		LCD_WR = 0;
-		LCD_WR = 1;
-
-	}
-	
-	LCD_CS = 1;
-	
-//	LCD_Set_Window(0,0,lcddev.width,lcddev.height);
-}
-
-void LCD_draw_raw8_BE(u16 sx, u16 sy, u16 width, u16 height, u8* frame)
-{
-	u32 index;
-	u32 totalpoint;
-	
-	LCD_DATA_OUT();
-	// set position
-	LCD_Set_Window(sx,sy,width,height);
-	// fill in bytes
-	totalpoint = width*height;
+	totalpoint = (lcddev.workw)*(lcddev.workh);
 	
 	LCD_WriteRAM_Prepare(); 
 	

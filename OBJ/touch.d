@@ -46,12 +46,5 @@
 ..\obj\touch.o: ..\HARDWARE\LCD\lcd.h
 ..\obj\touch.o: D:\_____ENGINEERING_____\stm32\Keil5 MDK\Keil_v5\ARM\ARMCCv506u7\Bin\..\include\stdlib.h
 ..\obj\touch.o: ..\HARDWARE\ADC\adc.h
-..\obj\touch.o: ..\APP\fatsd.h
-..\obj\touch.o: ..\FATFS\exfuns\exfuns.h
-..\obj\touch.o: ..\FATFS\src\ff.h
-..\obj\touch.o: ..\FATFS\src\integer.h
-..\obj\touch.o: ..\FATFS\src\ffconf.h
-..\obj\touch.o: ..\SYSTEM\delay\delay.h
-..\obj\touch.o: ..\MALLOC\malloc.h
-..\obj\touch.o: D:\_____ENGINEERING_____\stm32\Keil5 MDK\Keil_v5\ARM\ARMCCv506u7\Bin\..\include\stdio.h
 ..\obj\touch.o: D:\_____ENGINEERING_____\stm32\Keil5 MDK\Keil_v5\ARM\ARMCCv506u7\Bin\..\include\stdbool.h
+..\obj\touch.o: ..\SYSTEM\delay\delay.h
