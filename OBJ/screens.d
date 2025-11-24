@@ -206,8 +206,4 @@
 ..\obj\screens.o: ..\LVGL\lvgl/src/lv_api_map_v9_2.h
 ..\obj\screens.o: ..\LVGL\lvgl/src/lv_api_map_v9_3.h
 ..\obj\screens.o: ..\APP\ui\images.h
-..\obj\screens.o: ..\APP\ui\fonts.h
-..\obj\screens.o: ..\APP\ui\actions.h
-..\obj\screens.o: ..\APP\ui\vars.h
-..\obj\screens.o: ..\APP\ui\styles.h
 ..\obj\screens.o: ..\APP\ui\ui.h

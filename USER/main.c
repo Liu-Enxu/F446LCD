@@ -21,6 +21,7 @@
 #include "lvgl/lvgl.h"
 #include "lv_port_indev_template.h"
 #include "lv_port_disp_template.h"
+
 #include "ui.h"
 
 //void my_flush_cb(lv_display_t * disp, const lv_area_t * area, uint8_t * px_buf)
@@ -114,23 +115,52 @@ int main(void)
 //  lv_display_set_buffers(disp, buf_1_1, NULL, sizeof(buf_1_1), LV_DISPLAY_RENDER_MODE_PARTIAL); // MUST CALL THIS IN MAIN.C!!! WHY?? --- STACK SIZE NOT ENOUGH!!!!!!!!!!!!!!	
 	lv_port_indev_init();
 	
-//	ui_init();
+	
+//	lv_obj_t *obj = lv_obj_create(0);
+//	lv_obj_set_pos(obj, 0, 0);
+//  lv_obj_set_size(obj, 480, 320);
+//	
+//	lv_obj_t *parent_obj = obj;
 
-	lv_obj_t* switch_obj = lv_switch_create(lv_scr_act());
-	lv_obj_set_size(switch_obj, 100,50);
-	lv_obj_align(switch_obj, LV_ALIGN_LEFT_MID, 0, 0);
+//	lv_obj_t* switch_obj = lv_switch_create(parent_obj);//lv_scr_act()
+//	lv_obj_set_size(switch_obj, 100,50);
+//	lv_obj_align(switch_obj, LV_ALIGN_LEFT_MID, 0, 0);
 
-	lv_obj_t* spinner_obj = lv_spinner_create(lv_scr_act());
-	lv_obj_set_size(spinner_obj, 100, 50);
-	lv_obj_align(spinner_obj, LV_ALIGN_RIGHT_MID,0,0);
+//	lv_obj_t* spinner_obj = lv_spinner_create(parent_obj);
+//	lv_obj_set_size(spinner_obj, 100, 50);
+//	lv_obj_align(spinner_obj, LV_ALIGN_RIGHT_MID,0,0);
+//	
+//	lv_obj_t* button_obj = lv_button_create(parent_obj);
+//	lv_obj_set_pos(button_obj, 335, 240);
+//	lv_obj_set_size(button_obj, 100, 50);
+
+//	static lv_style_t style1;
+//	lv_style_init(&style1);
+//	lv_style_set_bg_color(&style1, lv_color_hex(0xffd2738a));
+//	lv_style_set_text_color(&style1, lv_color_hex(0xffc1b492));
+//	lv_style_set_text_font(&style1, &lv_font_montserrat_22);
+//	lv_style_set_text_align(&style1, LV_TEXT_ALIGN_CENTER);
+//	lv_obj_add_style(button_obj,&style1,LV_PART_MAIN | LV_STATE_DEFAULT);
+//	
+//	lv_obj_t* label_obj = lv_label_create(button_obj);
+//	lv_obj_set_pos(label_obj, 0, 0);
+//	lv_obj_set_size(label_obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+//	lv_obj_set_style_align(label_obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+//	lv_label_set_text(label_obj, "MAIN\nMENU");
+//	
+//	lv_scr_load_anim(obj, LV_SCR_LOAD_ANIM_FADE_IN, 200, 0, false);
 	
 	
 	
+	
+//	create_screen_load();
+	ui_init();
 	printf("loop!\n");	
 	 while(1) 
 	{	
 		lv_timer_handler();
 		delay_ms(5);
+
 	}
 	
 

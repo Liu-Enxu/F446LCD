@@ -190,6 +190,7 @@ static void touchpad_read(lv_indev_t * indev_drv, lv_indev_data_t * data)
     if(touchpad_is_pressed()) {
         touchpad_get_xy(&last_x, &last_y);
         data->state = LV_INDEV_STATE_PRESSED;
+				printf("x: %u, y: %u\n",last_x,last_y);
     }
     else {
         data->state = LV_INDEV_STATE_RELEASED;
@@ -199,8 +200,7 @@ static void touchpad_read(lv_indev_t * indev_drv, lv_indev_data_t * data)
     data->point.x = last_x;
     data->point.y = last_y;
 		
-		
-		for(i=0;i<3;i++){
+		for(i=0;i<2;i++){
 			delay_ms(10);
 		}
 }
@@ -212,8 +212,8 @@ static bool touchpad_is_pressed(void)
 		adcX = Get_Adc(ADC_Channel_4);
 		adcY = Get_Adc(ADC_Channel_1);
 		adcZ = 1023 - (adcY-adcX);
+//		printf("z:%u\n",adcZ);
 		return MIN_PRES<=adcZ && adcZ<=MAX_PRES;
-//    return false;
 }
 
 /*Get the x and y coordinates if the touchpad is pressed*/
@@ -225,7 +225,7 @@ static void touchpad_get_xy(int32_t * x, int32_t * y)
 		disableX();
 
 		enableY();
-		(*y) = (int32_t)(VER_RESOLUTION*(Get_Adc_Average(ADC_Channel_1,5)-100)/(915-100));
+		(*y) = VER_RESOLUTION-(int32_t)(VER_RESOLUTION*(Get_Adc_Average(ADC_Channel_1,5)-100)/(915-100));
 		disableY();
 }
 

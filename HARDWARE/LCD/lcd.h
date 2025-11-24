@@ -208,7 +208,7 @@ void LCD_draw_raw8_BE(u16 sx, u16 sy, u16 ex, u16 ey, u8* frame);
 #define disableY() {GPIOA->MODER&=0XFFFCFFF3;GPIOA->MODER|=0X00010004;PAout(1)=1;PAout(8)=0;}
 #define enableZ() {GPIOA->MODER&=0XFFFCFCF3;GPIOB->MODER&=0XFFCFFFFF;GPIOA->MODER|=0X0001030C;GPIOB->MODER|=0X00100000;PBout(10)=0;PAout(8)=1;}
 
-#define MIN_PRES 300
+#define MIN_PRES 160
 #define MAX_PRES 1000
 
 #endif  

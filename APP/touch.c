@@ -1,8 +1,7 @@
 #include "touch.h"
 #include "delay.h"
 
-u16 adc;
-u16 adcY, adcX, adcZ;
+vu16 adcY, adcX, adcZ; // MUST VU!!!!!!!!!!!!
 
 vu16 mouseX = 0;
 vu16 mouseY = 0;
@@ -11,7 +10,7 @@ vu16 last_mY = 0;
 vu8 mouse_moved = 0;
 
 bool get_touchXY(void){
-	u8 i;
+	u8 i;u8 max = 3;
 	enableZ();
 	adcX = Get_Adc(ADC_Channel_4);
 	adcY = Get_Adc(ADC_Channel_1);
@@ -31,13 +30,13 @@ bool get_touchXY(void){
 			mouseY = lcddev.height-(vu16)((adcY-100)*lcddev.height/(925-100));
 			
 //			LCD_DATA_OUT();
-			for(i=0;i<100;i++){
+			for(i=0;i<max;i++){
 				delay_ms(10);
 			}
 			return true;
 	}
 //	LCD_DATA_OUT();
-	for(i=0;i<100;i++){
+	for(i=0;i<max;i++){
 		delay_ms(10);
 	}
 	return false;

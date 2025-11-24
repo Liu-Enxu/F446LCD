@@ -15,7 +15,7 @@ _lcd_dev lcddev;
 //LCDdataOut_TypeDef LCDdataOut;
 //LCDdataIn_TypeDef LCDdataIn;
 
-//static volatile unsigned long  * LCDdataOut[8] = {
+//static volatile unsigned long* LCDdataOut[8] = {
 //	LCD_D0_o_addr,
 //	LCD_D1_o_addr,
 //	LCD_D2_o_addr,
@@ -25,6 +25,7 @@ _lcd_dev lcddev;
 //	LCD_D6_o_addr,
 //	LCD_D7_o_addr
 //};
+
 //static volatile unsigned long  * LCDdataIn[8] = {
 //	LCD_D0_i_addr,
 //	LCD_D1_i_addr,
@@ -55,12 +56,12 @@ static inline void DatabusWrite(u8 data){
 //	*LCD_D6_o_addr = (data&0X01);data>>=1;
 //	*LCD_D7_o_addr = (data&0X01);
 	
-//	volatile unsigned long ** p = &LCDdataOut.addr_D0;
+//	(volatile unsigned long*)* p = &LCDdataOut.addr_D0;
 //	for(u8 i=0;i<8;i++){
 //		*(p[i]) = (data&0X01);
 //		data>>=1;
 //	}
-	
+
 //	for(u8 i=0;i<8;i++){
 //		*(LCDdataOut[i]) = (data&0X01);
 //		data>>=1;
@@ -1066,16 +1067,6 @@ void LCD_ShowString(u16 x, u16 y, u16 width, u16 height, u8 size, u8 *p)
         p++;
     }
 }
-
-
-
-
-
-
-
-
-
-
 
 
 

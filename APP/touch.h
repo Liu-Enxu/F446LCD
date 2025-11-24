@@ -5,8 +5,7 @@
 #include "adc.h"
 #include <stdbool.h>
 
-extern u16 adc;
-extern u16 adcY, adcX, adcZ;
+extern vu16 adcY, adcX, adcZ; // MUST VU!!!!!!!!!!!!
 
 extern vu16 mouseX;
 extern vu16 mouseY;

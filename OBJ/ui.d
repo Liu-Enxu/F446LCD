@@ -206,5 +206,3 @@
 ..\obj\ui.o: ..\LVGL\lvgl/src/lv_api_map_v9_3.h
 ..\obj\ui.o: ..\APP\ui\screens.h
 ..\obj\ui.o: ..\APP\ui\images.h
-..\obj\ui.o: ..\APP\ui\actions.h
-..\obj\ui.o: ..\APP\ui\vars.h

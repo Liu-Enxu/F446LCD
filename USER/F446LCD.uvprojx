@@ -771,24 +771,24 @@
               <FilePath>..\APP\touch.c</FilePath>
             </File>
             <File>
-              <FileName>images.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\APP\ui\images.c</FilePath>
-            </File>
-            <File>
               <FileName>screens.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\APP\ui\screens.c</FilePath>
             </File>
             <File>
-              <FileName>styles.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\APP\ui\styles.c</FilePath>
-            </File>
-            <File>
               <FileName>ui.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\APP\ui\ui.c</FilePath>
+            </File>
+            <File>
+              <FileName>images.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\APP\ui\images.c</FilePath>
+            </File>
+            <File>
+              <FileName>ui_image_red.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\APP\ui\ui_image_red.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1141,14 +1141,14 @@
               <FilePath>..\LVGL\lvgl\src\font\lv_font_unscii_8.c</FilePath>
             </File>
             <File>
-              <FileName>lv_font_montserrat_24.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\LVGL\lvgl\src\font\lv_font_montserrat_24.c</FilePath>
-            </File>
-            <File>
               <FileName>lv_font_montserrat_48.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\LVGL\lvgl\src\font\lv_font_montserrat_48.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_montserrat_22.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\LVGL\lvgl\src\font\lv_font_montserrat_22.c</FilePath>
             </File>
           </Files>
         </Group>

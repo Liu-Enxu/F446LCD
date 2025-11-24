@@ -157,25 +157,73 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>144</LineNumber>
+          <LineNumber>190</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134264454</Address>
+          <Address>134552054</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\LVGL\lvgl\examples\porting\lv_port_disp_template.c</Filename>
+          <Filename>..\LVGL\lvgl\examples\porting\lv_port_indev_template.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\F446LCD\../LVGL/lvgl/examples/porting/lv_port_disp_template.c\144</Expression>
+          <Expression>\\F446LCD\../LVGL/lvgl/examples/porting/lv_port_indev_template.c\190</Expression>
+        </Bp>
+        <Bp>
+          <Number>1</Number>
+          <Type>0</Type>
+          <LineNumber>214</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134551964</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\LVGL\lvgl\examples\porting\lv_port_indev_template.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\F446LCD\../LVGL/lvgl/examples/porting/lv_port_indev_template.c\214</Expression>
+        </Bp>
+        <Bp>
+          <Number>2</Number>
+          <Type>0</Type>
+          <LineNumber>33</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134262480</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\APP\ui\screens.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\F446LCD\../APP/ui/screens.c\33</Expression>
+        </Bp>
+        <Bp>
+          <Number>3</Number>
+          <Type>0</Type>
+          <LineNumber>35</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>..\APP\ui\screens.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
         <Ww>
           <count>0</count>
           <WinNumber>1</WinNumber>
-          <ItemText>custom_print_cb</ItemText>
+          <ItemText>adcZ,0x0A</ItemText>
         </Ww>
       </WatchWindow1>
       <MemoryWindow1>
@@ -1147,8 +1195,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\APP\ui\images.c</PathWithFileName>
-      <FilenameWithoutPath>images.c</FilenameWithoutPath>
+      <PathWithFileName>..\APP\ui\screens.c</PathWithFileName>
+      <FilenameWithoutPath>screens.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1159,8 +1207,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\APP\ui\screens.c</PathWithFileName>
-      <FilenameWithoutPath>screens.c</FilenameWithoutPath>
+      <PathWithFileName>..\APP\ui\ui.c</PathWithFileName>
+      <FilenameWithoutPath>ui.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1171,8 +1219,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\APP\ui\styles.c</PathWithFileName>
-      <FilenameWithoutPath>styles.c</FilenameWithoutPath>
+      <PathWithFileName>..\APP\ui\images.c</PathWithFileName>
+      <FilenameWithoutPath>images.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1183,8 +1231,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\APP\ui\ui.c</PathWithFileName>
-      <FilenameWithoutPath>ui.c</FilenameWithoutPath>
+      <PathWithFileName>..\APP\ui\ui_image_red.c</PathWithFileName>
+      <FilenameWithoutPath>ui_image_red.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1999,8 +2047,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\LVGL\lvgl\src\font\lv_font_montserrat_24.c</PathWithFileName>
-      <FilenameWithoutPath>lv_font_montserrat_24.c</FilenameWithoutPath>
+      <PathWithFileName>..\LVGL\lvgl\src\font\lv_font_montserrat_48.c</PathWithFileName>
+      <FilenameWithoutPath>lv_font_montserrat_48.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -2011,8 +2059,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\LVGL\lvgl\src\font\lv_font_montserrat_48.c</PathWithFileName>
-      <FilenameWithoutPath>lv_font_montserrat_48.c</FilenameWithoutPath>
+      <PathWithFileName>..\LVGL\lvgl\src\font\lv_font_montserrat_22.c</PathWithFileName>
+      <FilenameWithoutPath>lv_font_montserrat_22.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
