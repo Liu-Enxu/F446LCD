@@ -7,7 +7,7 @@
 extern "C" {
 #endif
 
-extern const lv_img_dsc_t img_red;
+extern const lv_img_dsc_t img_binary;
 
 #ifndef EXT_IMG_DESC_T
 #define EXT_IMG_DESC_T

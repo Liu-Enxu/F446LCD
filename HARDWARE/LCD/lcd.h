@@ -131,6 +131,7 @@ extern u16  BACK_COLOR;     //背景颜色.默认为白色
 #define BROWN           0XBC40  //棕色
 #define BRRED           0XFC07  //棕红色
 #define GRAY            0X8430  //灰色
+#define LAIN						0xd391
 //GUI颜色
 
 #define DARKBLUE        0X01CF  //深蓝色
@@ -177,7 +178,7 @@ void LCD_Set_Window_xy(u16 sx, u16 sy, u16 ex, u16 ey);
 //void LCD_draw_raw16(u16 sx, u16 sy, u16 width, u16 height, u16* frame);
 //void LCD_draw_raw8_LE(u16 sx, u16 sy, u16 width, u16 height, u8* frame);
 void LCD_draw_raw8_BE(u16 sx, u16 sy, u16 ex, u16 ey, u8* frame);
-//void LCD_draw_bw(u16 sx, u16 sy, u16 ex, u16 ey, u8* frame)
+void LCD_draw_binary(u16 sx, u16 sy, u16 ex, u16 ey, u8* bw, u16 color);
 
 ////LCD分辨率设置
 #define HOR_RESOLUTION      480     //LCD水平分辨率

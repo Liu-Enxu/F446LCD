@@ -2,16 +2,14 @@
 
 #include "screens.h"
 #include "images.h"
-//#include "fonts.h"
-//#include "actions.h"
-//#include "vars.h"
-//#include "styles.h"
 #include "ui.h"
-
-#include <string.h>
+//#include "lain_gaze_fix.h"
+//#include "sys.h"
+//#include "lcd.h"
 
 objects_t objects;
-lv_style_t my_style;
+lv_style_t my_style0;
+lv_style_t my_style1;
 
 lv_obj_t *tick_value_change_obj;
 uint32_t active_theme_index = 0;
@@ -19,7 +17,6 @@ uint32_t active_theme_index = 0;
 
 
 void create_screen_load() {
-		static lv_style_t style1;
 		
 		// 	screen obj
     lv_obj_t *obj = lv_obj_create(0);
@@ -27,10 +24,24 @@ void create_screen_load() {
     lv_obj_set_pos(obj, 0, 0);
     lv_obj_set_size(obj, 480, 320);
     lv_obj_clear_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
-
+		
+		// 	label obj
+		lv_obj_t *L_obj = lv_label_create(obj);
+		objects.obj0 = L_obj;
+		lv_obj_set_pos(L_obj, 279, 70);
+		lv_obj_set_size(L_obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+		lv_style_init(&my_style0);
+		lv_style_set_text_font(&my_style0, &lv_font_montserrat_48);
+		lv_style_set_text_color(&my_style0, lv_color_hex(0xffc1b492));
+		lv_style_set_transform_pivot_x(&my_style0, 101);
+		lv_style_set_transform_pivot_y(&my_style0, 52);
+		lv_style_set_transform_rotation(&my_style0, 900);
+		lv_label_set_text(L_obj, "LAIN OS\nv0.2");
+		lv_obj_add_style(L_obj,&my_style0,LV_PART_MAIN | LV_STATE_DEFAULT);
+	
 		//	button obj
 		lv_obj_t *b_obj = lv_button_create(obj);
-		objects.obj0 = b_obj;
+		objects.obj1 = b_obj;
 		lv_obj_set_pos(b_obj , 335, 240);
 		lv_obj_set_size(b_obj , 100, 50);
 		//	apply style to button
@@ -39,23 +50,28 @@ void create_screen_load() {
 //		lv_obj_set_style_text_font(b_obj, &lv_font_montserrat_22,LV_PART_MAIN | LV_STATE_DEFAULT);
 //		lv_obj_set_style_text_align(b_obj, LV_TEXT_ALIGN_CENTER,LV_PART_MAIN | LV_STATE_DEFAULT);
 		
-		lv_style_init(&style1);
-		lv_style_set_bg_color(&style1, lv_color_hex(0xffd2738a));
-		lv_style_set_text_color(&style1, lv_color_hex(0xffc1b492));
-		lv_style_set_text_font(&style1, &lv_font_montserrat_22);
-		lv_style_set_text_align(&style1, LV_TEXT_ALIGN_CENTER);
-		lv_obj_add_style(b_obj,&style1,LV_PART_MAIN | LV_STATE_DEFAULT);
+		lv_style_init(&my_style1);
+		lv_style_set_bg_color(&my_style1, lv_color_hex(0xffd2738a));
+		lv_style_set_text_color(&my_style1, lv_color_hex(0xffc1b492));
+		lv_style_set_text_font(&my_style1, &lv_font_montserrat_22);
+		lv_style_set_text_align(&my_style1, LV_TEXT_ALIGN_CENTER);
+		lv_obj_add_style(b_obj,&my_style1,LV_PART_MAIN | LV_STATE_DEFAULT);
 		
 		//	label obj on button obj
 		lv_obj_t *l_obj = lv_label_create(b_obj);
-		objects.obj1 = l_obj;
+		objects.obj2 = l_obj;
 		lv_obj_set_pos(l_obj, 0, 0);
 		lv_obj_set_size(l_obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
 		lv_obj_set_style_align(l_obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
 		lv_label_set_text(l_obj, "MAIN\nMENU");
 		
-		lv_scr_load_anim(obj, LV_SCR_LOAD_ANIM_FADE_IN, 200, 0, false);
+		// 	img obj
+//		lv_obj_t * img_obj = lv_image_create(obj);
+//		lv_obj_set_pos(obj, 40, 40);
+//		lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+//		lv_image_set_src(obj, &          );
 		
+		lv_scr_load_anim(obj, LV_SCR_LOAD_ANIM_FADE_IN, 200, 0, false);
 }
 
 void create_screen_main() {

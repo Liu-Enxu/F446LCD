@@ -779,9 +779,46 @@ void LCD_draw_raw8_BE(u16 sx, u16 sy, u16 ex, u16 ey, u8* frame)
 	
 	LCD_CS = 1;
 	
-//	LCD_Set_Window(0,0,lcddev.width,lcddev.height);
 }
 
+
+void LCD_draw_binary(u16 sx, u16 sy, u16 width, u16 height, u8* bw, u16 color)
+{
+	u32 index;
+	u32 totalpoint;
+	u16 final_c;
+	
+	LCD_DATA_OUT();
+	// set position
+	LCD_Set_Window(sx,sy,width,height);
+	// fill in bytes
+	totalpoint = (lcddev.workw)*(lcddev.workh);
+	
+	LCD_WriteRAM_Prepare(); 
+	
+	LCD_CS = 0;
+	
+	for (index = 0; index < totalpoint; index++)
+	{
+		if( ((bw[index/8] >> (index%8))) & 0x01){
+			final_c = color;
+		}else{
+			final_c = BLACK;
+		}
+		
+//		delay_ms(50);
+		DatabusWrite(final_c>>8);
+		LCD_WR = 0;
+		LCD_WR = 1;
+		DatabusWrite(final_c & 0xFF);
+		LCD_WR = 0;
+		LCD_WR = 1;
+
+	}
+	
+	LCD_CS = 1;
+	
+}
 //在指定区域内填充指定颜色
 //区域大小:(xend-xsta+1)*(yend-ysta+1)
 //xsta
@@ -929,39 +966,39 @@ void LCD_Draw_Circle(u16 x0, u16 y0, u8 r)
 //mode:叠加方式(1)还是非叠加方式(0)
 void LCD_ShowChar(u16 x, u16 y, u8 num, u8 size, u8 mode)
 {
-    u8 temp, t1, t;
-    u16 y0 = y;
-    u8 csize = (size / 8 + ((size % 8) ? 1 : 0)) * (size / 2);  //得到字体一个字符对应点阵集所占的字节数
-    num = num - ' ';    //得到偏移后的值（ASCII字库是从空格开始取模，所以-' '就是对应字符的字库）
+//    u8 temp, t1, t;
+//    u16 y0 = y;
+//    u8 csize = (size / 8 + ((size % 8) ? 1 : 0)) * (size / 2);  //得到字体一个字符对应点阵集所占的字节数
+//    num = num - ' ';    //得到偏移后的值（ASCII字库是从空格开始取模，所以-' '就是对应字符的字库）
 
-    for (t = 0; t < csize; t++)
-    {
-        if (size == 12)temp = asc2_1206[num][t];        //调用1206字体
-        else if (size == 16)temp = asc2_1608[num][t];   //调用1608字体
-        else if (size == 24)temp = asc2_2412[num][t];   //调用2412字体
-        else return;                                    //没有的字库
+//    for (t = 0; t < csize; t++)
+//    {
+//        if (size == 12)temp = asc2_1206[num][t];        //调用1206字体
+//        else if (size == 16)temp = asc2_1608[num][t];   //调用1608字体
+//        else if (size == 24)temp = asc2_2412[num][t];   //调用2412字体
+//        else return;                                    //没有的字库
 
-        for (t1 = 0; t1 < 8; t1++)
-        {
-            if (temp & 0x80)LCD_Fast_DrawPoint(x, y, POINT_COLOR);
-            else if (mode == 0)LCD_Fast_DrawPoint(x, y, BACK_COLOR);
+//        for (t1 = 0; t1 < 8; t1++)
+//        {
+//            if (temp & 0x80)LCD_Fast_DrawPoint(x, y, POINT_COLOR);
+//            else if (mode == 0)LCD_Fast_DrawPoint(x, y, BACK_COLOR);
 
-            temp <<= 1;
-            y++;
+//            temp <<= 1;
+//            y++;
 
-            if (y >= lcddev.height)return;      //超区域了
+//            if (y >= lcddev.height)return;      //超区域了
 
-            if ((y - y0) == size)
-            {
-                y = y0;
-                x++;
+//            if ((y - y0) == size)
+//            {
+//                y = y0;
+//                x++;
 
-                if (x >= lcddev.width)return;   //超区域了
+//                if (x >= lcddev.width)return;   //超区域了
 
-                break;
-            }
-        }
-    }
+//                break;
+//            }
+//        }
+//    }
 }
 
 

@@ -12,10 +12,12 @@ typedef struct _objects_t {
     lv_obj_t *main;
     lv_obj_t *obj0;
     lv_obj_t *obj1;
+		lv_obj_t *obj2;
 } objects_t;
 
 extern objects_t objects;
-extern lv_style_t my_style;
+extern lv_style_t my_style0;
+extern lv_style_t my_style1;
 
 enum ScreensEnum {
     SCREEN_ID_LOAD = 1,

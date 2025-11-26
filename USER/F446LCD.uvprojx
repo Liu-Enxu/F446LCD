@@ -756,11 +756,6 @@
           <GroupName>APP</GroupName>
           <Files>
             <File>
-              <FileName>app.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\APP\app.c</FilePath>
-            </File>
-            <File>
               <FileName>fatsd.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\APP\fatsd.c</FilePath>
@@ -779,16 +774,6 @@
               <FileName>ui.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\APP\ui\ui.c</FilePath>
-            </File>
-            <File>
-              <FileName>images.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\APP\ui\images.c</FilePath>
-            </File>
-            <File>
-              <FileName>ui_image_red.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\APP\ui\ui_image_red.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1116,29 +1101,9 @@
               <FilePath>..\LVGL\lvgl\src\font\lv_font.c</FilePath>
             </File>
             <File>
-              <FileName>lv_font_dejavu_16_persian_hebrew.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\LVGL\lvgl\src\font\lv_font_dejavu_16_persian_hebrew.c</FilePath>
-            </File>
-            <File>
               <FileName>lv_font_fmt_txt.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\LVGL\lvgl\src\font\lv_font_fmt_txt.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_montserrat_8.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\LVGL\lvgl\src\font\lv_font_montserrat_8.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_source_han_sans_sc_14_cjk.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\LVGL\lvgl\src\font\lv_font_source_han_sans_sc_14_cjk.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_unscii_8.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\LVGL\lvgl\src\font\lv_font_unscii_8.c</FilePath>
             </File>
             <File>
               <FileName>lv_font_montserrat_48.c</FileName>

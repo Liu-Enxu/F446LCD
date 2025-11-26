@@ -24,67 +24,6 @@
 
 #include "ui.h"
 
-//void my_flush_cb(lv_display_t * disp, const lv_area_t * area, uint8_t * px_buf)
-//{
-//    /* Show the rendered image on the display */
-//        /*The most simple case (but also the slowest) to put all pixels to the screen one-by-one*/
-//				printf("Flush: x1=%d y1=%d x2=%d y2=%d\n", 
-//           area->x1, area->y1, area->x2, area->y2);
-//        int32_t x;
-//        int32_t y;
-//        for(y = area->y1; y <= area->y2; y++) {
-//            for(x = area->x1; x <= area->x2; x++) {
-//                /*Put a pixel to the display. For example:*/
-//                LCD_Fast_DrawPoint(x, y, (u16)(*(px_buf+1)<<8|*px_buf));
-//                px_buf+=2;
-//            }
-//        }
-
-//    /* Indicate that the buffer is available.
-//     * If DMA were used, call in the DMA complete interrupt. */
-//    lv_display_flush_ready(disp);
-//}
-
-//int main(void)
-//{
-//		u8 i;
-//		delay_init();NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);	 //设置NVIC中断分组2:2位抢占优先级，2位响应优先级
-//		uart_init(115200);TIM2_Int_Init(999,89);printf("begin!!\n");
-//		LCD_Init();
-//		
-//		lv_log_register_print_cb(my_log_cb);
-//    lv_init();
-//		
-//		/* physical display */
-//    lv_display_t * display = lv_display_create(480, 320);
-
-//    /* LVGL will render to this 1/10 screen sized buffer for 2 bytes/pixel */
-//    static uint8_t buf[32*1024];
-//    lv_display_set_buffers(display, buf, NULL, sizeof(buf), LV_DISPLAY_RENDER_MODE_PARTIAL);
-
-//    /* This callback will display the rendered image */
-//    lv_display_set_flush_cb(display, my_flush_cb);
-//		
-//		// create style
-//		static lv_style_t st;
-//		lv_style_init(&st);
-//		//lv_obj_add_style(label,&st,LV_STATE_DEFAULT);
-//		
-//    /* Create widgets */
-//    lv_obj_t * label = lv_label_create(lv_screen_active());
-//    lv_label_set_text(label, "Hello LVGL!");
-//		lv_obj_align(label, LV_ALIGN_CENTER, 0, 0);
-//	
-//		ui_init();
-//		/* Make LVGL periodically execute its tasks */
-//    while(1) {
-//      lv_timer_handler();
-//			delay_ms(5);
-//    }
-//}
-
-
-
 int main(void)
 {	  
 //		u16 t; //vu8 pressed;
@@ -115,52 +54,14 @@ int main(void)
 //  lv_display_set_buffers(disp, buf_1_1, NULL, sizeof(buf_1_1), LV_DISPLAY_RENDER_MODE_PARTIAL); // MUST CALL THIS IN MAIN.C!!! WHY?? --- STACK SIZE NOT ENOUGH!!!!!!!!!!!!!!	
 	lv_port_indev_init();
 	
+	create_screen_load();
+//	ui_init();	
 	
-//	lv_obj_t *obj = lv_obj_create(0);
-//	lv_obj_set_pos(obj, 0, 0);
-//  lv_obj_set_size(obj, 480, 320);
-//	
-//	lv_obj_t *parent_obj = obj;
-
-//	lv_obj_t* switch_obj = lv_switch_create(parent_obj);//lv_scr_act()
-//	lv_obj_set_size(switch_obj, 100,50);
-//	lv_obj_align(switch_obj, LV_ALIGN_LEFT_MID, 0, 0);
-
-//	lv_obj_t* spinner_obj = lv_spinner_create(parent_obj);
-//	lv_obj_set_size(spinner_obj, 100, 50);
-//	lv_obj_align(spinner_obj, LV_ALIGN_RIGHT_MID,0,0);
-//	
-//	lv_obj_t* button_obj = lv_button_create(parent_obj);
-//	lv_obj_set_pos(button_obj, 335, 240);
-//	lv_obj_set_size(button_obj, 100, 50);
-
-//	static lv_style_t style1;
-//	lv_style_init(&style1);
-//	lv_style_set_bg_color(&style1, lv_color_hex(0xffd2738a));
-//	lv_style_set_text_color(&style1, lv_color_hex(0xffc1b492));
-//	lv_style_set_text_font(&style1, &lv_font_montserrat_22);
-//	lv_style_set_text_align(&style1, LV_TEXT_ALIGN_CENTER);
-//	lv_obj_add_style(button_obj,&style1,LV_PART_MAIN | LV_STATE_DEFAULT);
-//	
-//	lv_obj_t* label_obj = lv_label_create(button_obj);
-//	lv_obj_set_pos(label_obj, 0, 0);
-//	lv_obj_set_size(label_obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-//	lv_obj_set_style_align(label_obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
-//	lv_label_set_text(label_obj, "MAIN\nMENU");
-//	
-//	lv_scr_load_anim(obj, LV_SCR_LOAD_ANIM_FADE_IN, 200, 0, false);
-	
-	
-	
-	
-//	create_screen_load();
-	ui_init();
 	printf("loop!\n");	
 	 while(1) 
 	{	
 		lv_timer_handler();
 		delay_ms(5);
-
 	}
 	
 
