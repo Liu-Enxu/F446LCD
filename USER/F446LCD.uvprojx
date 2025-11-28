@@ -340,7 +340,7 @@
               <MiscControls>--info sizes --info totals --info stack</MiscControls>
               <Define>STM32F446xx,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\CORE;..\USER;..\STM32F4xx_FWLib\inc;..\HARDWARE\LED;..\HARDWARE\KEY;..\HARDWARE\LCD;..\HARDWARE\TIMER;..\HARDWARE\SPI;..\HARDWARE\SD;..\HARDWARE\ADC;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\MALLOC;..\FATFS\exfuns;..\FATFS\src;..\FATFS\src\option;..\PICS;..\APP;..\APP\ui;..\LVGL;..\LVGL\lvgl;..\LVGL\lvgl\src;..\LVGL\lvgl\src\core;..\LVGL\lvgl\src\display;..\LVGL\lvgl\src\draw;..\LVGL\lvgl\src\draw\convert;..\LVGL\lvgl\src\draw\sw;..\LVGL\lvgl\src\draw\sw\blend;..\LVGL\lvgl\src\font;..\LVGL\lvgl\src\indev;..\LVGL\lvgl\src\layouts;..\LVGL\lvgl\src\layouts\flex;..\LVGL\lvgl\src\layouts\grid;..\LVGL\lvgl\src\libs;..\LVGL\lvgl\src\misc;..\LVGL\lvgl\src\misc\cache;..\LVGL\lvgl\src\misc\cache\class;..\LVGL\lvgl\src\misc\cache\instance;..\LVGL\lvgl\src\osal;..\LVGL\lvgl\src\others;..\LVGL\lvgl\src\stdlib;..\LVGL\lvgl\src\stdlib\builtin;..\LVGL\lvgl\src\themes;..\LVGL\lvgl\src\themes\default;..\LVGL\lvgl\src\themes\mono;..\LVGL\lvgl\src\themes\simple;..\LVGL\lvgl\src\tick;..\LVGL\lvgl\src\widgets;..\LVGL\lvgl\src\widgets\label;..\LVGL\lvgl\src\widgets\span;..\LVGL\lvgl\examples\porting</IncludePath>
+              <IncludePath>..\CORE;..\USER;..\STM32F4xx_FWLib\inc;..\HARDWARE\LED;..\HARDWARE\KEY;..\HARDWARE\LCD;..\HARDWARE\TIMER;..\HARDWARE\SPI;..\HARDWARE\SD;..\HARDWARE\ADC;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\MALLOC;..\FATFS\exfuns;..\FATFS\src;..\FATFS\src\option;..\PICS;..\APP;..\APP\ui;..\LVGL;..\LVGL\lvgl;..\LVGL\lvgl\src;..\LVGL\lvgl\src\core;..\LVGL\lvgl\src\display;..\LVGL\lvgl\src\draw;..\LVGL\lvgl\src\draw\convert;..\LVGL\lvgl\src\draw\sw;..\LVGL\lvgl\src\draw\sw\blend;..\LVGL\lvgl\src\font;..\LVGL\lvgl\src\indev;..\LVGL\lvgl\src\layouts;..\LVGL\lvgl\src\layouts\flex;..\LVGL\lvgl\src\layouts\grid;..\LVGL\lvgl\src\libs;..\LVGL\lvgl\src\misc;..\LVGL\lvgl\src\misc\cache;..\LVGL\lvgl\src\misc\cache\class;..\LVGL\lvgl\src\misc\cache\instance;..\LVGL\lvgl\src\osal;..\LVGL\lvgl\src\others;..\LVGL\lvgl\src\stdlib;..\LVGL\lvgl\src\stdlib\builtin;..\LVGL\lvgl\src\themes;..\LVGL\lvgl\src\themes\default;..\LVGL\lvgl\src\themes\mono;..\LVGL\lvgl\src\themes\simple;..\LVGL\lvgl\src\tick;..\LVGL\lvgl\src\widgets;..\LVGL\lvgl\src\widgets\label;..\LVGL\lvgl\src\widgets\span;..\LVGL\lvgl\examples\porting;..\FREERTOS\FreeRTOS-Kernel\include;..\FREERTOS\FreeRTOS-Kernel\portable\RVDS\ARM_CM4F</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1624,6 +1624,41 @@
               <FileName>lv_objx_templ.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\LVGL\lvgl\src\widgets\objx_templ\lv_objx_templ.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>FREERTOS</GroupName>
+          <Files>
+            <File>
+              <FileName>list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\FREERTOS\FreeRTOS-Kernel\list.c</FilePath>
+            </File>
+            <File>
+              <FileName>queue.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\FREERTOS\FreeRTOS-Kernel\queue.c</FilePath>
+            </File>
+            <File>
+              <FileName>tasks.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\FREERTOS\FreeRTOS-Kernel\tasks.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>FREERTOS/portable</GroupName>
+          <Files>
+            <File>
+              <FileName>heap_4.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\FREERTOS\FreeRTOS-Kernel\portable\MemMang\heap_4.c</FilePath>
+            </File>
+            <File>
+              <FileName>port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\FREERTOS\FreeRTOS-Kernel\portable\RVDS\ARM_CM4F\port.c</FilePath>
             </File>
           </Files>
         </Group>

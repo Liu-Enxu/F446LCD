@@ -215,6 +215,11 @@
 "..\obj\lv_spinner.o"
 "..\obj\lv_image.o"
 "..\obj\lv_objx_templ.o"
+"..\obj\list.o"
+"..\obj\queue.o"
+"..\obj\tasks.o"
+"..\obj\heap_4.o"
+"..\obj\port.o"
 --strict --scatter "..\OBJ\F446LCD.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
