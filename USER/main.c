@@ -19,10 +19,11 @@
 #include "timer.h"
 #include "touch.h"
 #include "lvgl/lvgl.h"
-#include "lv_port_indev_template.h"
 #include "lv_port_disp_template.h"
+#include "lv_port_indev_template.h"
 
-#include "ui.h"
+#include "screens.h"
+
 
 int main(void)
 {	  

@@ -1,30 +1,17 @@
 ..\obj\lv_bidi.o: ..\LVGL\lvgl\src\misc\lv_bidi.c
-..\obj\lv_bidi.o: ..\LVGL\lvgl\src\misc\lv_bidi_private.h
+..\obj\lv_bidi.o: D:\_____ENGINEERING_____\stm32\Keil5 MDK\Keil_v5\ARM\ARMCCv506u7\Bin\..\include\stddef.h
 ..\obj\lv_bidi.o: ..\LVGL\lvgl\src\misc\lv_bidi.h
 ..\obj\lv_bidi.o: ..\LVGL\lvgl\src\misc\../lv_conf_internal.h
+..\obj\lv_bidi.o: D:\_____ENGINEERING_____\stm32\Keil5 MDK\Keil_v5\ARM\ARMCCv506u7\Bin\..\include\stdint.h
 ..\obj\lv_bidi.o: ..\LVGL\lvgl\src\misc\../lv_conf_kconfig.h
 ..\obj\lv_bidi.o: ..\LVGL\lvgl\src\misc\../../../lv_conf.h
-..\obj\lv_bidi.o: ..\LVGL\lvgl\src\misc\lv_types.h
-..\obj\lv_bidi.o: D:\_____ENGINEERING_____\stm32\Keil5 MDK\Keil_v5\ARM\ARMCCv506u7\Bin\..\include\stdint.h
-..\obj\lv_bidi.o: D:\_____ENGINEERING_____\stm32\Keil5 MDK\Keil_v5\ARM\ARMCCv506u7\Bin\..\include\stddef.h
 ..\obj\lv_bidi.o: D:\_____ENGINEERING_____\stm32\Keil5 MDK\Keil_v5\ARM\ARMCCv506u7\Bin\..\include\stdbool.h
-..\obj\lv_bidi.o: D:\_____ENGINEERING_____\stm32\Keil5 MDK\Keil_v5\ARM\ARMCCv506u7\Bin\..\include\inttypes.h
-..\obj\lv_bidi.o: D:\_____ENGINEERING_____\stm32\Keil5 MDK\Keil_v5\ARM\ARMCCv506u7\Bin\..\include\limits.h
+..\obj\lv_bidi.o: ..\LVGL\lvgl\src\misc\lv_txt.h
 ..\obj\lv_bidi.o: D:\_____ENGINEERING_____\stm32\Keil5 MDK\Keil_v5\ARM\ARMCCv506u7\Bin\..\include\stdarg.h
-..\obj\lv_bidi.o: ..\LVGL\lvgl\src\misc\lv_text.h
 ..\obj\lv_bidi.o: ..\LVGL\lvgl\src\misc\lv_area.h
-..\obj\lv_bidi.o: ..\LVGL\lvgl\src\misc\lv_math.h
 ..\obj\lv_bidi.o: ..\LVGL\lvgl\src\misc\../font/lv_font.h
 ..\obj\lv_bidi.o: ..\LVGL\lvgl\src\misc\../font/lv_symbol_def.h
-..\obj\lv_bidi.o: ..\LVGL\lvgl\src\misc\../font/../draw/lv_draw_buf.h
-..\obj\lv_bidi.o: ..\LVGL\lvgl\src\misc\../font/../draw/../misc/lv_color.h
-..\obj\lv_bidi.o: ..\LVGL\lvgl\src\misc\../font/../draw/../misc/lv_assert.h
-..\obj\lv_bidi.o: ..\LVGL\lvgl\src\misc\../font/../draw/../misc/lv_log.h
-..\obj\lv_bidi.o: ..\LVGL\lvgl\src\misc\../font/../draw/../misc/../stdlib/lv_mem.h
-..\obj\lv_bidi.o: ..\LVGL\lvgl\src\misc\../font/../draw/../misc/../stdlib/lv_string.h
-..\obj\lv_bidi.o: ..\LVGL\lvgl\src\misc\../font/../draw/../misc/lv_palette.h
-..\obj\lv_bidi.o: ..\LVGL\lvgl\src\misc\../font/../draw/../misc/lv_color.h
-..\obj\lv_bidi.o: ..\LVGL\lvgl\src\misc\../font/../draw/../misc/lv_color_op.h
-..\obj\lv_bidi.o: ..\LVGL\lvgl\src\misc\../font/../draw/lv_image_dsc.h
-..\obj\lv_bidi.o: ..\LVGL\lvgl\src\misc\../stdlib/lv_sprintf.h
-..\obj\lv_bidi.o: ..\LVGL\lvgl\src\misc\lv_text_private.h
+..\obj\lv_bidi.o: ..\LVGL\lvgl\src\misc\lv_printf.h
+..\obj\lv_bidi.o: ..\LVGL\lvgl\src\misc\lv_types.h
+..\obj\lv_bidi.o: ..\LVGL\lvgl\src\misc\../misc/lv_mem.h
+..\obj\lv_bidi.o: D:\_____ENGINEERING_____\stm32\Keil5 MDK\Keil_v5\ARM\ARMCCv506u7\Bin\..\include\string.h

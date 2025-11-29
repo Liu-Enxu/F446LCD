@@ -175,8 +175,7 @@ void LCD_Display_Dir(u8 dir);                               //设置屏幕显示方向
 void LCD_Set_Window(u16 sx, u16 sy, u16 width, u16 height); //设置窗口//LCD分辨率设置
 void LCD_Set_Window_xy(u16 sx, u16 sy, u16 ex, u16 ey); 
 
-//void LCD_draw_raw16(u16 sx, u16 sy, u16 width, u16 height, u16* frame);
-//void LCD_draw_raw8_LE(u16 sx, u16 sy, u16 width, u16 height, u8* frame);
+void LCD_draw_raw16_BE(u16 sx, u16 sy, u16 ex, u16 ey, u16* frame);
 void LCD_draw_raw8_BE(u16 sx, u16 sy, u16 ex, u16 ey, u8* frame);
 void LCD_draw_binary(u16 sx, u16 sy, u16 ex, u16 ey, u8* bw, u16 color);
 

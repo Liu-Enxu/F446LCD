@@ -689,36 +689,6 @@ void LCD_Fast_Clear(u16 color)
 	LCD_CS = 1;
 }
 
-//void LCD_draw_raw16(u16 sx, u16 sy, u16 width, u16 height, u16* frame)
-//{
-//	u32 index;
-//	u32 totalpoint;
-//	
-//	LCD_DATA_OUT();
-//	// set position
-//	LCD_Set_Window(sx,sy,width,height);
-//	// fill in bytes
-//	totalpoint = width*height;
-//	
-//	LCD_WriteRAM_Prepare(); 
-//	
-//	LCD_CS = 0;
-//	
-//	for (index = 0; index < totalpoint; index++)
-//	{
-//		DatabusWrite(frame[index]>>8);
-//		LCD_WR = 0;
-//		LCD_WR = 1;
-//		DatabusWrite(frame[index] & 0xFF);
-//		LCD_WR = 0;
-//		LCD_WR = 1;
-
-//	}
-//	
-//	LCD_CS = 1;
-//	
-////	LCD_Set_Window(0,0,lcddev.width,lcddev.height);
-//}
 
 //void LCD_draw_raw8_LE(u16 sx, u16 sy, u16 width, u16 height, u8* frame)
 //{
@@ -781,6 +751,35 @@ void LCD_draw_raw8_BE(u16 sx, u16 sy, u16 ex, u16 ey, u8* frame)
 	
 }
 
+void LCD_draw_raw16_BE(u16 sx, u16 sy, u16 ex, u16 ey, u16* frame)
+{
+	u32 index;
+	u32 totalpoint;
+	
+	LCD_DATA_OUT();
+	// set position
+	LCD_Set_Window_xy(sx,sy,ex,ey);
+	// fill in bytes
+	totalpoint = (lcddev.workw)*(lcddev.workh);
+	
+	LCD_WriteRAM_Prepare(); 
+	
+	LCD_CS = 0;
+	
+	for (index = 0; index < totalpoint; index++)
+	{
+		DatabusWrite(frame[index] >> 8);
+		LCD_WR = 0;
+		LCD_WR = 1;
+		DatabusWrite(frame[index] & 0xFF);
+		LCD_WR = 0;
+		LCD_WR = 1;
+
+	}
+	
+	LCD_CS = 1;
+	
+}
 
 void LCD_draw_binary(u16 sx, u16 sy, u16 width, u16 height, u8* bw, u16 color)
 {

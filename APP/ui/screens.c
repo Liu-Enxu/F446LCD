@@ -28,21 +28,21 @@ void create_screen_load() {
 		// 	label obj
 		lv_obj_t *L_obj = lv_label_create(obj);
 		objects.obj0 = L_obj;
-		lv_obj_set_pos(L_obj, 279, 70);
+		lv_obj_set_pos(L_obj, 294, 75);
 		lv_obj_set_size(L_obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
 		lv_style_init(&my_style0);
 		lv_style_set_text_font(&my_style0, &lv_font_montserrat_48);
 		lv_style_set_text_color(&my_style0, lv_color_hex(0xffc1b492));
 		lv_style_set_transform_pivot_x(&my_style0, 101);
 		lv_style_set_transform_pivot_y(&my_style0, 52);
-		lv_style_set_transform_rotation(&my_style0, 900);
+		lv_style_set_transform_angle(&my_style0, 900);
 		lv_label_set_text(L_obj, "LAIN OS\nv0.2");
 		lv_obj_add_style(L_obj,&my_style0,LV_PART_MAIN | LV_STATE_DEFAULT);
 	
 		//	button obj
-		lv_obj_t *b_obj = lv_button_create(obj);
+		lv_obj_t *b_obj = lv_btn_create(obj);
 		objects.obj1 = b_obj;
-		lv_obj_set_pos(b_obj , 335, 240);
+		lv_obj_set_pos(b_obj , 345, 250);
 		lv_obj_set_size(b_obj , 100, 50);
 		//	apply style to button
 //		lv_obj_set_style_bg_color(b_obj, lv_color_hex(0xffd2738a),LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -74,22 +74,22 @@ void create_screen_load() {
 		lv_scr_load_anim(obj, LV_SCR_LOAD_ANIM_FADE_IN, 200, 0, false);
 }
 
-void create_screen_main() {
-    lv_obj_t *obj = lv_obj_create(0);
-    objects.main = obj;
-    lv_obj_set_pos(obj, 0, 0);
-    lv_obj_set_size(obj, 480, 320);
-    {
-        lv_obj_t *parent_obj = obj;
-        {
-            lv_obj_t *obj = lv_spinner_create(parent_obj);
-            lv_obj_set_pos(obj, 200, 120);
-            lv_obj_set_size(obj, 80, 80);
-            lv_spinner_set_anim_params(obj, 1000, 60);
-        }
-    }
-    
-}
+//void create_screen_main() {
+//    lv_obj_t *obj = lv_obj_create(0);
+//    objects.main = obj;
+//    lv_obj_set_pos(obj, 0, 0);
+//    lv_obj_set_size(obj, 480, 320);
+//    {
+//        lv_obj_t *parent_obj = obj;
+//        {
+//            lv_obj_t *obj = lv_spinner_create(parent_obj);
+//            lv_obj_set_pos(obj, 200, 120);
+//            lv_obj_set_size(obj, 80, 80);
+//            lv_spinner_set_anim_params(obj, 1000, 60);
+//        }
+//    }
+//    
+//}
 
 void create_screens() {
     lv_disp_t *dispp = lv_disp_get_default();

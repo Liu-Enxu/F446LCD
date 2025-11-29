@@ -139,7 +139,7 @@ void USART2_IRQHandler(void)                	//串口1中断服务程序
 #endif
 }
 
-void my_log_cb(lv_log_level_t level, const char * buf)
+void my_log_cb(const char * buf)
 {
 	printf("%s",buf);
 }
