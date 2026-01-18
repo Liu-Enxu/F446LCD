@@ -2,7 +2,8 @@
 ////////////////////////////////////////////////////////////////////////////////// 	 
 //如果需要使用OS,则包括下面的头文件即可.
 #if SYSTEM_SUPPORT_OS
-#include "includes.h"					//ucos 使用	  
+#include "FreeRTOS.h"					
+#include "task.h"
 #endif
 //////////////////////////////////////////////////////////////////////////////////	 
 //本程序只供学习使用，未经作者许可，不得用于其它任何用途
@@ -74,49 +75,54 @@ static u16 fac_ms=0;							//ms延时倍乘数,在ucos下,代表每个节拍的ms数
 #endif
 
 
-//us级延时时,关闭任务调度(防止打断us级延迟)
-void delay_osschedlock(void)
-{
-#ifdef CPU_CFG_CRITICAL_METHOD   				//使用UCOSIII
-	OS_ERR err; 
-	OSSchedLock(&err);							//UCOSIII的方式,禁止调度，防止打断us延时
-#else											//否则UCOSII
-	OSSchedLock();								//UCOSII的方式,禁止调度，防止打断us延时
-#endif
-}
+////us级延时时,关闭任务调度(防止打断us级延迟)
+//void delay_osschedlock(void)
+//{
+//#ifdef CPU_CFG_CRITICAL_METHOD   				//使用UCOSIII
+//	OS_ERR err; 
+//	OSSchedLock(&err);							//UCOSIII的方式,禁止调度，防止打断us延时
+//#else											//否则UCOSII
+//	OSSchedLock();								//UCOSII的方式,禁止调度，防止打断us延时
+//#endif
+//}
 
-//us级延时时,恢复任务调度
-void delay_osschedunlock(void)
-{	
-#ifdef CPU_CFG_CRITICAL_METHOD   				//使用UCOSIII
-	OS_ERR err; 
-	OSSchedUnlock(&err);						//UCOSIII的方式,恢复调度
-#else											//否则UCOSII
-	OSSchedUnlock();							//UCOSII的方式,恢复调度
-#endif
-}
+////us级延时时,恢复任务调度
+//void delay_osschedunlock(void)
+//{	
+//#ifdef CPU_CFG_CRITICAL_METHOD   				//使用UCOSIII
+//	OS_ERR err; 
+//	OSSchedUnlock(&err);						//UCOSIII的方式,恢复调度
+//#else											//否则UCOSII
+//	OSSchedUnlock();							//UCOSII的方式,恢复调度
+//#endif
+//}
 
-//调用OS自带的延时函数延时
-//ticks:延时的节拍数
-void delay_ostimedly(u32 ticks)
-{
-#ifdef CPU_CFG_CRITICAL_METHOD
-	OS_ERR err; 
-	OSTimeDly(ticks,OS_OPT_TIME_PERIODIC,&err);	//UCOSIII延时采用周期模式
-#else
-	OSTimeDly(ticks);							//UCOSII延时
-#endif 
-}
+////调用OS自带的延时函数延时
+////ticks:延时的节拍数
+//void delay_ostimedly(u32 ticks)
+//{
+//#ifdef CPU_CFG_CRITICAL_METHOD
+//	OS_ERR err; 
+//	OSTimeDly(ticks,OS_OPT_TIME_PERIODIC,&err);	//UCOSIII延时采用周期模式
+//#else
+//	OSTimeDly(ticks);							//UCOSII延时
+//#endif 
+//}
  
 //systick中断服务函数,使用ucos时用到
+extern void xPortSysTickHandler(void);
 void SysTick_Handler(void)
 {	
-	if(delay_osrunning==1)						//OS开始跑了,才执行正常的调度处理
-	{
-		OSIntEnter();							//进入中断
-		OSTimeTick();       					//调用ucos的时钟服务程序               
-		OSIntExit();       	 					//触发任务切换软中断
-	}
+//	if(delay_osrunning==1)						//OS开始跑了,才执行正常的调度处理
+//	{
+//		OSIntEnter();							//进入中断
+//		OSTimeTick();       					//调用ucos的时钟服务程序               
+//		OSIntExit();       	 					//触发任务切换软中断
+//	}
+	if(xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED)//系统已经运行 
+	{ 
+			xPortSysTickHandler();  
+	} 
 }
 #endif
 
@@ -130,13 +136,13 @@ void delay_init()
 #if SYSTEM_SUPPORT_OS  							//如果需要支持OS.
 	u32 reload;
 #endif
-	SysTick_CLKSourceConfig(SysTick_CLKSource_HCLK_Div8);	//选择外部时钟  HCLK/8
-	fac_us=SystemCoreClock/8000000;				//为系统时钟的1/8  
+	SysTick_CLKSourceConfig(SysTick_CLKSource_HCLK);	//选择外部时钟  HCLK
+	fac_us=SystemCoreClock/1000000;				//tick per us:tick/us=(10e-6)*tick/s-->SystemCoreClock
 #if SYSTEM_SUPPORT_OS  							//如果需要支持OS.
-	reload=SystemCoreClock/8000000;				//每秒钟的计数次数 单位为K	   
-	reload*=1000000/delay_ostickspersec;		//根据delay_ostickspersec设定溢出时间
-												//reload为24位寄存器,最大值:16777216,在72M下,约合1.86s左右	
-	fac_ms=1000/delay_ostickspersec;			//代表OS可以延时的最少单位	   
+	reload=SystemCoreClock/1000000;				//每秒钟的计数次数 单位为K	   
+	reload*=1000000/configTICK_RATE_HZ;		//根据delay_ostickspersec设定溢出时间
+																				//reload为24位寄存器,最大值:16777216,在72M下,约合1.86s左右	
+	fac_ms=1000/configTICK_RATE_HZ;			//代表OS可以延时的最少单位	   
 
 	SysTick->CTRL|=SysTick_CTRL_TICKINT_Msk;   	//开启SYSTICK中断
 	SysTick->LOAD=reload; 						//每1/delay_ostickspersec秒中断一次	
@@ -156,8 +162,8 @@ void delay_us(u32 nus)
 	u32 told,tnow,tcnt=0;
 	u32 reload=SysTick->LOAD;					//LOAD的值	    	 
 	ticks=nus*fac_us; 							//需要的节拍数	  		 
-	tcnt=0;
-	delay_osschedlock();						//阻止OS调度，防止打断us延时
+//	tcnt=0;
+//	delay_osschedlock();						//阻止OS调度，防止打断us延时
 	told=SysTick->VAL;        					//刚进入时的计数器值
 	while(1)
 	{
@@ -170,22 +176,42 @@ void delay_us(u32 nus)
 			if(tcnt>=ticks)break;				//时间超过/等于要延迟的时间,则退出.
 		}  
 	};
-	delay_osschedunlock();						//恢复OS调度									    
+//	delay_osschedunlock();						//恢复OS调度									    
 }
 //延时nms
 //nms:要延时的ms数
-void delay_ms(u16 nms)
+void delay_ms(u32 nms)
 {	
-	if(delay_osrunning&&delay_osintnesting==0)	//如果OS已经在跑了,并且不是在中断里面(中断里面不能任务调度)	    
-	{		 
-		if(nms>=fac_ms)							//延时的时间大于OS的最少时间周期 
-		{ 
-   			delay_ostimedly(nms/fac_ms);		//OS延时
-		}
-		nms%=fac_ms;							//OS已经无法提供这么小的延时了,采用普通方式延时    
-	}
-	delay_us((u32)(nms*1000));					//普通方式延时  
+//	if(delay_osrunning&&delay_osintnesting==0)	//如果OS已经在跑了,并且不是在中断里面(中断里面不能任务调度)	    
+//	{		 
+//		if(nms>=fac_ms)							//延时的时间大于OS的最少时间周期 
+//		{ 
+//   			delay_ostimedly(nms/fac_ms);		//OS延时
+//		}
+//		nms%=fac_ms;							//OS已经无法提供这么小的延时了,采用普通方式延时    
+//	}
+//	delay_us((u32)(nms*1000));					//普通方式延时  
+	
+	if(xTaskGetSchedulerState()!=taskSCHEDULER_NOT_STARTED)//系统已经运行 
+	{   
+		if(nms>=fac_ms)     //延时的时间大于OS的最少时间周期  
+		{  
+				vTaskDelay(nms/fac_ms);   //FreeRTOS延时 
+		} 
+		nms%=fac_ms;     //OS已经无法提供这么小的延时了, 
+		//采用普通方式延时     
+	} 
+	delay_us((u32)(nms*1000));    //普通方式延时
 }
+
+//延时nms,不会引起任务调度 
+//nms:要延时的ms数 
+void delay_xms(u32 nms) 
+{ 
+ u32 i; 
+ for(i=0;i<nms;i++) delay_us(1000); 
+} 
+
 #else //不用OS时
 //延时nus
 //nus为要延时的us数.		    								   

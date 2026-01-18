@@ -174,3 +174,10 @@
 ..\obj\usart.o: ..\LVGL\lvgl/src/extra/widgets/imgbtn/lv_imgbtn.h
 ..\obj\usart.o: ..\LVGL\lvgl/src/extra/widgets/span/lv_span.h
 ..\obj\usart.o: ..\HARDWARE\LED\led.h
+..\obj\usart.o: ..\FREERTOS\include\FreeRTOS.h
+..\obj\usart.o: ..\FREERTOS\FreeRTOSConfig.h
+..\obj\usart.o: ..\FREERTOS\include\projdefs.h
+..\obj\usart.o: ..\FREERTOS\include\portable.h
+..\obj\usart.o: ..\FREERTOS\include\deprecated_definitions.h
+..\obj\usart.o: ..\FREERTOS\portable\RVDS\ARM_CM4F\portmacro.h
+..\obj\usart.o: ..\FREERTOS\include\mpu_wrappers.h

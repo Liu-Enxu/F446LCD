@@ -48,7 +48,7 @@ void TIM2_IRQHandler(void)   //TIM2中断
 	{
 		TIM_ClearITPendingBit(TIM2, TIM_IT_Update  );  //清除TIMx的中断待处理位:TIM 中断源 
 //		UPDATE_CNT++;
-		lv_tick_inc(1);
+//		lv_tick_inc(1);
 		
 	}
 }

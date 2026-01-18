@@ -11,8 +11,8 @@ objects_t objects;
 lv_style_t my_style0;
 lv_style_t my_style1;
 
-lv_obj_t *tick_value_change_obj;
-uint32_t active_theme_index = 0;
+//lv_obj_t *tick_value_change_obj;
+//uint32_t active_theme_index = 0;
 
 
 

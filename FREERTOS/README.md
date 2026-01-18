@@ -1,51 +1,182 @@
-## Overview
-FreeRTOS offers feature stability with long term support (LTS) releases. FreeRTOS LTS libraries come with security updates and critical bug fixes to the FreeRTOS kernel and IoT libraries listed below for two years, and are maintained by AWS for the benefit of the FreeRTOS community. With FreeRTOS LTS, you get a complete set of libraries needed to build secure connected IoT and embedded products. Long term support helps reduce maintenance and testing costs associated with updating libraries on your devices already in production.
+[![CMock Unit Tests](https://github.com/FreeRTOS/FreeRTOS-Kernel/actions/workflows/unit-tests.yml/badge.svg?branch=main&event=push)](https://github.com/FreeRTOS/FreeRTOS-Kernel/actions/workflows/unit-tests.yml?query=branch%3Amain+event%3Apush+workflow%3A%22CMock+Unit+Tests%22++)
+[![codecov](https://codecov.io/gh/FreeRTOS/FreeRTOS-Kernel/badge.svg?branch=main)](https://codecov.io/gh/FreeRTOS/FreeRTOS-Kernel)
 
-AWS also offers FreeRTOS Extended Maintenance Plan (EMP) that provides you with security patches and critical bug fixes on your chosen FreeRTOS LTS version for up to an additional 10 years. With FreeRTOS EMP, your FreeRTOS-based long-lived devices can rely on a version that has feature stability and receives security updates for years. You receive timely notification of upcoming patches on FreeRTOS libraries, so you can plan the deployment of security patches on your IoT devices. To learn more about FreeRTOS EMP, see the [FreeRTOS Features page](https://aws.amazon.com/freertos/features/).
+## Getting started
 
-## FreeRTOS/FreeRTOS Long Term Support
+This repository contains FreeRTOS kernel source/header files and kernel
+ports only. This repository is referenced as a submodule in
+[FreeRTOS/FreeRTOS](https://github.com/FreeRTOS/FreeRTOS)
+repository, which contains pre-configured demo application projects under
+```FreeRTOS/Demo``` directory.
 
-Libraries in this GitHub branch (also listed below) are part of the FreeRTOS 202406-LTS release. Learn more at https://freertos.org/lts-libraries.html.
+The easiest way to use FreeRTOS is to start with one of the pre-configured demo
+application projects.  That way you will have the correct FreeRTOS source files
+included, and the correct include paths configured. Once a demo application is
+building and executing you can remove the demo application files, and start to
+add in your own application source files.  See the
+[FreeRTOS Kernel Quick Start Guide](https://www.FreeRTOS.org/FreeRTOS-quick-start-guide.html)
+for detailed instructions and other useful links.
 
-| Library                     | Version             | LTS Until  | LTS Repo URL                                                                    |
-|-------------------------    |---------------------|------------|-------------------------------------------------------------------------------  |
-| FreeRTOS Kernel             | 11.1.0              | 06/30/2026 | https://github.com/FreeRTOS/FreeRTOS-Kernel/tree/V11.1.0                        |
-| FreeRTOS-Plus-TCP           | 4.2.5               | 06/30/2026 | https://github.com/FreeRTOS/FreeRTOS-Plus-TCP/tree/V4.2.5                       |
-| coreMQTT                    | 2.3.1               | 06/30/2026 | https://github.com/FreeRTOS/coreMQTT/tree/v2.3.1                                |
-| coreHTTP                    | 3.1.1               | 06/30/2026 | https://github.com/FreeRTOS/coreHTTP/tree/v3.1.1                                |
-| corePKCS11                  | 3.6.3               | 06/30/2026 | https://github.com/FreeRTOS/corePKCS11/tree/v3.6.3                              |
-| coreJSON                    | 3.3.0               | 06/30/2026 | https://github.com/FreeRTOS/coreJSON/tree/v3.3.0                                |
-| coreSNTP                    | 1.3.1               | 06/30/2026 | https://github.com/FreeRTOS/coreSNTP/tree/v1.3.1                                |
-| Cellular Interface          | 1.4.0               | 06/30/2026 | https://github.com/FreeRTOS/FreeRTOS-Cellular-Interface/tree/v1.4.0             |
-| backoffAlgorithm            | 1.4.1               | 06/30/2026 | https://github.com/FreeRTOS/backoffAlgorithm/tree/v1.4.1                        |
-| SigV4                       | 1.3.0               | 06/30/2026 | https://github.com/aws/SigV4-for-AWS-IoT-embedded-sdk/tree/v1.3.0               |
-| AWS IoT Device Shadow       | 1.4.1               | 06/30/2026 | https://github.com/aws/Device-Shadow-for-AWS-IoT-embedded-sdk/tree/v1.4.1       |
-| AWS IoT Device Defender     | 1.4.0               | 06/30/2026 | https://github.com/aws/Device-Defender-for-AWS-IoT-embedded-sdk/tree/v1.4.0     |
-| AWS IoT Jobs                | 1.5.1               | 06/30/2026 | https://github.com/aws/Jobs-for-AWS-IoT-embedded-sdk/tree/v1.5.1                |
-| AWS IoT Fleet Provisioning  | 1.2.1               | 06/30/2026 | https://github.com/aws/Fleet-Provisioning-for-AWS-IoT-embedded-sdk/tree/v1.2.1  |
-| AWS IoT MQTT File Streams   | 1.1.0               | 06/30/2026 | https://github.com/aws/aws-iot-core-mqtt-file-streams-embedded-c/tree/v1.1.0    |
+Additionally, for FreeRTOS kernel feature information refer to the
+[Developer Documentation](https://www.FreeRTOS.org/features.html),
+and [API Reference](https://www.FreeRTOS.org/a00106.html).
 
-## Upgrading to FreeRTOS 202406-LTS from a previous version of FreeRTOS LTS
+Also for contributing and creating a Pull Request please refer to
+[the instructions here](.github/CONTRIBUTING.md#contributing-via-pull-request).
 
-FreeRTOS 202406 LTS libraries are backward compatible with 202210.xx LTS, except
-AWS IoT OTA and FreeRTOS-Plus-TCP libraries. AWS IoT OTA library is not included in the LTS 202406 release.
-Instead, AWS IoT MQTT File Streams are included in this release, and we suggest user
-reference to [Modular Over the Air Updates](https://freertos.org/freertos-core/over-the-air-updates/index.html),
-which makes use of the AWS IoT MQTT File Streams library for OTA application design.
-For FreeRTOS-Plus-TCP, refer to [these instructions](https://github.com/FreeRTOS/FreeRTOS-Plus-TCP/blob/main/GettingStarted.md)
-on how to update your projects to use the new version.
+### Getting help
 
+If you have any questions or need assistance troubleshooting your FreeRTOS project,
+we have an active community that can help on the
+[FreeRTOS Community Support Forum](https://forums.freertos.org).
 
-## FreeRTOS LTS Versioning and Patches
+## To consume FreeRTOS-Kernel
 
-FreeRTOS LTS releases use a date-based versioning scheme (YYYYMM) followed by a patch sequential number (.XX).
-For example, FreeRTOS 202406.01 LTS means the first patch to the June-2024 FreeRTOS LTS release.
-You can review the [CHANGELOG](./CHANGELOG.md) and subscribe to [GitHub notifications](https://docs.github.com/en/free-pro-team@latest/github/managing-subscriptions-and-notifications-on-github/about-notifications) to receive information on patches or other updates to this repository.   
+### Consume with CMake
 
-## Security
+If using CMake, it is recommended to use this repository using FetchContent.
+Add the following into your project's main or a subdirectory's `CMakeLists.txt`:
 
-See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
+- Define the source and version/tag you want to use:
 
-## License
+```cmake
+FetchContent_Declare( freertos_kernel
+  GIT_REPOSITORY https://github.com/FreeRTOS/FreeRTOS-Kernel.git
+  GIT_TAG        main #Note: Best practice to use specific git-hash or tagged version
+)
+```
 
-This library is licensed under the MIT License. See the [LICENSE](LICENSE.md) file.
+In case you prefer to add it as a git submodule, do:
+
+```bash
+git submodule add https://github.com/FreeRTOS/FreeRTOS-Kernel.git <path of the submodule>
+git submodule update --init
+```
+
+- Add a freertos_config library (typically an INTERFACE library) The following assumes the directory structure:
+  - `include/FreeRTOSConfig.h`
+
+```cmake
+add_library(freertos_config INTERFACE)
+
+target_include_directories(freertos_config SYSTEM
+INTERFACE
+    include
+)
+
+target_compile_definitions(freertos_config
+  INTERFACE
+    projCOVERAGE_TEST=0
+)
+```
+
+In case you installed FreeRTOS-Kernel as a submodule, you will have to add it as a subdirectory:
+
+```cmake
+add_subdirectory(${FREERTOS_PATH})
+```
+
+- Configure the FreeRTOS-Kernel and make it available
+  - this particular example supports a native and cross-compiled build option.
+
+```cmake
+set( FREERTOS_HEAP "4" CACHE STRING "" FORCE)
+# Select the native compile PORT
+set( FREERTOS_PORT "GCC_POSIX" CACHE STRING "" FORCE)
+# Select the cross-compile PORT
+if (CMAKE_CROSSCOMPILING)
+  set(FREERTOS_PORT "GCC_ARM_CA9" CACHE STRING "" FORCE)
+endif()
+
+FetchContent_MakeAvailable(freertos_kernel)
+```
+
+- In case of cross compilation, you should also add the following to `freertos_config`:
+
+```cmake
+target_compile_definitions(freertos_config INTERFACE ${definitions})
+target_compile_options(freertos_config INTERFACE ${options})
+```
+
+### Consuming stand-alone - Cloning this repository
+
+To clone using HTTPS:
+
+```
+git clone https://github.com/FreeRTOS/FreeRTOS-Kernel.git
+```
+
+Using SSH:
+
+```
+git clone git@github.com:FreeRTOS/FreeRTOS-Kernel.git
+```
+
+## Repository structure
+
+- The root of this repository contains the three files that are common to
+every port - list.c, queue.c and tasks.c.  The kernel is contained within these
+three files.  croutine.c implements the optional co-routine functionality - which
+is normally only used on very memory limited systems.
+
+- The ```./portable``` directory contains the files that are specific to a particular microcontroller and/or compiler.
+See the readme file in the ```./portable``` directory for more information.
+
+- The ```./include``` directory contains the real time kernel header files.
+
+- The ```./template_configuration``` directory contains a sample `FreeRTOSConfig.h` to help jumpstart a new project.
+See the [FreeRTOSConfig.h](examples/template_configuration/FreeRTOSConfig.h) file for instructions.
+
+### Code Formatting
+
+FreeRTOS files are formatted using the
+"[uncrustify](https://github.com/uncrustify/uncrustify)" tool.
+The configuration file used by uncrustify can be found in the
+[FreeRTOS/CI-CD-GitHub-Actions's](https://github.com/FreeRTOS/CI-CD-Github-Actions)
+[uncrustify.cfg](https://github.com/FreeRTOS/CI-CD-Github-Actions/tree/main/formatting)
+file.
+
+### Line Endings
+
+File checked into the FreeRTOS-Kernel repository use unix-style LF line endings
+for the best compatibility with git.
+
+For optimal compatibility with Microsoft Windows tools, it is best to enable
+the git autocrlf feature. You can enable this setting for the current
+repository using the following command:
+
+```
+git config core.autocrlf true
+```
+
+### Git History Optimizations
+
+Some commits in this repository perform large refactors which touch many lines
+and lead to unwanted behavior when using the `git blame` command. You can
+configure git to ignore the list of large refactor commits in this repository
+with the following command:
+
+```
+git config blame.ignoreRevsFile .git-blame-ignore-revs
+```
+
+### Spelling and Formatting
+
+We recommend using [Visual Studio Code](https://code.visualstudio.com),
+commonly referred to as VSCode, when working on the FreeRTOS-Kernel.
+The FreeRTOS-Kernel also uses [cSpell](https://cspell.org/) as part of its
+spelling check. The config file for which can be found at [cspell.config.yaml](cspell.config.yaml)
+There is additionally a
+[cSpell plugin for VSCode](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker)
+that can be used as well.
+*[.cSpellWords.txt](.github/.cSpellWords.txt)* contains words that are not
+traditionally found in an English dictionary. It is used by the spellchecker
+to verify the various jargon, variable names, and other odd words used in the
+FreeRTOS code base are correct. If your pull request fails to pass the spelling
+and you believe this is a mistake, then add the word to
+*[.cSpellWords.txt](.github/.cSpellWords.txt)*. When adding a word please
+then sort the list, which can be done by running the bash command:
+`sort -u .cSpellWords.txt -o .cSpellWords.txt`
+Note that only the FreeRTOS-Kernel Source Files, [include](include),
+[portable/MemMang](portable/MemMang), and [portable/Common](portable/Common)
+files are checked for proper spelling, and formatting at this time.
