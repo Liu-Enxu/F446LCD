@@ -18,11 +18,50 @@
 
 #include "timer.h"
 #include "touch.h"
+
+#include "screens.h"
+
+
 #include "lvgl/lvgl.h"
 #include "lv_port_disp_template.h"
 #include "lv_port_indev_template.h"
 
-#include "screens.h"
+#include "FreeRTOS.h"
+#include "task.h"
+#include "lv_demos.h"
+
+
+
+#define DEMO_STACK 1024
+//static StackType_t demoTaskStackBuffer[DEMO_STACK];
+//static StaticTask_t demoTaskBuffer;
+TaskHandle_t demoTaskHandle;
+void demo_task(void *pvParameters){
+	pvParameters = pvParameters;
+//	create_screen_load();
+	lv_demo_stress();
+	while(1){
+		lv_timer_handler();
+		vTaskDelay(5);
+	}
+}
+
+#define START_STACK 128
+TaskHandle_t startTaskHandle;
+void start_task(void *pvParameters){
+	pvParameters = pvParameters;
+	
+	taskENTER_CRITICAL();
+	xTaskCreate(demo_task,
+							"demoTask",
+              DEMO_STACK,
+              (void*)NULL,
+              3,
+              &demoTaskHandle);
+	taskEXIT_CRITICAL();
+	vTaskDelete(startTaskHandle);
+}
+
 
 
 int main(void)
@@ -53,16 +92,26 @@ int main(void)
 	
 	lv_port_disp_init();       
 //  lv_display_set_buffers(disp, buf_1_1, NULL, sizeof(buf_1_1), LV_DISPLAY_RENDER_MODE_PARTIAL); // MUST CALL THIS IN MAIN.C!!! WHY?? --- STACK SIZE NOT ENOUGH!!!!!!!!!!!!!!	
-	lv_port_indev_init();
+//	lv_port_indev_init();	// RTOS tasks resource racing??
 	
-	create_screen_load();
+//	create_screen_load();
 //	ui_init();	
 	
 	printf("loop!\n");	
+	
+	
+	xTaskCreate((TaskFunction_t)start_task,
+							"startTask",
+              START_STACK,
+              (void*)NULL,
+              1,
+              (TaskHandle_t*)&startTaskHandle);
+	vTaskStartScheduler();
+							
 	 while(1) 
 	{	
-		lv_timer_handler();
-		delay_ms(5);
+//		lv_timer_handler();
+//		vTaskDelay(5);
 	}
 	
 

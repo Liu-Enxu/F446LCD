@@ -24,6 +24,10 @@
 #include "stm32f4xx_it.h"
 #include "main.h"
 #include "usart.h"
+
+#include "FreeRTOS.h"
+#include "task.h"
+
 /** @addtogroup Template_Project
   * @{
   */
@@ -106,9 +110,11 @@ void UsageFault_Handler(void)
   * @param  None
   * @retval None
   */
-//void SVC_Handler(void)
-//{
-//}
+extern void vPortSVCHandler( void );
+void SVC_Handler(void)
+{
+	vPortSVCHandler();
+}
 
 /**
   * @brief  This function handles Debug Monitor exception.
@@ -124,9 +130,11 @@ void DebugMon_Handler(void)
   * @param  None
   * @retval None
   */
-//void PendSV_Handler(void)
-//{
-//}
+extern void xPortPendSVHandler( void );
+void PendSV_Handler(void)
+{
+	xPortPendSVHandler();
+}
 
 /**
   * @brief  This function handles SysTick Handler.
@@ -135,6 +143,7 @@ void DebugMon_Handler(void)
   */
 //void SysTick_Handler(void)
 //{
+//	xPortSysTickHandler();
 //}
 
 /******************************************************************************/
