@@ -45,7 +45,7 @@ int main(void)
 	delay_init();	    	 //延时函数初始化	  
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);	 //设置NVIC中断分组2:2位抢占优先级，2位响应优先级
 	uart_init(115200);	 	//串口初始化为115200
-//	TIM2_Int_Init(999,89); // 90M/(89+1)=1Mhz --> 1us, 9999+1-->10ms	//若使用RTOS则不需要TIMx！！
+//	TIM2_Int_Init(999,89); // 90M/(89+1)=1Mhz --> 1us, 9999+1-->10ms	//若使用RTOS则不需要TIMx！
 	printf("begin!\n");	
 	
 	lv_log_register_print_cb(my_log_cb);
