@@ -11,6 +11,8 @@
 #include "malloc.h"	
 #include "usart.h"
 
+#include "FreeRTOS.h"
+
 //////////////////////////////////////////////////////////////////////////////////	 
 //本程序只供学习使用，未经作者许可，不得用于其它任何用途
 //ALIENTEK战舰STM32开发板V3
@@ -152,15 +154,17 @@ DWORD get_fattime (void)
 	return 0;
 }			 
 //动态分配内存
-void *ff_memalloc (UINT size)			
-{
-	return (void*)mymalloc(size);
-}
-//释放内存
-void ff_memfree (void* mf)		 
-{
-	myfree(mf);
-}
+//void *ff_memalloc (UINT size)			
+//{
+////	return (void*)mymalloc(size);
+//	return pvPortMalloc(size);
+//}
+////释放内存
+//void ff_memfree (void* mf)		 
+//{
+////	myfree(mf);
+//	vPortFree(mf);
+//}
 
 
 

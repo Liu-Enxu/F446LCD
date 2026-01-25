@@ -940,4 +940,10 @@ void vApplicationGetTimerTaskMemory( StaticTask_t **ppxTimerTaskTCBBuffer,
 
 #endif // configSUPPORT_STATIC_ALLOCATION == 1
 
-		
+#ifdef configUSE_MALLOC_FAILED_HOOK 
+void vApplicationMallocFailedHook(void)
+{
+    taskDISABLE_INTERRUPTS();
+    for (;;);
+}
+#endif

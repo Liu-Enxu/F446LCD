@@ -1,5 +1,7 @@
 #include "adc.h"
 #include "delay.h"
+#include "FreeRTOS.h"
+#include "task.h"
 
 void Adc_init(void){
 	ADC_InitTypeDef ADC_InitStructure;
@@ -42,7 +44,8 @@ u16 Get_Adc_Average(u8 ch, u8 times){
 	u8 t;
 	for(t=0;t<times;t++){
 		tmp += Get_Adc(ch);
-		delay_ms(5);
+//		delay_ms(5);
+		vTaskDelay(5);
 	}
 	return tmp/times;
 }

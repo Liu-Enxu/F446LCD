@@ -40,7 +40,7 @@ extern uint32_t SystemCoreClock;
 /* Memory allocation related definitions. */
 #define configSUPPORT_STATIC_ALLOCATION                             1
 #define configSUPPORT_DYNAMIC_ALLOCATION                            1
-#define configTOTAL_HEAP_SIZE                                       10240
+#define configTOTAL_HEAP_SIZE                                       (64*1024)
 #define configAPPLICATION_ALLOCATED_HEAP                            0   // was 1
 #define configSTACK_ALLOCATION_FROM_SEPARATE_HEAP                   0   // was 1
 
@@ -48,7 +48,7 @@ extern uint32_t SystemCoreClock;
 #define configUSE_IDLE_HOOK                                 0
 #define configUSE_TICK_HOOK                                 0
 #define configCHECK_FOR_STACK_OVERFLOW                      0
-#define configUSE_MALLOC_FAILED_HOOK                        0
+#define configUSE_MALLOC_FAILED_HOOK                        1
 #define configUSE_DAEMON_TASK_STARTUP_HOOK                  0
 #define configUSE_SB_COMPLETED_CALLBACK                     0
 

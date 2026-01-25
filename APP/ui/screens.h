@@ -17,15 +17,8 @@ extern objects_t objects;
 extern lv_style_t my_style0;
 extern lv_style_t my_style1;
 
-enum ScreensEnum {
-    SCREEN_ID_LOAD = 1,
-    SCREEN_ID_MAIN = 2,
-};
-
 void create_screen_load();
-
 //void create_screen_main();
-
 void create_screens();
 
 

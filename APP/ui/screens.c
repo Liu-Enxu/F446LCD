@@ -1,8 +1,6 @@
 #include <string.h>
 
 #include "screens.h"
-#include "images.h"
-#include "ui.h"
 //#include "lain_gaze_fix.h"
 //#include "sys.h"
 //#include "lcd.h"
@@ -31,7 +29,7 @@ void create_screen_load() {
 		lv_obj_set_pos(L_obj, 294, 75);
 		lv_obj_set_size(L_obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
 		lv_style_init(&my_style0);
-		lv_style_set_text_font(&my_style0, &lv_font_montserrat_48);
+		lv_style_set_text_font(&my_style0, &lv_font_montserrat_22);
 		lv_style_set_text_color(&my_style0, lv_color_hex(0xffc1b492));
 		lv_style_set_transform_pivot_x(&my_style0, 101);
 		lv_style_set_transform_pivot_y(&my_style0, 52);
@@ -71,7 +69,8 @@ void create_screen_load() {
 //		lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
 //		lv_image_set_src(obj, &          );
 		
-		lv_scr_load_anim(obj, LV_SCR_LOAD_ANIM_FADE_IN, 200, 0, false);
+//		lv_scr_load_anim(obj, LV_SCR_LOAD_ANIM_FADE_IN, 200, 0, false);
+		lv_disp_load_scr(obj);
 }
 
 //void create_screen_main() {

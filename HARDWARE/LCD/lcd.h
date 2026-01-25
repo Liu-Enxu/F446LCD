@@ -2,7 +2,8 @@
 #define __LCD_H
 #include "sys.h"
 #include "stdlib.h"
-
+#include "FreeRTOS.h"
+#include "task.h"
 
 // LCD --------------------------------------------------------------------------
 //LCD重要参数集
@@ -33,7 +34,7 @@ extern u16  POINT_COLOR;    //默认红色
 extern u16  BACK_COLOR;     //背景颜色.默认为白色
 
 #define LCD_DATA_OUT() 	{GPIOA->MODER&=0XFFC0FCF3;GPIOA->MODER|=0X00150104;GPIOB->MODER&=0XFFCFF03F;GPIOB->MODER|=0X00100540;GPIOC->MODER&=0XFFFF3FFF;GPIOC->MODER|=0X00004000;} // A:8 9 10; B:3 4 5 10; C:7
-#define LCD_DATA_IN() 	{GPIOA->MODER&=0XFFC0FFFF;							 					 GPIOB->MODER&=0XFFCFF03F;												 GPIOC->MODER&=0XFFFF3FFF;}
+#define LCD_DATA_IN() 	{GPIOA->MODER&=0XFFC0FFFF;GPIOB->MODER&=0XFFCFF03F;GPIOC->MODER&=0XFFFF3FFF;}
 
 // output
 #define	LCD_D0_o_addr PAo_addr(9)
@@ -208,7 +209,7 @@ void LCD_draw_binary(u16 sx, u16 sy, u16 ex, u16 ey, u8* bw, u16 color);
 #define disableY() {GPIOA->MODER&=0XFFFCFFF3;GPIOA->MODER|=0X00010004;PAout(1)=1;PAout(8)=0;}
 #define enableZ() {GPIOA->MODER&=0XFFFCFCF3;GPIOB->MODER&=0XFFCFFFFF;GPIOA->MODER|=0X0001030C;GPIOB->MODER|=0X00100000;PBout(10)=0;PAout(8)=1;}
 
-#define MIN_PRES 160
+#define MIN_PRES 100
 #define MAX_PRES 1000
 
 #endif  

@@ -721,6 +721,11 @@
               <FilePath>..\FATFS\exfuns\exfuns.c</FilePath>
             </File>
             <File>
+              <FileName>syscall.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\FATFS\src\option\syscall.c</FilePath>
+            </File>
+            <File>
               <FileName>cc936.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\FATFS\src\option\cc936.c</FilePath>
@@ -756,19 +761,9 @@
           <GroupName>APP</GroupName>
           <Files>
             <File>
-              <FileName>fatsd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\APP\fatsd.c</FilePath>
-            </File>
-            <File>
               <FileName>touch.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\APP\touch.c</FilePath>
-            </File>
-            <File>
-              <FileName>ui.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\APP\ui\ui.c</FilePath>
             </File>
             <File>
               <FileName>screens.c</FileName>
@@ -776,9 +771,9 @@
               <FilePath>..\APP\ui\screens.c</FilePath>
             </File>
             <File>
-              <FileName>lv_demo_stress.c</FileName>
+              <FileName>myfatsd.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\LVGL\lvgl\demos\stress\lv_demo_stress.c</FilePath>
+              <FilePath>..\APP\myfatsd.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1249,11 +1244,6 @@
               <FileName>lv_font_montserrat_22.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\LVGL\lvgl\src\font\lv_font_montserrat_22.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_montserrat_48.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\LVGL\lvgl\src\font\lv_font_montserrat_48.c</FilePath>
             </File>
             <File>
               <FileName>lv_font_fmt_txt.c</FileName>
