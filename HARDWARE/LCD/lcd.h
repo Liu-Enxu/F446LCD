@@ -33,8 +33,18 @@ extern _lcd_dev lcddev;     //管理LCD重要参数
 extern u16  POINT_COLOR;    //默认红色
 extern u16  BACK_COLOR;     //背景颜色.默认为白色
 
-#define LCD_DATA_OUT() 	{GPIOA->MODER&=0XFFC0FCF3;GPIOA->MODER|=0X00150104;GPIOB->MODER&=0XFFCFF03F;GPIOB->MODER|=0X00100540;GPIOC->MODER&=0XFFFF3FFF;GPIOC->MODER|=0X00004000;} // A:8 9 10; B:3 4 5 10; C:7
+extern uint32_t moderA_out;
+extern uint32_t moderB_out;
+extern uint32_t moderC_out;
+extern uint32_t moderA_in;
+extern uint32_t moderB_in;
+extern uint32_t moderC_in;
+
+//#define LCD_DATA_OUT() 	{GPIOA->MODER&=0XFFC0FCF3;GPIOA->MODER|=0X00150104;GPIOB->MODER&=0XFFCFF03F;GPIOB->MODER|=0X00100540;GPIOC->MODER&=0XFFFF3FFF;GPIOC->MODER|=0X00004000;} // A:8 9 10; B:3 4 5 10; C:7
+#define LCD_DATA_OUT() 	{GPIOA->MODER=moderA_out;GPIOB->MODER=moderB_out;GPIOC->MODER=moderC_out;}
 #define LCD_DATA_IN() 	{GPIOA->MODER&=0XFFC0FFFF;GPIOB->MODER&=0XFFCFF03F;GPIOC->MODER&=0XFFFF3FFF;}
+
+
 
 // output
 #define	LCD_D0_o_addr PAo_addr(9)

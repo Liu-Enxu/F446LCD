@@ -78,10 +78,10 @@
  *====================*/
 
 /*Default display refresh period. LVG will redraw changed areas with this period time*/
-#define LV_DISP_DEF_REFR_PERIOD 33      /*[ms]*/
+#define LV_DISP_DEF_REFR_PERIOD 24      /*[ms]*/
 
 /*Input device read period in milliseconds*/
-#define LV_INDEV_DEF_READ_PERIOD 30     /*[ms]*/
+#define LV_INDEV_DEF_READ_PERIOD 60     /*[ms]*/
 
 /*Use a custom tick source that tells the elapsed time in milliseconds.
  *It removes the need to manually update the tick with `lv_tick_inc()`)*/
@@ -368,7 +368,7 @@
 #define LV_FONT_MONTSERRAT_16 0
 #define LV_FONT_MONTSERRAT_18 0
 #define LV_FONT_MONTSERRAT_20 0
-#define LV_FONT_MONTSERRAT_22 1
+#define LV_FONT_MONTSERRAT_22 0
 #define LV_FONT_MONTSERRAT_24 0
 #define LV_FONT_MONTSERRAT_26 0
 #define LV_FONT_MONTSERRAT_28 0
@@ -396,10 +396,10 @@
 /*Optionally declare custom fonts here.
  *You can use these fonts as default font too and they will be available globally.
  *E.g. #define LV_FONT_CUSTOM_DECLARE   LV_FONT_DECLARE(my_font_1) LV_FONT_DECLARE(my_font_2)*/
-#define LV_FONT_CUSTOM_DECLARE
+#define LV_FONT_CUSTOM_DECLARE LV_FONT_DECLARE(fixedsys)
 
 /*Always set a default font*/
-#define LV_FONT_DEFAULT &lv_font_montserrat_22
+#define LV_FONT_DEFAULT &fixedsys
 
 /*Enable handling large font and/or fonts with a lot of characters.
  *The limit depends on the font size, font face and bpp.

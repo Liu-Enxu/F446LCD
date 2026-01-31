@@ -690,6 +690,11 @@
               <FileType>1</FileType>
               <FilePath>..\HARDWARE\ADC\adc.c</FilePath>
             </File>
+            <File>
+              <FileName>touch.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\LCD\touch.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -760,11 +765,6 @@
         <Group>
           <GroupName>APP</GroupName>
           <Files>
-            <File>
-              <FileName>touch.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\APP\touch.c</FilePath>
-            </File>
             <File>
               <FileName>screens.c</FileName>
               <FileType>1</FileType>
@@ -1241,11 +1241,6 @@
               <FilePath>..\LVGL\lvgl\src\font\lv_font.c</FilePath>
             </File>
             <File>
-              <FileName>lv_font_montserrat_22.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\LVGL\lvgl\src\font\lv_font_montserrat_22.c</FilePath>
-            </File>
-            <File>
               <FileName>lv_font_fmt_txt.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\LVGL\lvgl\src\font\lv_font_fmt_txt.c</FilePath>
@@ -1254,6 +1249,11 @@
               <FileName>lv_font_loader.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\LVGL\lvgl\src\font\lv_font_loader.c</FilePath>
+            </File>
+            <File>
+              <FileName>fixedsys.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\LVGL\lvgl\src\font\fixedsys.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1609,6 +1609,16 @@
               <FileName>port.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\FREERTOS\portable\RVDS\ARM_CM4F\port.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>FREERTOS_MIDDLEWARE</GroupName>
+          <Files>
+            <File>
+              <FileName>RTOSmanager.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\FREERTOS\RTOSmanager.c</FilePath>
             </File>
           </Files>
         </Group>

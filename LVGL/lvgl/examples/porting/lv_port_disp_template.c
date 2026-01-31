@@ -17,6 +17,9 @@
 
 #include "usart.h"
 #include "delay.h"
+
+#include "FreeRTOS.h"
+#include "RTOSmanager.h"
 /*********************
  *      DEFINES
  *********************/
@@ -183,8 +186,9 @@ static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_colo
 //            }
 //        }
 //    }
+//		xSemaphoreTake(lcd_bus_mutex, 0);	// take ---------------------------
 		LCD_draw_raw16_BE(area->x1, area->y1, area->x2, area->y2, (u16*)color_p);
-
+//		xSemaphoreGive(lcd_bus_mutex);	//	give ---------------------------
     /*IMPORTANT!!!
      *Inform the graphics library that you are ready with the flushing*/
     lv_disp_flush_ready(disp_drv);

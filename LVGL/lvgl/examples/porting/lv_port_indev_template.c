@@ -12,6 +12,8 @@
 #include "lv_port_indev_template.h"
 #include "../../lvgl.h"
 
+#include "RTOSmanager.h"
+
 #include "touch.h"
 #include "delay.h"
 #include "usart.h"
@@ -195,14 +197,15 @@ static void touchpad_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
     static lv_coord_t last_y = 0;
 
     /*Save the pressed coordinates and the state*/
-    if(touchpad_is_pressed()) {
+//    xSemaphoreTake(lcd_bus_mutex, 0);	// take ---------------------------
+		if(touchpad_is_pressed()) {
         touchpad_get_xy(&last_x, &last_y);
         data->state = LV_INDEV_STATE_PR;
-    }
-    else {
+    } else {
         data->state = LV_INDEV_STATE_REL;
     }
-
+//		xSemaphoreGive(lcd_bus_mutex);	//	give ---------------------------
+		
     /*Set the last pressed coordinates*/
     data->point.x = last_x;
     data->point.y = last_y;
@@ -212,18 +215,21 @@ static void touchpad_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
 /*Return true is the touchpad is pressed*/
 static bool touchpad_is_pressed(void)
 {
-    enableZ();
+		
+		enableZ();
+		vTaskDelay(1);
 		adcX = Get_Adc_Average(ADC_Channel_4,2);
 		adcY = Get_Adc_Average(ADC_Channel_1,2);
+		
 		adcZ = 1023 - (adcY-adcX);
-		printf("x:%u,y:%u,z:%u\n",adcX,adcY,adcZ);
+//		printf("x:%u,y:%u,z:%u\n",adcX,adcY,adcZ);
 		return MIN_PRES<=adcZ && adcZ<=MAX_PRES;
 }
 
 /*Get the x and y coordinates if the touchpad is pressed*/
 static void touchpad_get_xy(lv_coord_t * x, lv_coord_t * y)
-{
-    disableY();
+{		
+		disableY();
 		enableX();
 		(*x) = (int32_t)(HOR_RESOLUTION*(Get_Adc_Average(ADC_Channel_4,5)-70)/(940-70));
 		disableX();
@@ -231,8 +237,8 @@ static void touchpad_get_xy(lv_coord_t * x, lv_coord_t * y)
 		enableY();
 		(*y) = VER_RESOLUTION-(int32_t)(VER_RESOLUTION*(Get_Adc_Average(ADC_Channel_1,5)-100)/(915-100));
 		disableY();
-	
-		printf("x: %d, y: %d\n", *x, *y);
+		
+//		printf("x: %d, y: %d\n", *x, *y);
 }
 
 ///*------------------

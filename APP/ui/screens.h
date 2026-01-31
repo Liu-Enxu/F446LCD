@@ -11,15 +11,19 @@ typedef struct _objects_t {
     lv_obj_t *obj0;
     lv_obj_t *obj1;
 		lv_obj_t *obj2;
+		lv_obj_t *obj3;
+//		lv_obj_t *lain_os_1;
+//		lv_obj_t *lain_os_2;
+//		lv_obj_t *lain_os_3;
 } objects_t;
-
 extern objects_t objects;
-extern lv_style_t my_style0;
-extern lv_style_t my_style1;
+
+extern lv_style_t char_color1;
+extern lv_style_t char_color2;
+extern lv_style_t color_combo;
 
 void create_screen_load();
 //void create_screen_main();
-void create_screens();
 
 
 

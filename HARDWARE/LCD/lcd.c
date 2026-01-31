@@ -15,6 +15,13 @@ _lcd_dev lcddev;
 //LCDdataOut_TypeDef LCDdataOut;
 //LCDdataIn_TypeDef LCDdataIn;
 
+uint32_t moderA_out;
+uint32_t moderB_out;
+uint32_t moderC_out;
+uint32_t moderA_in;
+uint32_t moderB_in;
+uint32_t moderC_in;
+
 //static volatile unsigned long* LCDdataOut[8] = {
 //	LCD_D0_o_addr,
 //	LCD_D1_o_addr,
@@ -478,14 +485,17 @@ void LCD_Init(void)
     //	PORTA Data pins
 		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0/*LCD_RD*/|GPIO_Pin_1/*LCD_WR*/|GPIO_Pin_4/*LCD_RS*/|GPIO_Pin_8/*LCD_D7 or YM*/|GPIO_Pin_9/*LCD_D0*/|GPIO_Pin_10/*LCD_D2*/;		//PORTA
     GPIO_Init(GPIOA, &GPIO_InitStructure);
+		moderA_out = GPIOA->MODER;
 		
     //	PORTB复用推挽输出
     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0/*LCD_CS*/|GPIO_Pin_3/*LCD_D3*/|GPIO_Pin_4/*LCD_D5*/|GPIO_Pin_5/*LCD_D4*/|GPIO_Pin_10/*LCD_D6 or XP*/;    //PORTB复用推挽输出
     GPIO_Init(GPIOB, &GPIO_InitStructure); 
+		moderB_out = GPIOB->MODER;
      
     //	PORTC复用推挽输出
     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1/*LCD_RST*/|GPIO_Pin_7/*LCD_D1*/; //PORTC复用推挽输出
     GPIO_Init(GPIOC, &GPIO_InitStructure);
+		moderC_out = GPIOC->MODER;
 		
 		//	Ctrl pins ----------------------------------------------
 		// PORTA Ctrl pins
