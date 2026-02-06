@@ -1,29 +1,34 @@
-#ifndef EEZ_LVGL_UI_SCREENS_H
-#define EEZ_LVGL_UI_SCREENS_H
+#ifndef __SCREENS_H
+#define __SCREENS_H
 
 #include <lvgl/lvgl.h>
 
-
-
-typedef struct _objects_t {
+typedef struct {
     lv_obj_t *load;
+    lv_obj_t *obj0;
+    lv_obj_t *obj1;
+		lv_obj_t *obj2;
+		lv_obj_t *obj3;
+		lv_obj_t *obj4;
+		lv_obj_t *obj5;
+} scrn_load_t;
+
+
+typedef struct {
     lv_obj_t *main;
     lv_obj_t *obj0;
     lv_obj_t *obj1;
 		lv_obj_t *obj2;
 		lv_obj_t *obj3;
-//		lv_obj_t *lain_os_1;
-//		lv_obj_t *lain_os_2;
-//		lv_obj_t *lain_os_3;
-} objects_t;
-extern objects_t objects;
+		lv_obj_t *obj4;
+		lv_obj_t *obj5;
+		lv_obj_t *obj6;
+		lv_obj_t *obj7;
+} scrn_main_t;
 
-extern lv_style_t char_color1;
-extern lv_style_t char_color2;
-extern lv_style_t color_combo;
 
 void create_screen_load();
-//void create_screen_main();
+void create_screen_main();
 
 
 

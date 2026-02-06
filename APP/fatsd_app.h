@@ -1,5 +1,5 @@
-#ifndef __FATSD_H
-#define __FATSD_H
+#ifndef __FATSD_APP_H
+#define __FATSD_APP_H
 
 #include "exfuns.h"
 #include "lcd.h"

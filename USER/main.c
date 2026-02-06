@@ -25,7 +25,8 @@
 #include "RTOSmanager.h"
 
 //	App layer ----------------------------------------
-#include "lvgl/lvgl.h"
+//#include "lvgl/lvgl.h"
+#include "lv_app_conf.h"
 #include "lv_port_disp_template.h"
 #include "lv_port_indev_template.h"
 //#include "lv_demos.h"
@@ -72,6 +73,7 @@ int main(void)
 	printf("begin!\n");	
 	
 	RTOS_init();
+	lv_app_init();
 	
 	lv_log_register_print_cb(my_log_cb);
 	lv_init();

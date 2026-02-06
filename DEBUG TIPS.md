@@ -66,43 +66,43 @@ fopen
 
 ##### **lv\_conf.h**
 
-/\*1: use custom malloc/free, 0: use the built-in `lv\_mem\_alloc()` and `lv\_mem\_free()`\*/
+/\*1: use custom malloc/free, 0: use the built-in `lv\\\\\\\\\\\\\\\_mem\\\\\\\\\\\\\\\_alloc()` and `lv\\\\\\\\\\\\\\\_mem\\\\\\\\\\\\\\\_free()`\*/
 
 \#define LV\_MEM\_CUSTOM 1
 
 \#if LV\_MEM\_CUSTOM == 0
 
-&nbsp;   /\*Size of the memory available for `lv\_mem\_alloc()` in bytes (>= 2kB)\*/
+    /\*Size of the memory available for `lv\\\\\\\\\\\\\\\_mem\\\\\\\\\\\\\\\_alloc()` in bytes (>= 2kB)\*/
 
-&nbsp;   #define LV\_MEM\_SIZE (48U \* 1024U)          /\*\[bytes]\*/
+    #define LV\_MEM\_SIZE (48U \* 1024U)          /\*\[bytes]\*/
 
 
 
-&nbsp;   /\*Set an address for the memory pool instead of allocating it as a normal array. Can be in external SRAM too.\*/
+    /\*Set an address for the memory pool instead of allocating it as a normal array. Can be in external SRAM too.\*/
 
-&nbsp;   #define LV\_MEM\_ADR 0     /\*0: unused\*/
+    #define LV\_MEM\_ADR 0     /\*0: unused\*/
 
-&nbsp;   /\*Instead of an address give a memory allocator that will be called to get a memory pool for LVGL. E.g. my\_malloc\*/
+    /\*Instead of an address give a memory allocator that will be called to get a memory pool for LVGL. E.g. my\_malloc\*/
 
-&nbsp;   #if LV\_MEM\_ADR == 0
+    #if LV\_MEM\_ADR == 0
 
-&nbsp;       #undef LV\_MEM\_POOL\_INCLUDE
+        #undef LV\_MEM\_POOL\_INCLUDE
 
-&nbsp;       #undef LV\_MEM\_POOL\_ALLOC
+        #undef LV\_MEM\_POOL\_ALLOC
 
-&nbsp;   #endif
+    #endif
 
 
 
 \#else       /\*LV\_MEM\_CUSTOM\*/
 
-&nbsp;   #define LV\_MEM\_CUSTOM\_INCLUDE "FreeRTOS.h"   /\*Header for the dynamic memory function\*/
+    #define LV\_MEM\_CUSTOM\_INCLUDE "FreeRTOS.h"   /\*Header for the dynamic memory function\*/
 
-&nbsp;   #define LV\_MEM\_CUSTOM\_ALLOC   pvPortMalloc
+    #define LV\_MEM\_CUSTOM\_ALLOC   pvPortMalloc
 
-&nbsp;   #define LV\_MEM\_CUSTOM\_FREE    vPortFree
+    #define LV\_MEM\_CUSTOM\_FREE    vPortFree
 
-&nbsp;   #define LV\_MEM\_CUSTOM\_REALLOC pvPortRealloc
+    #define LV\_MEM\_CUSTOM\_REALLOC pvPortRealloc --》 GitHub func underreview
 
 \#endif     /\*LV\_MEM\_CUSTOM\*/
 
@@ -130,45 +130,45 @@ uncomment the FreeRTOS parts
 
 void vApplicationGetIdleTaskMemory( StaticTask\_t \*\*ppxIdleTaskTCBBuffer,
 
-&nbsp;                                   StackType\_t \*\*ppxIdleTaskStackBuffer,
+                                    StackType\_t \*\*ppxIdleTaskStackBuffer,
 
-&nbsp;                                   configSTACK\_DEPTH\_TYPE \*pulIdleTaskStackSize )
+                                    configSTACK\_DEPTH\_TYPE \*pulIdleTaskStackSize )
 
 {
 
-&nbsp;   /\* If the buffers to be provided to the Idle task are declared inside this
+    /\* If the buffers to be provided to the Idle task are declared inside this
 
-&nbsp;      function then they must be declared static - otherwise they will be allocated on
+       function then they must be declared static - otherwise they will be allocated on
 
-&nbsp;      the stack and so not exists after this function exits. \*/
+       the stack and so not exists after this function exits. \*/
 
-&nbsp;   static StaticTask\_t xIdleTaskTCB;
+    static StaticTask\_t xIdleTaskTCB;
 
-&nbsp;   static StackType\_t uxIdleTaskStack\[ configMINIMAL\_STACK\_SIZE ];
-
-
-
-&nbsp;   /\* Pass out a pointer to the StaticTask\_t structure in which the Idle task's
-
-&nbsp;      state will be stored. \*/
-
-&nbsp;   \*ppxIdleTaskTCBBuffer = \&xIdleTaskTCB;
+    static StackType\_t uxIdleTaskStack\[ configMINIMAL\_STACK\_SIZE ];
 
 
 
-&nbsp;   /\* Pass out the array that will be used as the Idle task's stack. \*/
+    /\* Pass out a pointer to the StaticTask\_t structure in which the Idle task's
 
-&nbsp;   \*ppxIdleTaskStackBuffer = uxIdleTaskStack;
+       state will be stored. \*/
+
+    \*ppxIdleTaskTCBBuffer = \&xIdleTaskTCB;
 
 
 
-&nbsp;   /\* Pass out the size of the array pointed to by \*ppxIdleTaskStackBuffer.
+    /\* Pass out the array that will be used as the Idle task's stack. \*/
 
-&nbsp;      Note that, as the array is necessarily of type StackType\_t,
+    \*ppxIdleTaskStackBuffer = uxIdleTaskStack;
 
-&nbsp;      configMINIMAL\_STACK\_SIZE is specified in words, not bytes. \*/
 
-&nbsp;   \*pulIdleTaskStackSize = configMINIMAL\_STACK\_SIZE;
+
+    /\* Pass out the size of the array pointed to by \*ppxIdleTaskStackBuffer.
+
+       Note that, as the array is necessarily of type StackType\_t,
+
+       configMINIMAL\_STACK\_SIZE is specified in words, not bytes. \*/
+
+    \*pulIdleTaskStackSize = configMINIMAL\_STACK\_SIZE;
 
 }
 
@@ -180,45 +180,45 @@ void vApplicationGetIdleTaskMemory( StaticTask\_t \*\*ppxIdleTaskTCBBuffer,
 
 void vApplicationGetTimerTaskMemory( StaticTask\_t \*\*ppxTimerTaskTCBBuffer,
 
-&nbsp;                                    StackType\_t \*\*ppxTimerTaskStackBuffer,
+                                     StackType\_t \*\*ppxTimerTaskStackBuffer,
 
-&nbsp;                                    uint32\_t \*pulTimerTaskStackSize )
+                                     uint32\_t \*pulTimerTaskStackSize )
 
 {
 
-&nbsp;   /\* If the buffers to be provided to the Timer task are declared inside this
+    /\* If the buffers to be provided to the Timer task are declared inside this
 
-&nbsp;      function then they must be declared static - otherwise they will be allocated on
+       function then they must be declared static - otherwise they will be allocated on
 
-&nbsp;      the stack and so not exists after this function exits. \*/
+       the stack and so not exists after this function exits. \*/
 
-&nbsp;   static StaticTask\_t xTimerTaskTCB;
+    static StaticTask\_t xTimerTaskTCB;
 
-&nbsp;   static StackType\_t uxTimerTaskStack\[ configTIMER\_TASK\_STACK\_DEPTH ];
-
-
-
-&nbsp;   /\* Pass out a pointer to the StaticTask\_t structure in which the Timer
-
-&nbsp;      task's state will be stored. \*/
-
-&nbsp;   \*ppxTimerTaskTCBBuffer = \&xTimerTaskTCB;
+    static StackType\_t uxTimerTaskStack\[ configTIMER\_TASK\_STACK\_DEPTH ];
 
 
 
-&nbsp;   /\* Pass out the array that will be used as the Timer task's stack. \*/
+    /\* Pass out a pointer to the StaticTask\_t structure in which the Timer
 
-&nbsp;   \*ppxTimerTaskStackBuffer = uxTimerTaskStack;
+       task's state will be stored. \*/
+
+    \*ppxTimerTaskTCBBuffer = \&xTimerTaskTCB;
 
 
 
-&nbsp;   /\* Pass out the size of the array pointed to by \*ppxTimerTaskStackBuffer.
+    /\* Pass out the array that will be used as the Timer task's stack. \*/
 
-&nbsp;      Note that, as the array is necessarily of type StackType\_t,
+    \*ppxTimerTaskStackBuffer = uxTimerTaskStack;
 
-&nbsp;     configTIMER\_TASK\_STACK\_DEPTH is specified in words, not bytes. \*/
 
-&nbsp;   \*pulTimerTaskStackSize = configTIMER\_TASK\_STACK\_DEPTH;
+
+    /\* Pass out the size of the array pointed to by \*ppxTimerTaskStackBuffer.
+
+       Note that, as the array is necessarily of type StackType\_t,
+
+      configTIMER\_TASK\_STACK\_DEPTH is specified in words, not bytes. \*/
+
+    \*pulTimerTaskStackSize = configTIMER\_TASK\_STACK\_DEPTH;
 
 }
 
@@ -230,15 +230,15 @@ void vApplicationGetTimerTaskMemory( StaticTask\_t \*\*ppxTimerTaskTCBBuffer,
 
 
 
-\#ifdef configUSE\_MALLOC\_FAILED\_HOOK 
+\#ifdef configUSE\_MALLOC\_FAILED\_HOOK
 
 void vApplicationMallocFailedHook(void)
 
 {
 
-&nbsp;   taskDISABLE\_INTERRUPTS();
+    taskDISABLE\_INTERRUPTS();
 
-&nbsp;   for (;;);
+    for (;;);
 
 }
 
@@ -248,17 +248,27 @@ void vApplicationMallocFailedHook(void)
 
 ###### ffconf.h
 
-&nbsp;	#include "FreeRTOS.h"
+ 	#include "FreeRTOS.h"
 
-&nbsp;	#include "semphr.h"
+ 	#include "semphr.h"
 
-&nbsp;	。。。
+ 	。。。
 
-&nbsp;	#define	\_USE\_LFN	3
+ 	#define	\_USE\_LFN	3
 
-&nbsp;	#define \_FS\_REENTRANT	1
+ 	#define \_FS\_REENTRANT	1
 
-&nbsp;	#define \_FS\_TIMEOUT		1000
+ 	#define \_FS\_TIMEOUT		1000
 
-&nbsp;	#define	\_SYNC\_t			SemaphoreHandle\_t
+ 	#define	\_SYNC\_t			SemaphoreHandle\_t
+
+
+
+
+
+
+
+##### **Font I Need**
+
+F001 F002 F004 F005 F007
 

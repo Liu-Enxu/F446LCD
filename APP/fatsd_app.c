@@ -1,4 +1,4 @@
-#include "myfatsd.h"
+#include "fatsd_app.h"
 
 u8 file_cnt = 0;
 char* pathName;

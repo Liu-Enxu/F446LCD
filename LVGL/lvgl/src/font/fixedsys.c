@@ -3,6 +3,8 @@
  * Bpp: 4
  * Opts: --bpp 4 --size 20 --no-compress --stride 1 --align 1 --font FSEX300.ttf --range 32-127 --format lvgl -o fixedsys.c
  ******************************************************************************/
+ 
+ // flash: 422kb
 
 #ifdef __has_include
     #if __has_include("lvgl.h")

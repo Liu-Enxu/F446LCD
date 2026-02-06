@@ -771,9 +771,14 @@
               <FilePath>..\APP\ui\screens.c</FilePath>
             </File>
             <File>
-              <FileName>myfatsd.c</FileName>
+              <FileName>lv_app_conf.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\APP\myfatsd.c</FilePath>
+              <FilePath>..\APP\lv_app_conf.c</FilePath>
+            </File>
+            <File>
+              <FileName>fatsd_app.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\APP\fatsd_app.c</FilePath>
             </File>
           </Files>
         </Group>

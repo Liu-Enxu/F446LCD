@@ -11,6 +11,7 @@
  *********************/
 #include "lv_port_indev_template.h"
 #include "../../lvgl.h"
+#include "lv_app_conf.h"
 
 #include "RTOSmanager.h"
 
@@ -193,13 +194,13 @@ static void touchpad_init(void)
 /*Will be called by the library to read the touchpad*/
 static void touchpad_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
 {
-    static lv_coord_t last_x = 0;
-    static lv_coord_t last_y = 0;
+//    static lv_coord_t last_x = 0;
+//    static lv_coord_t last_y = 0;
 
     /*Save the pressed coordinates and the state*/
 //    xSemaphoreTake(lcd_bus_mutex, 0);	// take ---------------------------
 		if(touchpad_is_pressed()) {
-        touchpad_get_xy(&last_x, &last_y);
+        touchpad_get_xy(&lv_cursor_pos.cursor_x, &lv_cursor_pos.cursor_y);
         data->state = LV_INDEV_STATE_PR;
     } else {
         data->state = LV_INDEV_STATE_REL;
@@ -207,19 +208,18 @@ static void touchpad_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
 //		xSemaphoreGive(lcd_bus_mutex);	//	give ---------------------------
 		
     /*Set the last pressed coordinates*/
-    data->point.x = last_x;
-    data->point.y = last_y;
+    data->point.x = lv_cursor_pos.cursor_x;
+    data->point.y = lv_cursor_pos.cursor_y;
 		
 }
 
 /*Return true is the touchpad is pressed*/
 static bool touchpad_is_pressed(void)
 {
-		
 		enableZ();
-		vTaskDelay(1);
-		adcX = Get_Adc_Average(ADC_Channel_4,2);
-		adcY = Get_Adc_Average(ADC_Channel_1,2);
+//		vTaskDelay(1);
+		adcX = Get_Adc_Average(ADC_Channel_4,5);		
+		adcY = Get_Adc_Average(ADC_Channel_1,5);
 		
 		adcZ = 1023 - (adcY-adcX);
 //		printf("x:%u,y:%u,z:%u\n",adcX,adcY,adcZ);
@@ -231,11 +231,11 @@ static void touchpad_get_xy(lv_coord_t * x, lv_coord_t * y)
 {		
 		disableY();
 		enableX();
-		(*x) = (int32_t)(HOR_RESOLUTION*(Get_Adc_Average(ADC_Channel_4,5)-70)/(940-70));
+		(*x) = (lv_coord_t)(HOR_RESOLUTION*(Get_Adc_Average(ADC_Channel_4,5)-70)/(940-70));
 		disableX();
 
 		enableY();
-		(*y) = VER_RESOLUTION-(int32_t)(VER_RESOLUTION*(Get_Adc_Average(ADC_Channel_1,5)-100)/(915-100));
+		(*y) = (lv_coord_t)(VER_RESOLUTION-(lv_coord_t)VER_RESOLUTION*((lv_coord_t)Get_Adc_Average(ADC_Channel_1,5)-100)/(840-100));
 		disableY();
 		
 //		printf("x: %d, y: %d\n", *x, *y);
