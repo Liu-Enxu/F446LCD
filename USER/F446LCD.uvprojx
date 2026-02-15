@@ -1260,6 +1260,11 @@
               <FileType>1</FileType>
               <FilePath>..\LVGL\lvgl\src\font\fixedsys.c</FilePath>
             </File>
+            <File>
+              <FileName>awesomesyms.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\LVGL\lvgl\src\font\awesomesyms.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

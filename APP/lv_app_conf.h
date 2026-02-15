@@ -6,7 +6,9 @@
 typedef struct {
 	lv_style_t char_color1;
 	lv_style_t char_color2;
-	lv_style_t color_combo; 
+	lv_style_t color_combo;
+	lv_style_t sym_font;	
+	lv_style_t txt_font;
 }lv_app_styles_t;
 extern lv_app_styles_t lv_app_styles;
 
