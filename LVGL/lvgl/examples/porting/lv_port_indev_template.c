@@ -228,16 +228,34 @@ static bool touchpad_is_pressed(void)
 
 /*Get the x and y coordinates if the touchpad is pressed*/
 static void touchpad_get_xy(lv_coord_t * x, lv_coord_t * y)
-{		
+{
 		disableY();
 		enableX();
-		(*x) = (lv_coord_t)(HOR_RESOLUTION*(Get_Adc_Average(ADC_Channel_4,5)-70)/(940-70));
+		vTaskDelay(5);
+		uint16_t raw_x = Get_Adc_Average(ADC_Channel_4, 5);
+		lv_cursor_pos.raw_x = raw_x;
 		disableX();
 
 		enableY();
-		(*y) = (lv_coord_t)(VER_RESOLUTION-(lv_coord_t)VER_RESOLUTION*((lv_coord_t)Get_Adc_Average(ADC_Channel_1,5)-100)/(840-100));
+		vTaskDelay(5);
+		uint16_t raw_y = Get_Adc_Average(ADC_Channel_1, 5);
+		lv_cursor_pos.raw_y = raw_y;
 		disableY();
-		
+
+		if (calibrat_t.calibrated) {
+			int32_t den_x = (int32_t)calibrat_t.adc_x_right - calibrat_t.adc_x_left;
+			int32_t den_y = (int32_t)calibrat_t.adc_y_bot   - calibrat_t.adc_y_top;
+			*x = (lv_coord_t)((int32_t)(raw_x - calibrat_t.adc_x_left) * (HOR_RESOLUTION - 30) / den_x + 30);
+			*y = (lv_coord_t)((int32_t)(raw_y - calibrat_t.adc_y_top)  * (VER_RESOLUTION - 30) / den_y + 30);
+		} else {
+			*x = (lv_coord_t)(HOR_RESOLUTION * (raw_x - 70) / (940 - 70));
+			*y = (lv_coord_t)(VER_RESOLUTION - (lv_coord_t)VER_RESOLUTION * ((lv_coord_t)raw_y - 100) / (840 - 100));
+		}
+		if (*x < 0)                *x = 0;
+		if (*x >= HOR_RESOLUTION)  *x = HOR_RESOLUTION - 1;
+		if (*y < 0)                *y = 0;
+		if (*y >= VER_RESOLUTION)  *y = VER_RESOLUTION - 1;
+
 //		printf("x: %d, y: %d\n", *x, *y);
 }
 

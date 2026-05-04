@@ -2,38 +2,87 @@
 #define __SCREENS_H
 
 #include <lvgl/lvgl.h>
+#include "sys.h"
 
 typedef struct {
-    lv_obj_t *load;
-    lv_obj_t *obj0;
-    lv_obj_t *obj1;
-		lv_obj_t *obj2;
-		lv_obj_t *obj3;
-		lv_obj_t *obj4;
-		lv_obj_t *obj5;
+	lv_obj_t *screen;
+	lv_obj_t *circle;
+	lv_obj_t *pos_obj;
+	lv_obj_t *circle_pos_obj;
+	lv_obj_t *posX_obj;
+	lv_obj_t *posY_obj;
+	lv_obj_t *lbl_pref_obj;
+	lv_obj_t *lbl_sep_obj;
+	lv_obj_t *lbl_comma_obj;
+	
+} scrn_cali_t;
+
+typedef struct {
+		lv_obj_t *screen;
+    lv_obj_t *L_obj;
+    lv_obj_t *b_obj;
+		lv_obj_t *l_obj;
+		lv_obj_t *ascii_obj;
+		lv_obj_t *pos_obj;
+		lv_obj_t *posX_obj;
+		lv_obj_t *posY_obj;
+		lv_obj_t *welcome_obj;
 } scrn_load_t;
 
 
 typedef struct {
-    lv_obj_t *main;
-    lv_obj_t *obj0;
-    lv_obj_t *obj1;
-		lv_obj_t *obj2;
-		lv_obj_t *obj3;
-		lv_obj_t *obj4;
-		lv_obj_t *obj5;
-		lv_obj_t *obj6;
-		lv_obj_t *obj7;
-		lv_obj_t *obj8;
-		lv_obj_t *obj9;
-		lv_obj_t *obj10;
-		lv_obj_t *obj11;
-		lv_obj_t *obj12;
+		lv_obj_t *screen;
+		// header
+		lv_obj_t *header_obj;
+		lv_obj_t *menu_b_obj;
+		lv_obj_t *menu_l_obj;
+		lv_obj_t *menu_obj;
+			lv_obj_t *menu_page_obj;
+				lv_obj_t *menu_splash_obj;
+					lv_obj_t *menu_splash_b_obj;
+						lv_obj_t *menu_splash_l_obj;
+				lv_obj_t *menu_calendar_obj;
+					lv_obj_t *menu_calendar_b_obj;
+						lv_obj_t *menu_calendar_l_obj;
+				lv_obj_t *menu_settings_obj;
+					lv_obj_t *menu_settings_b_obj;
+						lv_obj_t *menu_settings_l_obj;
+	
+		lv_obj_t *folder_obj;
+		lv_obj_t *folder_l_obj;
+		lv_obj_t *terminal_obj;
+		lv_obj_t *terminal_l_obj;
+	
+		// footer/status bar
+    lv_obj_t *bar_obj;
+    lv_obj_t *ret_obj;
+		lv_obj_t *ret_val_obj;
+		lv_obj_t *pos_obj;
+		lv_obj_t *posX_obj;
+		lv_obj_t *posY_obj;
+		lv_obj_t *tray_obj;
+		lv_obj_t *end_obj;
+		lv_obj_t *wifi_obj;
+		lv_obj_t *wifix_obj;
+		lv_obj_t *sound_obj;
+		lv_obj_t *soundx_obj;
+		lv_obj_t *battery_obj;
+		lv_obj_t *batteryx_obj;
+		lv_obj_t *SD_obj;
+		lv_obj_t *SDx_obj;
+		lv_obj_t *sta_obj;
 } scrn_main_t;
 
 
-void create_screen_load();
-void create_screen_main();
+typedef struct{
+	u8 id;
+	lv_obj_t *tab;
+	void* other_obj;
+} app_t;
+	
+void create_screen_cali(void);
+void create_screen_load(void);
+void create_screen_main(void);
 
 
 

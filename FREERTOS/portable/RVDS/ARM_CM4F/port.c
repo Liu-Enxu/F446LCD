@@ -944,6 +944,7 @@ void vApplicationGetTimerTaskMemory( StaticTask_t **ppxTimerTaskTCBBuffer,
 void vApplicationMallocFailedHook(void)
 {
     taskDISABLE_INTERRUPTS();
+		printf("Malloc failed!\n");
     for (;;);
 }
 #endif

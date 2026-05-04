@@ -40,6 +40,9 @@ extern uint32_t moderA_in;
 extern uint32_t moderB_in;
 extern uint32_t moderC_in;
 
+#define MIN(a, b)  ((a) < (b) ? (a) : (b))
+#define MAX(a, b)  ((a) > (b) ? (a) : (b))
+
 //#define LCD_DATA_OUT() 	{GPIOA->MODER&=0XFFC0FCF3;GPIOA->MODER|=0X00150104;GPIOB->MODER&=0XFFCFF03F;GPIOB->MODER|=0X00100540;GPIOC->MODER&=0XFFFF3FFF;GPIOC->MODER|=0X00004000;} // A:8 9 10; B:3 4 5 10; C:7
 #define LCD_DATA_OUT() 	{GPIOA->MODER=moderA_out;GPIOB->MODER=moderB_out;GPIOC->MODER=moderC_out;}
 #define LCD_DATA_IN() 	{GPIOA->MODER&=0XFFC0FFFF;GPIOB->MODER&=0XFFCFF03F;GPIOC->MODER&=0XFFFF3FFF;}
@@ -222,7 +225,7 @@ void LCD_draw_binary(u16 sx, u16 sy, u16 ex, u16 ey, u8* bw, u16 color);
 //#define enableZ() {GPIOA->MODER&=0XFFFCFCF3;GPIOB->MODER&=0XFFCFFFFF;GPIOA->MODER|=0X0001030C;GPIOB->MODER|=0X00100000;PBout(10)=0;PAout(8)=1;}
 #define enableZ() {GPIOA->MODER&=0XFFFCFCF3;GPIOB->MODER&=0XFFCFFFFF;GPIOA->MODER|=0X0001030C;GPIOB->MODER|=0X00100000;GPIO_ResetBits(GPIOB,GPIO_Pin_10);GPIO_SetBits(GPIOA,GPIO_Pin_8);}
 	
-#define MIN_PRES 500
+#define MIN_PRES 300
 #define MAX_PRES 1000
 
 #endif  

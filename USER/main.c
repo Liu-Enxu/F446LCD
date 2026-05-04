@@ -33,19 +33,32 @@
 //#include "myfatsd.h"
 
 
-#define DEMO_STACK 1024	// LOWER MIGHT CAUSE SCREEN NOT FOUND
+#define DISP_STACK 1024	// LOWER MIGHT CAUSE SCREEN NOT FOUND
 //static StackType_t demoTaskStackBuffer[DEMO_STACK];
 //static StaticTask_t demoTaskBuffer;
-TaskHandle_t demoTaskHandle;
-void demo_task(void *pvParameters){
+TaskHandle_t dispTaskHandle;
+void disp_task(void *pvParameters){
 	pvParameters = pvParameters;
-	create_screen_load();
-//	lv_demo_stress();
+	create_screen_cali();
 	while(1){
 		lv_timer_handler();
 		vTaskDelay(5);
-//		lv_timer_handler_run_in_period(10);
-//		vTaskDelay(10);
+	}
+}
+
+#define DUMMY_STACK 1024
+TaskHandle_t dummyTaskHandle;
+void dummy_task(void *pvParameters){
+	pvParameters = pvParameters;
+	const noti_t dummy_noti = {
+		.notiSource = "DUMMY",
+		.notiContent = "Let's all love lain"
+	};
+	while(1){
+		if(xQueueSendToBack(notifyQueue,&dummy_noti,portMAX_DELAY)==pdPASS){	// wait indefinitely?
+//			lv_event_send(noti_box, LV_NOTI_NEW, NULL);
+		}
+		vTaskDelay(pdMS_TO_TICKS(1000));
 	}
 }
 
@@ -82,17 +95,16 @@ int main(void)
 //  lv_display_set_buffers(disp, buf_1_1, NULL, sizeof(buf_1_1), LV_DISPLAY_RENDER_MODE_PARTIAL); // MUST CALL THIS IN MAIN.C!!! WHY?? --- STACK SIZE NOT ENOUGH!!!!!!!!!!!!!!	
 	lv_port_indev_init();	// RTOS tasks resource racing??
 	
-	
 	printf("loop!\n");	
 	
 		
 	taskENTER_CRITICAL();
-	xTaskCreate(demo_task,
-							"demoTask",
-              DEMO_STACK,
-              (void*)NULL,
-              3,
-              &demoTaskHandle);
+	xTaskCreate(disp_task,
+				"dispTask",
+            	DISP_STACK,
+            	(void*)NULL,
+            	3,
+            	&dispTaskHandle);
 	taskEXIT_CRITICAL();
 							
 	vTaskStartScheduler();

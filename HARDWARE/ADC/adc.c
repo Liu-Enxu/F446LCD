@@ -11,7 +11,7 @@ void Adc_init(void){
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA,ENABLE);
 	
 	
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;    //ÍÆÍìÊä³ö
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
@@ -33,7 +33,8 @@ void Adc_init(void){
 }
 
 u16 Get_Adc(u8 ch){
-	ADC_RegularChannelConfig(ADC1, ch, 1, ADC_SampleTime_28Cycles);
+	ADC_RegularChannelConfig(ADC1, ch, 1, ADC_SampleTime_84Cycles);
+	ADC_ClearFlag(ADC1, ADC_FLAG_EOC);
 	ADC_SoftwareStartConv(ADC1);
 	while(!ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC));
 	return ADC_GetConversionValue(ADC1);
@@ -44,8 +45,10 @@ u16 Get_Adc_Average(u8 ch, u8 times){
 	u8 t;
 	for(t=0;t<times;t++){
 		tmp += Get_Adc(ch);
-//		delay_ms(5);
-		vTaskDelay(5);
+//		vTaskDelay(pdMS_TO_TICKS(2));
 	}
+//	u16 result = (u16)(tmp/times);
+//	return result;
 	return (u16)(tmp/times);
+	
 }
