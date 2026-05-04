@@ -86,4 +86,4 @@ void create_screen_main(void);
 
 
 
-#endif /*EEZ_LVGL_UI_SCREENS_H*/
+#endif /*__SCREENS_H*/

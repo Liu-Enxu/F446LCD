@@ -387,13 +387,14 @@ void create_screen_main(void){
 		// menu
 		main->menu_obj = lv_menu_create(main->screen);
 		lv_obj_set_pos(main->menu_obj, 0, 30);
-		lv_obj_set_size(main->menu_obj,LV_SIZE_CONTENT,100);
+		lv_obj_set_size(main->menu_obj,200,100);
 		lv_obj_add_flag(main->menu_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
 			// menu page
 			main->menu_page_obj = lv_menu_page_create(main->menu_obj, NULL);
 			lv_obj_add_flag(main->menu_page_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+			lv_obj_t * tmp_main_section = lv_menu_section_create(main->menu_page_obj);
 				// splash
-				main->menu_splash_obj = lv_menu_cont_create(main->menu_page_obj);
+				main->menu_splash_obj = lv_menu_cont_create(tmp_main_section);
 				lv_obj_set_height(main->menu_splash_obj, 30);
 				lv_obj_add_flag(main->menu_splash_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
 					// splash button
@@ -410,7 +411,7 @@ void create_screen_main(void){
 						lv_obj_add_style(main->menu_splash_l_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
 						lv_obj_add_flag(main->menu_splash_l_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
 				// calendar F133
-				main->menu_calendar_obj = lv_menu_cont_create(main->menu_page_obj);
+				main->menu_calendar_obj = lv_menu_cont_create(tmp_main_section);
 				lv_obj_set_height(main->menu_calendar_obj, 30);
 				lv_obj_add_flag(main->menu_calendar_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
 					// calendar button
@@ -427,7 +428,7 @@ void create_screen_main(void){
 						lv_obj_add_style(main->menu_calendar_l_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
 						lv_obj_add_flag(main->menu_calendar_l_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
 				// settings	\xEF\x80\x93 or F40D or F085
-				main->menu_settings_obj = lv_menu_cont_create(main->menu_page_obj);
+				main->menu_settings_obj = lv_menu_cont_create(tmp_main_section);
 				lv_obj_set_height(main->menu_settings_obj, 30);
 				lv_obj_add_flag(main->menu_settings_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
 					// settings button
@@ -443,10 +444,31 @@ void create_screen_main(void){
 						lv_obj_set_style_align(main->menu_settings_l_obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
 						lv_obj_add_style(main->menu_settings_l_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
 						lv_obj_add_flag(main->menu_settings_l_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
-		
+						
+						// settings subpage
+						lv_obj_t * sub_settings_page = lv_menu_page_create(main->menu_obj, NULL);
+						lv_obj_set_style_pad_hor(sub_settings_page, lv_obj_get_style_pad_left(lv_menu_get_main_header(main->menu_obj), 0), 0);
+						lv_menu_separator_create(sub_settings_page);
+						lv_obj_t * tmp_section = lv_menu_section_create(sub_settings_page);
+						
+						lv_obj_t * tmp_cont = lv_menu_cont_create(tmp_section);
+						lv_obj_t * tmp_lbl = lv_label_create(tmp_cont);
+						lv_label_set_text(tmp_lbl, "setting page");
+						lv_label_set_long_mode(tmp_lbl, LV_LABEL_LONG_SCROLL_CIRCULAR);
+						lv_obj_set_flex_grow(tmp_lbl, 1);
+
+						lv_menu_set_load_page_event(main->menu_obj, main->menu_settings_obj, sub_settings_page);
+
+
+						// lv_event_send(lv_obj_get_child(lv_obj_get_child(lv_menu_get_cur_sidebar_page(main->menu_obj), 0), 0), LV_EVENT_CLICKED, NULL);
+
 				
-		lv_menu_set_page(main->menu_obj, main->menu_page_obj);
-		lv_obj_set_width(lv_obj_get_child(main->menu_obj, 1), 0);	
+		// lv_menu_set_page(main->menu_obj, main->menu_page_obj);
+		// lv_obj_set_style_pad_hor(main->menu_page_obj, lv_obj_get_style_pad_left(lv_menu_get_main_header(main->menu_obj), 0), 0);	
+
+		// lv_menu_set_page(main->menu_obj, NULL);
+		lv_menu_set_sidebar_page(main->menu_obj, main->menu_page_obj);
+
 		lv_obj_add_flag(main->menu_obj, LV_OBJ_FLAG_HIDDEN);
 		
 		// folder
