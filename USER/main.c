@@ -39,7 +39,7 @@
 TaskHandle_t dispTaskHandle;
 void disp_task(void *pvParameters){
 	pvParameters = pvParameters;
-	create_screen_cali();
+	create_screen_load();
 	while(1){
 		lv_timer_handler();
 		vTaskDelay(5);

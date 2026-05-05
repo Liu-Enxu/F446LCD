@@ -248,8 +248,8 @@ static void touchpad_get_xy(lv_coord_t * x, lv_coord_t * y)
 			*x = (lv_coord_t)((int32_t)(raw_x - calibrat_t.adc_x_left) * (HOR_RESOLUTION - 30) / den_x + 30);
 			*y = (lv_coord_t)((int32_t)(raw_y - calibrat_t.adc_y_top)  * (VER_RESOLUTION - 30) / den_y + 30);
 		} else {
-			*x = (lv_coord_t)(HOR_RESOLUTION * (raw_x - 70) / (940 - 70));
-			*y = (lv_coord_t)(VER_RESOLUTION - (lv_coord_t)VER_RESOLUTION * ((lv_coord_t)raw_y - 100) / (840 - 100));
+			*x = (lv_coord_t)(HOR_RESOLUTION * (raw_x - 116) / (907 - 116));
+			*y = (lv_coord_t)(VER_RESOLUTION - (lv_coord_t)VER_RESOLUTION * ((lv_coord_t)raw_y - 147) / (850 - 147));
 		}
 		if (*x < 0)                *x = 0;
 		if (*x >= HOR_RESOLUTION)  *x = HOR_RESOLUTION - 1;
