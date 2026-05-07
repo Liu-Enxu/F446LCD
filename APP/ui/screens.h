@@ -18,15 +18,15 @@ typedef struct {
 } scrn_cali_t;
 
 typedef struct {
-		lv_obj_t *screen;
+	lv_obj_t *screen;
     lv_obj_t *L_obj;
     lv_obj_t *b_obj;
-		lv_obj_t *l_obj;
-		lv_obj_t *ascii_obj;
-		lv_obj_t *pos_obj;
-		lv_obj_t *posX_obj;
-		lv_obj_t *posY_obj;
-		lv_obj_t *welcome_obj;
+	lv_obj_t *l_obj;
+	lv_obj_t *ascii_obj;
+	lv_obj_t *pos_obj;
+	lv_obj_t *posX_obj;
+	lv_obj_t *posY_obj;
+	lv_obj_t *welcome_obj;
 } scrn_load_t;
 
 
@@ -41,9 +41,9 @@ typedef struct {
 				lv_obj_t *menu_splash_obj;
 					lv_obj_t *menu_splash_b_obj;
 						lv_obj_t *menu_splash_l_obj;
-				lv_obj_t *menu_calendar_obj;
-					lv_obj_t *menu_calendar_b_obj;
-						lv_obj_t *menu_calendar_l_obj;
+				lv_obj_t *menu_calibrate_obj;
+					lv_obj_t *menu_calibrate_b_obj;
+						lv_obj_t *menu_calibrate_l_obj;
 				lv_obj_t *menu_settings_obj;
 					lv_obj_t *menu_settings_b_obj;
 						lv_obj_t *menu_settings_l_obj;
@@ -54,8 +54,8 @@ typedef struct {
 		lv_obj_t *terminal_l_obj;
 	
 		// footer/status bar
-    lv_obj_t *bar_obj;
-    lv_obj_t *ret_obj;
+    	lv_obj_t *bar_obj;
+    	lv_obj_t *ret_obj;
 		lv_obj_t *ret_val_obj;
 		lv_obj_t *pos_obj;
 		lv_obj_t *posX_obj;
@@ -72,6 +72,36 @@ typedef struct {
 		lv_obj_t *SDx_obj;
 		lv_obj_t *sta_obj;
 } scrn_main_t;
+
+
+typedef struct{
+	lv_obj_t *menu_obj;
+	lv_obj_t *menu_page_obj;	// root page
+	
+	uint8_t section_len;	// number of sections
+	section_t **menu_sections;	// array of ptrs of sections
+} menu_t;
+
+typedef struct {
+	lv_obj_t *section_obj;
+	uint8_t cont_len;	// number of contents
+	cont_t **section_conts;		// array of contents
+} section_t;
+
+typedef struct {
+	lv_obj_t *cont_obj;
+	lv_obj_t *cont_label;	// content label
+	submenu_t *cont_submenu;
+} cont_t;
+
+typedef struct {
+	lv_obj_t *submenu_page_obj;	// lv_obj_t * sub_about_page = lv_menu_page_create(menu, NULL);
+	
+	uint8_t section_len;	// number of sections
+	section_t **submenu_sections;	// array of ptrs of sections
+
+} submenu_t;	
+
 
 
 typedef struct{
