@@ -57,11 +57,16 @@ menu_t* create_menu(lv_obj_t *parent,
 /*  create_page                                                         */
 /* ================================================================== */
 
-page_t* create_page(menu_t *parent_menu, uint8_t section_len)
+page_t* create_page(menu_t *parent_menu, cont_t *parent_cont, uint8_t section_len)
 {
     // check for valid args
     if (parent_menu == NULL || section_len == 0) {
         printf("Invalid args in create_page!!\r\n");
+        return NULL;
+    }
+    // valid page vacancy
+    if (parent_menu->root_page_obj != NULL && (parent_cont == NULL || parent_cont->cont_subpage != NULL)){
+        printf("Neither root page or content subpage is empty!");
         return NULL;
     }
     // struct malloc
@@ -70,7 +75,7 @@ page_t* create_page(menu_t *parent_menu, uint8_t section_len)
         printf("Error allocating memory for page_t!!\r\n");
         return NULL;
     }
- 
+
     /* page_obj — created as a child of the menu widget */
     my_page->page_obj = lv_menu_page_create(parent_menu->menu_obj, NULL);
     // lv_obj_set_style_pad_hor(my_page->page_obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);    //  ?
@@ -100,8 +105,8 @@ page_t* create_page(menu_t *parent_menu, uint8_t section_len)
 		lv_menu_set_page(parent_menu->menu_obj, NULL);
 		lv_obj_set_width(((lv_menu_t*)(parent_menu->menu_obj))->sidebar, LV_PCT(50));
         lv_obj_add_flag(lv_menu_get_sidebar_header(parent_menu->menu_obj), LV_OBJ_FLAG_HIDDEN);
-        
-       
+    } else if (parent_cont != NULL && parent_cont->cont_subpage == NULL) {
+        cont_set_subpage(parent_menu, parent_cont, my_page);
     }
  
     return my_page;
@@ -128,6 +133,12 @@ section_t* create_section(page_t *parent_page, uint8_t cont_len){
 
     //  section_obj
     my_section->section_obj = lv_menu_section_create(parent_page->page_obj);
+    if(LV_RES_INV == page_add_section(parent_page, my_section)){
+        lv_obj_del(my_section->section_obj);
+        lv_mem_free(my_section);
+        return NULL;
+    };
+
     //  cont_len
     my_section->cont_len = cont_len;
     //  section_conts
@@ -162,8 +173,16 @@ cont_t* create_content(section_t *parent_sect, const char* my_cont_l){
         return NULL;
     }
 
-    //  cont_obj
+    //  cont_obj create
     my_cont->cont_obj = lv_menu_cont_create(parent_sect->section_obj);
+    // add cont_obj to section
+    if(LV_RES_INV == section_add_cont(parent_sect, my_cont)){
+        lv_obj_del(my_cont->cont_obj);
+        lv_mem_free(my_cont);
+        return NULL;
+    }
+
+    // cont_obj properties
     lv_obj_set_height(my_cont->cont_obj, 30);
     lv_obj_set_flex_align(my_cont->cont_obj, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
 	lv_obj_clear_flag(my_cont->cont_obj, LV_OBJ_FLAG_SCROLLABLE);
@@ -186,19 +205,19 @@ cont_t* create_content(section_t *parent_sect, const char* my_cont_l){
 /*  Attachment helpers                                                  */
 /* ================================================================== */
  
-lv_res_t menu_add_page(menu_t *my_menu, page_t *page)
-{
-    /* menu_t does not hold a pages array itself — pages live inside the
-       LVGL menu widget.  This helper exists for symmetry and records the
-       first page as root if not already set. */
-    if (my_menu == NULL || page == NULL) return LV_RES_INV;
+// lv_res_t menu_add_page(menu_t *my_menu, page_t *page)
+// {
+//     /* menu_t does not hold a pages array itself — pages live inside the
+//        LVGL menu widget.  This helper exists for symmetry and records the
+//        first page as root if not already set. */
+//     if (my_menu == NULL || page == NULL) return LV_RES_INV;
  
-    if (my_menu->root_page_obj == NULL) {
-        my_menu->root_page_obj = page;
-        lv_menu_set_page(my_menu->menu_obj, page->page_obj);
-    }
-    return LV_RES_OK;
-}
+//     if (my_menu->root_page_obj == NULL) {
+//         my_menu->root_page_obj = page;
+//         lv_menu_set_page(my_menu->menu_obj, page->page_obj);
+//     }
+//     return LV_RES_OK;
+// }
  
 lv_res_t page_add_section(page_t *page, section_t *section)
 {
@@ -213,7 +232,15 @@ lv_res_t page_add_section(page_t *page, section_t *section)
     page->menu_sections[slot] = section;
     return LV_RES_OK;
 }
- 
+
+lv_res_t page_add_obj(page_t *page, lv_obj_t *lv_obj)
+{
+    if (page == NULL || lv_obj == NULL) return LV_RES_INV;
+    
+    return LV_RES_OK;
+}
+
+
 lv_res_t section_add_cont(section_t *section, cont_t *cont)
 {
     if (section == NULL || cont == NULL) return LV_RES_INV;

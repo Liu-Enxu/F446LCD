@@ -89,7 +89,7 @@ menu_t* create_menu(lv_obj_t *parent,
  * @param section_len  Maximum number of sections this page will hold
  * @return             Pointer to the new page_t, or NULL on failure.
  */
-page_t* create_page(menu_t *parent_menu, uint8_t section_len);
+page_t* create_page(menu_t *parent_menu, cont_t *parent_cont, uint8_t section_len);
  
 /**
  * Allocate and initialise a section inside @p parent_page.
@@ -113,18 +113,24 @@ cont_t* create_content(section_t *parent_sect, const char *my_cont_l);
 /*  Attachment helpers                                                  */
 /* ------------------------------------------------------------------ */
  
-/**
- * Register @p page into @p my_menu's section array at the next free slot.
- * @return LV_RES_OK on success, LV_RES_INV if the array is full.
- */
-lv_res_t menu_add_page(menu_t *my_menu, page_t *page);
+// /**
+//  * Register @p page into @p my_menu's section array at the next free slot.
+//  * @return LV_RES_OK on success, LV_RES_INV if the array is full.
+//  */
+// lv_res_t menu_add_page(menu_t *my_menu, page_t *page);
  
 /**
  * Register @p section into @p page's section array at the next free slot.
  * @return LV_RES_OK on success, LV_RES_INV if the array is full.
  */
 lv_res_t page_add_section(page_t *page, section_t *section);
- 
+
+/**
+ * Register @p lv_obj into @p page's section array at the next free slot.
+ * @return LV_RES_OK on success, LV_RES_INV if the array is full.
+ */
+lv_res_t page_add_obj(page_t *page, lv_obj_t *lv_obj);
+
 /**
  * Register @p cont into @p section's content array at the next free slot.
  * @return LV_RES_OK on success, LV_RES_INV if the array is full.
