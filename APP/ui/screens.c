@@ -8,10 +8,6 @@
 
 #include "LCD.h"
 
-static u8  id = 0;
-static u8  cali_sub = 0;
-static u32 cali_acc_x = 0;
-static u32 cali_acc_y = 0;
 static u16 circle_pos[6][2] = {{30,30},{HOR_RESOLUTION/2,30},{HOR_RESOLUTION,30},{30,VER_RESOLUTION},{HOR_RESOLUTION/2,VER_RESOLUTION},{HOR_RESOLUTION,VER_RESOLUTION}};
 
 static void cali_cb(lv_event_t* e){
@@ -21,10 +17,10 @@ static void cali_cb(lv_event_t* e){
 	
 	// id 0-5: accumulate taps
 	if (0==calibrat_t.isValidLimSet){
-		if (circle_pos[id][0] < HOR_RESOLUTION/4) {
+		if (circle_pos[calibrat_t.id][0] < HOR_RESOLUTION/4) {
 			calibrat_t.valid_x_min = 0;
 			calibrat_t.valid_x_max = 200; 
-		} else if (circle_pos[id][0] < 3*HOR_RESOLUTION/4) {
+		} else if (circle_pos[calibrat_t.id][0] < 3*HOR_RESOLUTION/4) {
 			calibrat_t.valid_x_min = 1024/2-100;
 			calibrat_t.valid_x_max = 1024/2+100; 
 		} else {
@@ -32,10 +28,10 @@ static void cali_cb(lv_event_t* e){
 			calibrat_t.valid_x_max = 1024;
 		}
 
-		if (circle_pos[id][1] < VER_RESOLUTION/4) {
+		if (circle_pos[calibrat_t.id][1] < VER_RESOLUTION/4) {
 			calibrat_t.valid_y_min = 1024-200;
 			calibrat_t.valid_y_max = 1024;	
-		} else if (circle_pos[id][1] < 3*VER_RESOLUTION/4) {
+		} else if (circle_pos[calibrat_t.id][1] < 3*VER_RESOLUTION/4) {
 			calibrat_t.valid_y_min = 1024/2-100;
 			calibrat_t.valid_y_max = 1024/2+100; 
 		} else {
@@ -60,19 +56,19 @@ static void cali_cb(lv_event_t* e){
 		calibrat_t.isInvalid = 0;
 		return;
 	} else {
-		cali_acc_x += lv_cursor_pos.raw_x;
-		cali_acc_y += lv_cursor_pos.raw_y;
-		cali_sub++;
+		calibrat_t.cali_acc_x += lv_cursor_pos.raw_x;
+		calibrat_t.cali_acc_y += lv_cursor_pos.raw_y;
+		calibrat_t.cali_sub++;
 	}
 
-	if(cali_sub < 3){
-		lv_label_set_text_fmt(cali_scrn->circle_pos_obj, "%u,%u (%u/3)", circle_pos[id][0], circle_pos[id][1], cali_sub);
+	if(calibrat_t.cali_sub < 3){
+		lv_label_set_text_fmt(cali_scrn->circle_pos_obj, "%u,%u (%u/3)", circle_pos[calibrat_t.id][0], circle_pos[calibrat_t.id][1], calibrat_t.cali_sub);
 		return;
 	} else {
 		// 3rd tap: store average and advance
-		u16 avg_x = cali_acc_x / 3;
-		u16 avg_y = cali_acc_y / 3;
-		switch(id){
+		u16 avg_x = calibrat_t.cali_acc_x / 3;
+		u16 avg_y = calibrat_t.cali_acc_y / 3;
+		switch(calibrat_t.id){
 			case 0: calibrat_t.tl_x = avg_x; calibrat_t.tl_y = avg_y; break;
 			case 1: calibrat_t.tm_x = avg_x; calibrat_t.tm_y = avg_y; break;
 			case 2: calibrat_t.tr_x = avg_x; calibrat_t.tr_y = avg_y; break;
@@ -80,18 +76,23 @@ static void cali_cb(lv_event_t* e){
 			case 4: calibrat_t.bm_x = avg_x; calibrat_t.bm_y = avg_y; break;
 			case 5: calibrat_t.br_x = avg_x; calibrat_t.br_y = avg_y; break;
 		}
-		cali_acc_x = 0; cali_acc_y = 0; cali_sub = 0; calibrat_t.isValidLimSet = 0; calibrat_t.isInvalid = 0;
-		id++;
+		calibrat_t.cali_acc_x = 0; 
+		calibrat_t.cali_acc_y = 0; 
+		calibrat_t.cali_sub = 0; 
+		calibrat_t.isValidLimSet = 0; 
+		calibrat_t.isInvalid = 0;
+		calibrat_t.id++;
 		
-		if(6 > id){
-			lv_obj_set_pos(cali_scrn->circle, circle_pos[id][0]-30, circle_pos[id][1]-30);
-			lv_label_set_text_fmt(cali_scrn->circle_pos_obj, "%u,%u (0/3)", circle_pos[id][0], circle_pos[id][1]);
+		if(6 > calibrat_t.id){
+			lv_obj_set_pos(cali_scrn->circle, circle_pos[calibrat_t.id][0]-30, circle_pos[calibrat_t.id][1]-30);
+			lv_label_set_text_fmt(cali_scrn->circle_pos_obj, "%u,%u (0/3)", circle_pos[calibrat_t.id][0], circle_pos[calibrat_t.id][1]);
 		} else {
 			calibrat_t.adc_x_left  = (calibrat_t.tl_x + calibrat_t.bl_x) / 2;
 			calibrat_t.adc_x_right = (calibrat_t.tr_x + calibrat_t.br_x) / 2;
 			calibrat_t.adc_y_top   = (calibrat_t.tl_y + calibrat_t.tm_y + calibrat_t.tr_y) / 3;
 			calibrat_t.adc_y_bot   = (calibrat_t.bl_y + calibrat_t.bm_y + calibrat_t.br_y) / 3;
 			calibrat_t.calibrated  = 1;
+			calibrat_t.id = 0; calibrat_t.cali_acc_x = 0; calibrat_t.cali_acc_y = 0; calibrat_t.cali_sub = 0;
 			lv_obj_add_flag(cali_scrn->circle, LV_OBJ_FLAG_HIDDEN);
 			printf("cal: xl=%u xr=%u yt=%u yb=%u\r\n",
 				calibrat_t.adc_x_left, calibrat_t.adc_x_right,
@@ -125,7 +126,6 @@ static void cali_cb(lv_event_t* e){
 }
 
 void create_screen_cali(void){
-	id = 0; cali_sub = 0; cali_acc_x = 0; cali_acc_y = 0;
 	scrn_cali_t *cali = lv_mem_alloc(sizeof(scrn_cali_t));
 	lv_memset_00(cali, sizeof(scrn_cali_t));
 	
@@ -139,7 +139,7 @@ void create_screen_cali(void){
 	// circle
 	cali->circle = lv_obj_create(cali->screen);
 	lv_obj_set_size(cali->circle, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-	lv_obj_set_pos(cali->circle,circle_pos[id][0]-30,circle_pos[id][1]-30);
+	lv_obj_set_pos(cali->circle,circle_pos[calibrat_t.id][0]-30,circle_pos[calibrat_t.id][1]-30);
 	lv_obj_set_style_radius(cali->circle, 30, LV_PART_MAIN | LV_STATE_DEFAULT);
 	lv_obj_set_style_bg_color(cali->circle, lv_color_hex(0xffffff), LV_PART_MAIN | LV_STATE_DEFAULT);
   	lv_obj_set_style_bg_opa(cali->circle, LV_OPA_COVER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -167,7 +167,7 @@ void create_screen_cali(void){
 
 	// circle pos
 	cali->circle_pos_obj = lv_label_create(cali->pos_obj);
-	lv_label_set_text_fmt(cali->circle_pos_obj,"%u,%u (0/3)",circle_pos[id][0],circle_pos[id][1]);
+	lv_label_set_text_fmt(cali->circle_pos_obj,"%u,%u (0/3)",circle_pos[calibrat_t.id][0],circle_pos[calibrat_t.id][1]);
 	lv_obj_add_flag(cali->circle_pos_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
 
 	cali->lbl_sep_obj = lv_label_create(cali->pos_obj);
@@ -317,6 +317,7 @@ static void menu_to_splash_cb(lv_event_t* e) {
 		lv_cursor_pos.label_x = NULL;
 		lv_cursor_pos.label_y = NULL;
 		taskEXIT_CRITICAL();
+		free_menu(s->menu);	// need to free menu manually
 		lv_obj_clean(s->screen);
 		create_screen_load();
 		lv_obj_del(s->screen);
@@ -331,7 +332,7 @@ static void menu_to_cali_cb(lv_event_t* e) {
 		lv_cursor_pos.label_x = NULL;
 		lv_cursor_pos.label_y = NULL;
 		taskEXIT_CRITICAL();
-		id = 0;
+		free_menu(s->menu);	// need to free menu manually
 		lv_obj_clean(s->screen);
 		create_screen_cali();
 		lv_obj_del(s->screen);
@@ -410,7 +411,7 @@ void create_screen_main(void){
 				cont_t *settings_cont = create_content(main_section, "settings");
 				// lv_obj_add_event_cb(settings_cont->cont_obj, menu_to_settings_cb, LV_EVENT_ALL, main);
 				// section_add_cont(main_section, settings_cont);
-
+				cont_t *wrong_cont  = create_content(main_section, "wrong");
 					// settings subpage
 					page_t    *settings_page    = create_page(main->menu, settings_cont, 1);
 					section_t *settings_section = create_section(settings_page, 1);

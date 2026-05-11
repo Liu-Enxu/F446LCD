@@ -23,6 +23,11 @@ typedef struct {
 	u16 bl_x; u16 bl_y;
 	u16 bm_x; u16 bm_y;
 	u16 br_x; u16 br_y;
+	// calibration var for calculation
+	u8  id;
+	u8  cali_sub;
+	u32 cali_acc_x;
+	u32 cali_acc_y;
 	// individual circle valid range
 	u16 valid_x_min; u16 valid_x_max;
 	u16 valid_y_min; u16 valid_y_max;
