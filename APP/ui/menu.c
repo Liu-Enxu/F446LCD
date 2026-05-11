@@ -1,0 +1,287 @@
+#include "menu.h"
+#include <stdio.h>
+
+/* ================================================================== */
+/*  Internal helpers                                                    */
+/* ================================================================== */
+ 
+/** Return the first NULL slot index in a pointer array, or -1 if full. */
+static int find_free_slot(void **arr, uint8_t len)
+{
+    for (uint8_t i = 0; i < len; i++) {
+        if (arr[i] == NULL) return (int)i;
+    }
+    return -1;
+}
+
+
+/* ================================================================== */
+/*  create_menu                                                         */
+/* ================================================================== */
+
+menu_t* create_menu(lv_obj_t *parent, 
+                    uint16_t menu_x, uint16_t menu_y, 
+                    uint16_t menu_w, uint16_t menu_h)
+{
+    //  check for valid params
+    if(parent==NULL || menu_w == 0 || menu_h == 0){
+        printf("Invalid args in create_menu!\r\n");
+        return NULL;
+    }
+    //  struct malloc
+    menu_t* my_menu = lv_mem_alloc(sizeof(menu_t));
+    if (my_menu == NULL){
+        printf("Error allocating memory for menu_t!!\r\n");
+        return NULL;
+    }
+    //  menu_obj
+    my_menu->menu_obj = lv_menu_create(parent);
+    lv_obj_set_pos(my_menu->menu_obj, menu_x, menu_y);
+    lv_obj_set_size(my_menu->menu_obj, menu_w, menu_h);
+    lv_obj_set_style_bg_opa(my_menu->menu_obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_add_flag(my_menu->menu_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+    //  root_page_obj
+    my_menu->root_page_obj = NULL;
+    
+    //  config menu properties
+//    lv_obj_set_width(((lv_menu_t*)(my_menu->menu_obj))->sidebar, LV_PCT(50));
+    // lv_obj_add_flag(lv_menu_get_sidebar_header(my_menu->menu_obj), LV_OBJ_FLAG_HIDDEN);
+    lv_obj_add_flag(lv_menu_get_main_header(my_menu->menu_obj), LV_OBJ_FLAG_HIDDEN);
+    //  hide menu by default
+    lv_obj_add_flag(my_menu->menu_obj, LV_OBJ_FLAG_HIDDEN);
+    
+    return my_menu;
+}
+
+/* ================================================================== */
+/*  create_page                                                         */
+/* ================================================================== */
+
+page_t* create_page(menu_t *parent_menu, uint8_t section_len)
+{
+    // check for valid args
+    if (parent_menu == NULL || section_len == 0) {
+        printf("Invalid args in create_page!!\r\n");
+        return NULL;
+    }
+    // struct malloc
+    page_t *my_page = lv_mem_alloc(sizeof(page_t));
+    if (my_page == NULL) {
+        printf("Error allocating memory for page_t!!\r\n");
+        return NULL;
+    }
+ 
+    /* page_obj — created as a child of the menu widget */
+    my_page->page_obj = lv_menu_page_create(parent_menu->menu_obj, NULL);
+    // lv_obj_set_style_pad_hor(my_page->page_obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);    //  ?
+    lv_obj_set_style_bg_opa(my_page->page_obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_clear_flag(my_page->page_obj, LV_OBJ_FLAG_SCROLLABLE);
+    lv_obj_add_flag(my_page->page_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+    /* section_len */
+    my_page->section_len = section_len;
+ 
+    /* menu_sections — array of section_t pointers, all NULL initially */
+    my_page->menu_sections = lv_mem_alloc(section_len * sizeof(section_t *));
+    if (my_page->menu_sections == NULL) {
+        lv_mem_free(my_page);
+        printf("Error allocating memory for menu_sections in page_t!!\r\n");
+        return NULL;
+    }
+    for (uint8_t i = 0; i < section_len; i++) {
+        my_page->menu_sections[i] = NULL;
+    }
+ 
+    /* If this is the first page, make it the root */
+    if (parent_menu->root_page_obj == NULL) {
+        //  set root page and sidebar
+        parent_menu->root_page_obj = my_page;
+        // sidebar setting
+        lv_menu_set_sidebar_page(parent_menu->menu_obj, my_page->page_obj);
+		lv_menu_set_page(parent_menu->menu_obj, NULL);
+		lv_obj_set_width(((lv_menu_t*)(parent_menu->menu_obj))->sidebar, LV_PCT(50));
+        lv_obj_add_flag(lv_menu_get_sidebar_header(parent_menu->menu_obj), LV_OBJ_FLAG_HIDDEN);
+        
+       
+    }
+ 
+    return my_page;
+}
+
+/* ================================================================== */
+/*  create_section                                                      */
+/* ================================================================== */
+ 
+section_t* create_section(page_t *parent_page, uint8_t cont_len){
+    
+    /* check for valid params */
+    if (parent_page == NULL || cont_len == 0) {
+        printf("Invalid args in create_section!\r\n");
+        return NULL;
+    }
+
+    // struct malloc
+    section_t* my_section = lv_mem_alloc(sizeof(section_t));
+    if (my_section == NULL){
+        printf("Error allocating memory for section_t!!\r\n");
+        return NULL;
+    } 
+
+    //  section_obj
+    my_section->section_obj = lv_menu_section_create(parent_page->page_obj);
+    //  cont_len
+    my_section->cont_len = cont_len;
+    //  section_conts
+    my_section->section_conts = lv_mem_alloc(cont_len*sizeof(cont_t*));
+    if (my_section->section_conts == NULL){
+        lv_mem_free(my_section);
+        printf("Error allocating memory for section_conts in certain section_t!!\r\n");
+        return NULL;
+    } 
+    for (uint8_t i = 0; i < cont_len; i++) {
+        my_section->section_conts[i] = NULL;
+    }
+
+    return my_section;
+}
+
+/* ================================================================== */
+/*  create_content                                                      */
+/* ================================================================== */
+
+cont_t* create_content(section_t *parent_sect, const char* my_cont_l){
+    
+    /* check for valid params */
+    if (parent_sect == NULL || my_cont_l == NULL) {
+        printf("Invalid args in create_content!\r\n");
+        return NULL;
+    }
+    //  struct malloc
+    cont_t *my_cont = lv_mem_alloc(sizeof(cont_t)); // need to be freed lv_mem_free()...
+    if (my_cont == NULL){
+        printf("Error allocating memory for my_cont!!\r\n");
+        return NULL;
+    }
+
+    //  cont_obj
+    my_cont->cont_obj = lv_menu_cont_create(parent_sect->section_obj);
+    lv_obj_set_height(my_cont->cont_obj, 30);
+    lv_obj_set_flex_align(my_cont->cont_obj, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
+	lv_obj_clear_flag(my_cont->cont_obj, LV_OBJ_FLAG_SCROLLABLE);
+	lv_obj_add_flag(my_cont->cont_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+    //  cont_label
+    my_cont->cont_label = lv_label_create(my_cont->cont_obj);
+    lv_label_set_long_mode(my_cont->cont_label, LV_LABEL_LONG_SCROLL_CIRCULAR);
+    lv_obj_set_flex_grow(my_cont->cont_label, 1);   //  expand to fill the remaining horizontal space in the flex
+    lv_label_set_text(my_cont->cont_label, my_cont_l);
+    lv_obj_set_style_align(my_cont->cont_label, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_add_style(my_cont->cont_label,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_add_flag(my_cont->cont_label, LV_OBJ_FLAG_EVENT_BUBBLE);
+    //  cont_subpage
+    my_cont->cont_subpage = NULL;
+
+    return my_cont;
+}
+
+/* ================================================================== */
+/*  Attachment helpers                                                  */
+/* ================================================================== */
+ 
+lv_res_t menu_add_page(menu_t *my_menu, page_t *page)
+{
+    /* menu_t does not hold a pages array itself — pages live inside the
+       LVGL menu widget.  This helper exists for symmetry and records the
+       first page as root if not already set. */
+    if (my_menu == NULL || page == NULL) return LV_RES_INV;
+ 
+    if (my_menu->root_page_obj == NULL) {
+        my_menu->root_page_obj = page;
+        lv_menu_set_page(my_menu->menu_obj, page->page_obj);
+    }
+    return LV_RES_OK;
+}
+ 
+lv_res_t page_add_section(page_t *page, section_t *section)
+{
+    if (page == NULL || section == NULL) return LV_RES_INV;
+ 
+    int slot = find_free_slot((void **)page->menu_sections, page->section_len);
+    if (slot < 0) {
+        printf("Error: page section array is full (capacity %d)!!\r\n",
+               page->section_len);
+        return LV_RES_INV;
+    }
+    page->menu_sections[slot] = section;
+    return LV_RES_OK;
+}
+ 
+lv_res_t section_add_cont(section_t *section, cont_t *cont)
+{
+    if (section == NULL || cont == NULL) return LV_RES_INV;
+ 
+    int slot = find_free_slot((void **)section->section_conts, section->cont_len);
+    if (slot < 0) {
+        printf("Error: section cont array is full (capacity %d)!!\r\n",
+               section->cont_len);
+        return LV_RES_INV;
+    }
+    section->section_conts[slot] = cont;
+    return LV_RES_OK;
+}
+ 
+void cont_set_subpage(menu_t *my_menu, cont_t *cont, page_t *subpage)
+{
+    /* check for valid params */
+    if (my_menu == NULL || cont == NULL || subpage == NULL) {
+        printf("Invalid args in cont_set_subpage!\r\n");
+        return;
+    }
+    
+    cont->cont_subpage = subpage;
+    /* Wire up LVGL navigation so tapping this cont opens the sub-page */
+    lv_menu_set_load_page_event(
+        my_menu->menu_obj,
+        cont->cont_obj,
+        subpage->page_obj
+    );
+}
+ 
+/* ================================================================== */
+/*  Cleanup                                                             */
+/* ================================================================== */
+ 
+void free_content(cont_t *cont)
+{
+    if (cont == NULL) return;
+    /* LVGL objects are deleted with the parent; only free our struct */
+    lv_mem_free(cont);
+}
+ 
+void free_section(section_t *section)
+{
+    if (section == NULL) return;
+    for (uint8_t i = 0; i < section->cont_len; i++) {
+        free_content(section->section_conts[i]);
+    }
+    lv_mem_free(section->section_conts);
+    lv_mem_free(section);
+}
+ 
+void free_page(page_t *page)
+{
+    if (page == NULL) return;
+    for (uint8_t i = 0; i < page->section_len; i++) {
+        free_section(page->menu_sections[i]);
+    }
+    lv_mem_free(page->menu_sections);
+    lv_mem_free(page);
+}
+ 
+void free_menu(menu_t *my_menu)
+{
+    if (my_menu == NULL) return;
+    /* Deleting the LVGL menu object cascades to all child LVGL objects */
+    lv_obj_del(my_menu->menu_obj);
+    free_page(my_menu->root_page_obj);
+    lv_mem_free(my_menu);
+}
+

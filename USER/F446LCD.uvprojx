@@ -781,6 +781,11 @@
               <FileType>1</FileType>
               <FilePath>..\APP\fatsd_app.c</FilePath>
             </File>
+            <File>
+              <FileName>menu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\APP\ui\menu.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

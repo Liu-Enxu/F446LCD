@@ -964,3 +964,7 @@ void vPortHeapResetState( void )
     xNumberOfSuccessfulFrees = ( size_t ) 0U;
 }
 /*-----------------------------------------------------------*/
+
+void vApplicationStackOverflowHook( TaskHandle_t xTask, char * pcTaskName ){
+	printf("Stack overflow in task %s:!!\r\n", pcTaskName);
+}
