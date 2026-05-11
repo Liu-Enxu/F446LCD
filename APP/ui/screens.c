@@ -399,7 +399,6 @@ void create_screen_main(void){
 				// splash
 				cont_t *splash_cont = create_content(main_section, 30);
 				create_cont_lbl(splash_cont, "splash");
-				// lv_obj_add_event_cb(splash_cont->cont_obj, menu_to_splash_cb, LV_EVENT_ALL, main);
 
 					// splash subpage
 					page_t    *splash_page    = create_page(main->menu, splash_cont, 1);
@@ -407,7 +406,7 @@ void create_screen_main(void){
 					cont_t    *splash_item    = create_content(splash_section, 30);
 					create_cont_lbl(splash_item, "go to splash screen");
 					cont_t    *splash_btn_item    = create_content(splash_section, 60);
-					create_cont_btn(splash_btn_item, "GO");
+					create_cont_btn(splash_btn_item, "GO", menu_to_splash_cb, main);
 
 				// calibrate
 				cont_t *calibrate_cont = create_content(main_section, 30);
@@ -420,7 +419,7 @@ void create_screen_main(void){
 					cont_t    *calibrate_item    = create_content(calibrate_section, 30);
 					create_cont_lbl(calibrate_item, "go to calibration screen");
 					cont_t    *calibrate_btn_item    = create_content(calibrate_section, 60);
-					create_cont_btn(calibrate_btn_item, "GO");
+					create_cont_btn(calibrate_btn_item, "GO", menu_to_cali_cb, main);
 
 				// settings (with subpage)
 				cont_t *settings_cont = create_content(main_section, 30);
@@ -433,7 +432,7 @@ void create_screen_main(void){
 					cont_t    *settings_item    = create_content(settings_section, 30);
 					create_cont_lbl(settings_item, "go to settings app");
 					cont_t    *settings_btn_item    = create_content(settings_section, 60);
-					create_cont_btn(settings_btn_item, "GO");
+					create_cont_btn(settings_btn_item, "GO", menu_to_settings_cb, main);
 
 
 		// folder

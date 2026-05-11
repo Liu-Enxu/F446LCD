@@ -123,7 +123,7 @@ lv_obj_t* create_cont_lbl(cont_t* parent_cont, const char* cont_l);
  * @param cont_bl		Label text on button
  * @return             	Pointer to button.
  */
-lv_obj_t* create_cont_btn(cont_t* parent_cont, const char* cont_bl);
+lv_obj_t* create_cont_btn(cont_t* parent_cont, const char* cont_bl, void(*lv_callback)(lv_event_t* e), void* lv_data);
 
 
 /* ------------------------------------------------------------------ */

@@ -259,7 +259,7 @@ lv_obj_t* create_cont_lbl(cont_t* parent_cont, const char* cont_l){
 /*  create_cont_btn                                                   */
 /* ================================================================== */
 
-lv_obj_t* create_cont_btn(cont_t* parent_cont, const char* cont_bl){
+lv_obj_t* create_cont_btn(cont_t* parent_cont, const char* cont_bl, void(*lv_callback)(lv_event_t* e), void* lv_data){
     /* check for valid params */
     if (parent_cont == NULL || cont_bl == NULL) {
         printf("Invalid args in create_cont_lbl!\r\n");
@@ -286,6 +286,8 @@ lv_obj_t* create_cont_btn(cont_t* parent_cont, const char* cont_bl){
     // lv_obj_set_style_bg_opa(my_cont_btn_l, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_add_flag(my_cont_btn_l, LV_OBJ_FLAG_EVENT_BUBBLE);
 
+    // attach button callback
+    lv_obj_add_event_cb(my_cont_btn, lv_callback, LV_EVENT_ALL, lv_data);
     return my_cont_btn;
 
 
@@ -301,6 +303,9 @@ void free_content(cont_t *cont)
 {
     if (cont == NULL) return;
     /* LVGL objects are deleted with the parent; only free our struct */
+    if (cont->cont_subpage != NULL) {
+        free_page(cont->cont_subpage);  // recursively free subpage tree
+    }
     lv_mem_free(cont);
 }
  
