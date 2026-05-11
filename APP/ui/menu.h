@@ -39,7 +39,7 @@ typedef struct menu_t    menu_t;
 struct cont_t {
 	lv_obj_t *cont_obj;
  
-	lv_obj_t *cont_label;	// content label
+	lv_obj_t *cont_attach;	// content obj
 	page_t   *cont_subpage;
 };
  
@@ -99,7 +99,7 @@ page_t* create_page(menu_t *parent_menu, cont_t *parent_cont, uint8_t section_le
  * @return             Pointer to the new section_t, or NULL on failure.
  */
 section_t* create_section(page_t *parent_page, uint8_t cont_len);
- 
+
 /**
  * Allocate and initialise a content row inside @p parent_sect.
  *
@@ -107,41 +107,25 @@ section_t* create_section(page_t *parent_page, uint8_t cont_len);
  * @param my_cont_l    Label text
  * @return             Pointer to the new cont_t, or NULL on failure.
  */
-cont_t* create_content(section_t *parent_sect, const char *my_cont_l);
- 
-/* ------------------------------------------------------------------ */
-/*  Attachment helpers                                                  */
-/* ------------------------------------------------------------------ */
- 
-// /**
-//  * Register @p page into @p my_menu's section array at the next free slot.
-//  * @return LV_RES_OK on success, LV_RES_INV if the array is full.
-//  */
-// lv_res_t menu_add_page(menu_t *my_menu, page_t *page);
- 
-/**
- * Register @p section into @p page's section array at the next free slot.
- * @return LV_RES_OK on success, LV_RES_INV if the array is full.
- */
-lv_res_t page_add_section(page_t *page, section_t *section);
+cont_t* create_content(section_t *parent_sect, uint8_t cont_h);
 
 /**
- * Register @p lv_obj into @p page's section array at the next free slot.
- * @return LV_RES_OK on success, LV_RES_INV if the array is full.
+ * Create a label for content to use.
+ *
+ * @param cont_l		Label text
+ * @return             	Pointer to label.
  */
-lv_res_t page_add_obj(page_t *page, lv_obj_t *lv_obj);
+lv_obj_t* create_cont_lbl(cont_t* parent_cont, const char* cont_l);
 
 /**
- * Register @p cont into @p section's content array at the next free slot.
- * @return LV_RES_OK on success, LV_RES_INV if the array is full.
+ * Create a button for content to use.
+ *
+ * @param cont_bl		Label text on button
+ * @return             	Pointer to button.
  */
-lv_res_t section_add_cont(section_t *section, cont_t *cont);
- 
-/**
- * Attach a sub-page to a content item so tapping it navigates deeper.
- */
-void cont_set_subpage(menu_t *my_menu, cont_t *cont, page_t *subpage);
- 
+lv_obj_t* create_cont_btn(cont_t* parent_cont, const char* cont_bl);
+
+
 /* ------------------------------------------------------------------ */
 /*  Cleanup                                                             */
 /* ------------------------------------------------------------------ */

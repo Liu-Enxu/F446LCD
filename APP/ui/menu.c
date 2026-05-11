@@ -175,10 +175,10 @@ section_t* create_section(page_t *parent_page, uint8_t cont_len){
 /*  create_content                                                      */
 /* ================================================================== */
 
-cont_t* create_content(section_t *parent_sect, const char* my_cont_l){
+cont_t* create_content(section_t *parent_sect, uint8_t cont_h){
     
     /* check for valid params */
-    if (parent_sect == NULL || my_cont_l == NULL) {
+    if (parent_sect == NULL) {
         printf("Invalid args in create_content!\r\n");
         return NULL;
     }
@@ -202,18 +202,19 @@ cont_t* create_content(section_t *parent_sect, const char* my_cont_l){
     my_cont->cont_obj = lv_menu_cont_create(parent_sect->section_obj);
 
     // cont_obj properties
-    lv_obj_set_height(my_cont->cont_obj, 30);
+    lv_obj_set_height(my_cont->cont_obj, cont_h);
     lv_obj_set_flex_align(my_cont->cont_obj, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
-	lv_obj_clear_flag(my_cont->cont_obj, LV_OBJ_FLAG_SCROLLABLE);
+    lv_obj_add_style(my_cont->cont_obj,&lv_app_styles.color_combo1,LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_add_style(my_cont->cont_obj,&lv_app_styles.color_combo1,LV_PART_MAIN | LV_STATE_CHECKED);
+    lv_obj_add_style(my_cont->cont_obj,&lv_app_styles.color_combo1,LV_PART_MAIN | LV_STATE_PRESSED);
+    lv_obj_add_style(my_cont->cont_obj,&lv_app_styles.color_combo1,LV_PART_MAIN | LV_STATE_PRESSED | LV_STATE_CHECKED);
+	// lv_obj_add_style(my_cont->cont_obj,&lv_app_styles.color_combo1, LV_PART_MAIN | LV_STATE_ANY);
+    lv_obj_set_style_bg_opa(my_cont->cont_obj, LV_OPA_0, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    lv_obj_clear_flag(my_cont->cont_obj, LV_OBJ_FLAG_SCROLLABLE);
 	lv_obj_add_flag(my_cont->cont_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
-    //  cont_label
-    my_cont->cont_label = lv_label_create(my_cont->cont_obj);
-    lv_label_set_long_mode(my_cont->cont_label, LV_LABEL_LONG_SCROLL_CIRCULAR);
-    lv_obj_set_flex_grow(my_cont->cont_label, 1);   //  expand to fill the remaining horizontal space in the flex
-    lv_label_set_text(my_cont->cont_label, my_cont_l);
-    lv_obj_set_style_align(my_cont->cont_label, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_add_style(my_cont->cont_label,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_add_flag(my_cont->cont_label, LV_OBJ_FLAG_EVENT_BUBBLE);
+    //  cont_attach
+    my_cont->cont_attach = NULL;
     //  cont_subpage
     my_cont->cont_subpage = NULL;
 
@@ -222,78 +223,76 @@ cont_t* create_content(section_t *parent_sect, const char* my_cont_l){
 
     return my_cont;
 }
+ 
 
 /* ================================================================== */
-/*  Attachment helpers                                                  */
+/*  create_cont_lbl                                                   */
 /* ================================================================== */
- 
-// lv_res_t menu_add_page(menu_t *my_menu, page_t *page)
-// {
-//     /* menu_t does not hold a pages array itself — pages live inside the
-//        LVGL menu widget.  This helper exists for symmetry and records the
-//        first page as root if not already set. */
-//     if (my_menu == NULL || page == NULL) return LV_RES_INV;
- 
-//     if (my_menu->root_page_obj == NULL) {
-//         my_menu->root_page_obj = page;
-//         lv_menu_set_page(my_menu->menu_obj, page->page_obj);
-//     }
-//     return LV_RES_OK;
-// }
- 
-lv_res_t page_add_section(page_t *page, section_t *section)
-{
-    if (page == NULL || section == NULL) return LV_RES_INV;
- 
-    int slot = find_free_slot((void **)page->menu_sections, page->section_len);
-    if (slot < 0) {
-        printf("Error: page section array is full (capacity %d)!!\r\n",
-               page->section_len);
-        return LV_RES_INV;
-    }
-    page->menu_sections[slot] = section;
-    return LV_RES_OK;
-}
 
-lv_res_t page_add_obj(page_t *page, lv_obj_t *lv_obj)
-{
-    if (page == NULL || lv_obj == NULL) return LV_RES_INV;
-    
-    return LV_RES_OK;
-}
-
-
-lv_res_t section_add_cont(section_t *section, cont_t *cont)
-{
-    if (section == NULL || cont == NULL) return LV_RES_INV;
- 
-    int slot = find_free_slot((void **)section->section_conts, section->cont_len);
-    if (slot < 0) {
-        printf("Error: section cont array is full (capacity %d)!!\r\n",
-               section->cont_len);
-        return LV_RES_INV;
-    }
-    section->section_conts[slot] = cont;
-    return LV_RES_OK;
-}
- 
-void cont_set_subpage(menu_t *my_menu, cont_t *cont, page_t *subpage)
-{
+lv_obj_t* create_cont_lbl(cont_t* parent_cont, const char* cont_l){
     /* check for valid params */
-    if (my_menu == NULL || cont == NULL || subpage == NULL) {
-        printf("Invalid args in cont_set_subpage!\r\n");
-        return;
+    if (parent_cont == NULL || cont_l == NULL) {
+        printf("Invalid args in create_cont_lbl!\r\n");
+        return NULL;
     }
-    
-    cont->cont_subpage = subpage;
-    /* Wire up LVGL navigation so tapping this cont opens the sub-page */
-    lv_menu_set_load_page_event(
-        my_menu->menu_obj,
-        cont->cont_obj,
-        subpage->page_obj
-    );
+
+    //  check for vacancy
+    if (parent_cont->cont_attach != NULL){
+        printf("Content already has attachment!");
+        return NULL;
+    }
+        
+    // create label
+    lv_obj_t *my_cont_label = lv_label_create(parent_cont->cont_obj);
+    lv_label_set_long_mode(my_cont_label, LV_LABEL_LONG_SCROLL_CIRCULAR);
+    lv_obj_set_flex_grow(my_cont_label, 1);   //  expand to fill the remaining horizontal space in the flex
+    // lv_obj_set_flex_align(my_cont_label, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
+    lv_label_set_text(my_cont_label, cont_l);
+    lv_obj_add_style(my_cont_label,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(my_cont_label, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_add_flag(my_cont_label, LV_OBJ_FLAG_EVENT_BUBBLE);
+
+    return my_cont_label;
 }
- 
+
+/* ================================================================== */
+/*  create_cont_btn                                                   */
+/* ================================================================== */
+
+lv_obj_t* create_cont_btn(cont_t* parent_cont, const char* cont_bl){
+    /* check for valid params */
+    if (parent_cont == NULL || cont_bl == NULL) {
+        printf("Invalid args in create_cont_lbl!\r\n");
+        return NULL;
+    }
+
+    //  check for vacancy
+    if (parent_cont->cont_attach != NULL){
+        printf("Content already has attachment!");
+        return NULL;
+    }
+
+    // create button
+    lv_obj_t *my_cont_btn = lv_btn_create(parent_cont->cont_obj);
+    lv_obj_add_style(my_cont_btn,&lv_app_styles.color_combo1,LV_PART_MAIN | LV_STATE_DEFAULT);
+    
+    // create button label
+    lv_obj_t *my_cont_btn_l = lv_label_create(my_cont_btn);
+    lv_label_set_long_mode(my_cont_btn_l, LV_LABEL_LONG_SCROLL_CIRCULAR);
+    lv_obj_set_flex_grow(my_cont_btn_l, 1);   //  expand to fill the remaining horizontal space in the flex
+    // lv_obj_set_flex_align(my_cont_btn_l, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
+    lv_label_set_text(my_cont_btn_l, cont_bl);
+    // lv_obj_add_style(my_cont_btn_l,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
+    // lv_obj_set_style_bg_opa(my_cont_btn_l, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_add_flag(my_cont_btn_l, LV_OBJ_FLAG_EVENT_BUBBLE);
+
+    return my_cont_btn;
+
+
+}
+
+
+
 /* ================================================================== */
 /*  Cleanup                                                             */
 /* ================================================================== */

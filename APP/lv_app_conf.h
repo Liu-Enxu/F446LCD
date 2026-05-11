@@ -5,6 +5,9 @@
 
 // system wide
 typedef struct {
+	lv_color_t color1;
+	lv_color_t color2;
+
 	lv_style_t char_color1;
 	lv_style_t char_color2;
 	lv_style_t color_combo1;

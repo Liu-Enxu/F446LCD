@@ -395,32 +395,46 @@ void create_screen_main(void){
 			// root page: 1 section with 3 contents (splash, calibrate, settings)
 			page_t    *root_page     = create_page(main->menu, NULL, 1);
 			section_t *main_section  = create_section(root_page, 3);
-			printf("Free heap 2: %d\r\n", xPortGetFreeHeapSize());
 
 				// splash
-				cont_t *splash_cont = create_content(main_section, "splash");
+				cont_t *splash_cont = create_content(main_section, 30);
+				create_cont_lbl(splash_cont, "splash");
 				// lv_obj_add_event_cb(splash_cont->cont_obj, menu_to_splash_cb, LV_EVENT_ALL, main);
-				// section_add_cont(main_section, splash_cont);
+
+					// splash subpage
+					page_t    *splash_page    = create_page(main->menu, splash_cont, 1);
+					section_t *splash_section = create_section(splash_page, 2);
+					cont_t    *splash_item    = create_content(splash_section, 30);
+					create_cont_lbl(splash_item, "go to splash screen");
+					cont_t    *splash_btn_item    = create_content(splash_section, 60);
+					create_cont_btn(splash_btn_item, "GO");
 
 				// calibrate
-				cont_t *calibrate_cont = create_content(main_section, "calibrate");
+				cont_t *calibrate_cont = create_content(main_section, 30);
+				create_cont_lbl(calibrate_cont, "calibrate");
 				// lv_obj_add_event_cb(calibrate_cont->cont_obj, menu_to_cali_cb, LV_EVENT_ALL, main);
-				// section_add_cont(main_section, calibrate_cont);
+
+					// calibrate subpage
+					page_t    *calibrate_page    = create_page(main->menu, calibrate_cont, 1);
+					section_t *calibrate_section = create_section(calibrate_page, 2);
+					cont_t    *calibrate_item    = create_content(calibrate_section, 30);
+					create_cont_lbl(calibrate_item, "go to calibration screen");
+					cont_t    *calibrate_btn_item    = create_content(calibrate_section, 60);
+					create_cont_btn(calibrate_btn_item, "GO");
 
 				// settings (with subpage)
-				cont_t *settings_cont = create_content(main_section, "settings");
+				cont_t *settings_cont = create_content(main_section, 30);
+				create_cont_lbl(settings_cont, "settings");
 				// lv_obj_add_event_cb(settings_cont->cont_obj, menu_to_settings_cb, LV_EVENT_ALL, main);
-				// section_add_cont(main_section, settings_cont);
-				cont_t *wrong_cont  = create_content(main_section, "wrong");
+
 					// settings subpage
 					page_t    *settings_page    = create_page(main->menu, settings_cont, 1);
-					section_t *settings_section = create_section(settings_page, 1);
-					cont_t    *settings_item    = create_content(settings_section, "setting page setting page setting page setting page setting page ");
-					// section_add_cont(settings_section, settings_item);
-					// page_add_section(settings_page, settings_section);
-					// cont_set_subpage(main->menu, settings_cont, settings_page);
+					section_t *settings_section = create_section(settings_page, 2);
+					cont_t    *settings_item    = create_content(settings_section, 30);
+					create_cont_lbl(settings_item, "go to settings app");
+					cont_t    *settings_btn_item    = create_content(settings_section, 60);
+					create_cont_btn(settings_btn_item, "GO");
 
-			// page_add_section(root_page, main_section);
 
 		// folder
 		main->folder_obj = lv_btn_create(main->header_obj);
@@ -595,6 +609,7 @@ void create_screen_main(void){
 		lv_obj_add_style(main->sta_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
 		lv_obj_add_flag(main->sta_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
 		
+		printf("Free heap main: %d\r\n", xPortGetFreeHeapSize());
 		lv_disp_load_scr(main->screen);
 		
 }

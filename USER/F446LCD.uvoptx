@@ -159,7 +159,7 @@
           <Type>0</Type>
           <LineNumber>969</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134459598</Address>
+          <Address>134457898</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -175,7 +175,7 @@
           <Type>0</Type>
           <LineNumber>63</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134221508</Address>
+          <Address>134221504</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -189,9 +189,9 @@
         <Bp>
           <Number>2</Number>
           <Type>0</Type>
-          <LineNumber>497</LineNumber>
+          <LineNumber>402</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134251194</Address>
+          <Address>134249922</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -200,7 +200,23 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\APP\ui\screens.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\F446LCD\../APP/ui/screens.c\497</Expression>
+          <Expression>\\F446LCD\../APP/ui/screens.c\402</Expression>
+        </Bp>
+        <Bp>
+          <Number>3</Number>
+          <Type>0</Type>
+          <LineNumber>241</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134247122</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\APP\ui\menu.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\F446LCD\../APP/ui/menu.c\241</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
