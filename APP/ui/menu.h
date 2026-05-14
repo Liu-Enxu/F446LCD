@@ -4,33 +4,6 @@
 #include <lvgl/lvgl.h>
 #include "lv_app_conf.h"
 
-//	cross reference
-// typedef struct {
-// 	lv_obj_t *cont_obj;
-
-// 	lv_obj_t *cont_label;	// content label
-// 	page_t *cont_subpage;
-// } cont_t;
-
-// typedef struct {
-// 	lv_obj_t *section_obj;
-
-// 	uint8_t cont_len;	// number of contents
-// 	cont_t **section_conts;		// array of contents
-// } section_t;
-
-// typedef struct{
-// 	lv_obj_t *page_obj;	// page
-	
-// 	uint8_t section_len;	// number of sections
-// 	section_t **menu_sections;	// array of ptrs of sections
-// } page_t;
-
-// typedef struct{
-// 	lv_obj_t *menu_obj;
-// 	page_t *root_page_obj;
-// } menu_t;
-
 typedef struct cont_t    cont_t;
 typedef struct section_t section_t;
 typedef struct page_t    page_t;

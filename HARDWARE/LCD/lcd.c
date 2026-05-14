@@ -1,6 +1,5 @@
 #include "lcd.h"
 #include "stdlib.h"
-#include "font.h"
 #include "usart.h"
 #include "delay.h"
 #include "timer.h"

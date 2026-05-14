@@ -103,11 +103,8 @@ typedef struct{	// need revise
 
 // constructor funcs
 // should be private now since scrn_manager already handles screen switching?
-scrn_load_t* create_screen_load(void);
-scrn_main_t* create_screen_main(void);
-scrn_cali_t* create_screen_cali(void);
-
-
-
+// scrn_load_t* create_screen_load(void);
+// scrn_main_t* create_screen_main(void);
+// scrn_cali_t* create_screen_cali(void);
 #endif /*__SCREENS_H*/
 

@@ -255,7 +255,7 @@ static void scrn_cali_t_enter(scrn_t* self){
 	lv_disp_load_scr(cali->scrn_base.screen);
 }
 
-scrn_cali_t* create_screen_cali(void){
+static scrn_cali_t* create_screen_cali(void){
 	scrn_cali_t *cali = lv_mem_alloc(sizeof(scrn_cali_t));
 	if(cali == NULL){
 		printf("Failed to allocate memory for scrn_cali_t\r\n");
@@ -369,7 +369,7 @@ static void scrn_load_t_enter(scrn_t* self){
 	lv_disp_load_scr(load->scrn_base.screen);
 }
 
-scrn_load_t* create_screen_load(void) {
+static scrn_load_t* create_screen_load(void) {
 	scrn_load_t *load = lv_mem_alloc(sizeof(scrn_load_t));
 	if(load == NULL){
 		printf("Failed to allocate memory for scrn_load_t\r\n");
@@ -693,7 +693,7 @@ static void scrn_main_t_enter(scrn_t* self){
 	lv_disp_load_scr(main->scrn_base.screen);
 }
 
-scrn_main_t* create_screen_main(void){
+static scrn_main_t* create_screen_main(void){
 	scrn_main_t *main = lv_mem_alloc(sizeof(scrn_main_t));
 	if(main == NULL){
 		printf("Failed to allocate memory for scrn_main_t\r\n");

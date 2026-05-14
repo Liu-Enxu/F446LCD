@@ -77,5 +77,4 @@ extern uint32_t LV_NOTI_NEW;
 
 void lv_app_init(void);
 
-
-#endif
+#endif //__LV_APP_CONF_H
