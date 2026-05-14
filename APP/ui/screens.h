@@ -20,10 +20,11 @@ typedef enum {
 
 typedef struct {
 	// scrn_type_t curr_scrn_type;
+	u8 scrn_manager_inited;
 	scrn_t* curr_scrn_ptr;
 } scrn_manager_t;
 scrn_manager_t* scrn_manager_inst(void);
-void scrn_manager_switch(scrn_t *next); 
+void start_scrn_manager(void);
 
 //	father class/general screen ---------------------------------
 struct scrn_t {
@@ -34,8 +35,8 @@ struct scrn_t {
 	lv_obj_t *posY_obj;
 	
 	// operation funcs
-	scrn_t* (*scrn_t_enter)(scrn_t* self);
-	scrn_t* (*scrn_t_exit)(scrn_t* self);
+	void (*scrn_t_enter)(scrn_t* self);
+	void (*scrn_t_exit)(scrn_t* self);
 };
 
 //	children classes ---------------------------------------------
@@ -108,3 +109,4 @@ scrn_cali_t* create_screen_cali(void);
 
 
 #endif /*__SCREENS_H*/
+

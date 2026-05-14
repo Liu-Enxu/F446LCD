@@ -16,3 +16,4 @@ extern vu8 mouse_moved;
 bool get_touchXY(void);
 
 #endif
+

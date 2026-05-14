@@ -39,7 +39,7 @@
 TaskHandle_t dispTaskHandle;
 void disp_task(void *pvParameters){
 	pvParameters = pvParameters;
-	scrn_manager_switch((scrn_t*)create_screen_load());
+	start_scrn_manager();
 	while(1){
 		lv_timer_handler();
 		vTaskDelay(5);

@@ -22,24 +22,33 @@ static u16 circle_pos[6][2] = {
 /* ================================================================== */
 /*  Screen Manager				   									*/
 /* ================================================================== */
+
+static void scrn_manager_switch(scrn_t *next) {	// use this in all exiting callback
+    scrn_t *curr = scrn_manager_inst()->curr_scrn_ptr;
+    next->scrn_t_enter(next);	// create new scrn before clear old due to stupid logic inside lv_disp_load_scr which asks for old screen (root obj)
+    if (curr) curr->scrn_t_exit(curr);
+    scrn_manager_inst()->curr_scrn_ptr = next;
+}
+
 scrn_manager_t* scrn_manager_inst(void){
 	static scrn_manager_t scrn_manager;
-	static u8 scrn_manager_inited = 0;
-	if (!scrn_manager_inited){
+	if (!scrn_manager.scrn_manager_inited){
 		// scrn_manager.curr_scrn_type = SCREEN_LOAD;
 		scrn_manager.curr_scrn_ptr = NULL;
-		scrn_manager_inited = 1;
+		scrn_manager.scrn_manager_inited = 1;
 	}
 	return &scrn_manager;
 }
 
-void scrn_manager_switch(scrn_t *next) {	// use this in all exiting callback
-    scrn_t *curr = scrn_manager_inst()->curr_scrn_ptr;
-    if (curr) curr->scrn_t_exit(curr);
-    next->scrn_t_enter(next);
-    scrn_manager_inst()->curr_scrn_ptr = next;
+void start_scrn_manager(void){
+	static u8 started = 0;
+	if (!started){
+		scrn_manager_switch((scrn_t*)create_screen_load());
+		started = 1;
+	} else {
+		printf("Screen manager already started!\r\n");
+	}
 }
-
 
 /* ================================================================== */
 /*  General Screen (some kind of abstract base class?)					*/
@@ -59,10 +68,6 @@ static void scrn_t_enter_t(scrn_t* self){
 }
 
 static void scrn_t_exit_t(scrn_t* self){
-	taskENTER_CRITICAL();
-	lv_cursor_pos.label_x = NULL;
-	lv_cursor_pos.label_y = NULL;
-	taskEXIT_CRITICAL();
 	lv_obj_clean(self->screen);	//	lv_obj_del should del all children...lv_obj_clean?
 	lv_refr_now(lv_obj_get_disp(lv_scr_act()));
 	// scrn_t* next_scrn = next->scrn_t_enter(next);
@@ -178,7 +183,7 @@ static void cali_cb(lv_event_t* e){
 			lv_refr_now(lv_obj_get_disp(cali_scrn->scrn_base.screen));
 			vTaskDelay(pdMS_TO_TICKS(1000));
 			// load actual screen
-			srnc_manager_switch((scrn_t*)create_screen_main());
+			scrn_manager_switch((scrn_t*)create_screen_main());
 			return;
 		}
 	}
