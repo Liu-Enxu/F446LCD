@@ -54,14 +54,6 @@ void start_scrn_manager(void){
 /*  General Screen (some kind of abstract base class?)					*/
 /* ================================================================== */
 
-// private operation functions for general screen management
-static void scrn_t_update(scrn_t self){
-	taskENTER_CRITICAL();
-	lv_cursor_pos.label_x = self.posX_obj;
-	lv_cursor_pos.label_y = self.posY_obj;
-	taskEXIT_CRITICAL();
-}
-
 static void scrn_t_enter_t(scrn_t* self){
 	(void)self; // for now, nothing to do when entering a screen. could add animation later?
 	// this should init all lvgl objects for specific screen
@@ -115,16 +107,16 @@ static void cali_cb(lv_event_t* e){
 	}
 
 	if ( (lv_cursor_pos.raw_x < calibrat_t.valid_x_min) || (lv_cursor_pos.raw_x > calibrat_t.valid_x_max)){
-		if(lv_cursor_pos.label_x) lv_label_set_text_fmt(lv_cursor_pos.label_x, "%s", "INV");
+		if(cali_scrn->scrn_base.posX_obj) lv_label_set_text_fmt(cali_scrn->scrn_base.posX_obj, "%s", "INV");
 		calibrat_t.isInvalid = 1;
 	} else {
-		if(lv_cursor_pos.label_x) lv_label_set_text_fmt(lv_cursor_pos.label_x, "%u", lv_cursor_pos.raw_x);
+		if(cali_scrn->scrn_base.posX_obj) lv_label_set_text_fmt(cali_scrn->scrn_base.posX_obj, "%u", lv_cursor_pos.raw_x);
 	}
 	if ( (lv_cursor_pos.raw_y < calibrat_t.valid_y_min) || (lv_cursor_pos.raw_y > calibrat_t.valid_y_max)){
-		if(lv_cursor_pos.label_y) lv_label_set_text_fmt(lv_cursor_pos.label_y, "%s", "INV");
+		if(cali_scrn->scrn_base.posY_obj) lv_label_set_text_fmt(cali_scrn->scrn_base.posY_obj, "%s", "INV");
 		calibrat_t.isInvalid = 1;
 	} else {
-		if(lv_cursor_pos.label_y) lv_label_set_text_fmt(lv_cursor_pos.label_y, "%u", lv_cursor_pos.raw_y);
+		if(cali_scrn->scrn_base.posY_obj) lv_label_set_text_fmt(cali_scrn->scrn_base.posY_obj, "%u", lv_cursor_pos.raw_y);
 	}
 	if(calibrat_t.isInvalid) {
 		calibrat_t.isInvalid = 0;
@@ -282,10 +274,11 @@ scrn_cali_t* create_screen_cali(void){
 // could be deprecated since OOP structure already handles this?
 static void touch_cb(lv_event_t* e){	
 	lv_event_code_t code = lv_event_get_code(e);
-	if(lv_cursor_pos.label_x!= NULL && lv_cursor_pos.label_y != NULL && (code == LV_EVENT_PRESSED || code==LV_EVENT_RELEASED)){
+	scrn_t* scrn = (scrn_t*)(lv_event_get_user_data(e));
+	if(scrn && scrn->posX_obj && scrn->posY_obj && (code == LV_EVENT_PRESSED || code==LV_EVENT_RELEASED)){
 //		printf("RELEASED\n");
-		lv_label_set_text_fmt(lv_cursor_pos.label_x, "%u", lv_cursor_pos.cursor_x);
-		lv_label_set_text_fmt(lv_cursor_pos.label_y, "%u", lv_cursor_pos.cursor_y);
+		lv_label_set_text_fmt(scrn->posX_obj, "%u", lv_cursor_pos.cursor_x);
+		lv_label_set_text_fmt(scrn->posY_obj, "%u", lv_cursor_pos.cursor_y);
 	}
 }
 
@@ -372,9 +365,6 @@ static void scrn_load_t_enter(scrn_t* self){
 	lv_obj_add_style(load->welcome_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
 	lv_obj_add_flag(load->welcome_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
 	
-	// update (could be deprecated since OOP structure already handles this?)
-	scrn_t_update(load->scrn_base);
-
 	lv_disp_load_scr(load->scrn_base.screen);
 }
 
@@ -688,8 +678,6 @@ static void scrn_main_t_enter(scrn_t* self){
 	lv_obj_add_style(main->sta_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
 	lv_obj_add_flag(main->sta_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
 	
-	// update (could be deprecated since OOP structure already handles this?)
-	scrn_t_update(main->scrn_base);
 	printf("Free heap main: %d\r\n", xPortGetFreeHeapSize());
 	lv_disp_load_scr(main->scrn_base.screen);
 }

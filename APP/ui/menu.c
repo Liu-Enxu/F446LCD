@@ -150,6 +150,7 @@ section_t* create_section(page_t *parent_page, uint8_t cont_len){
 
     //  section_obj
     my_section->section_obj = lv_menu_section_create(parent_page->page_obj);
+    lv_obj_add_flag(my_section->section_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
 
     //  cont_len
     my_section->cont_len = cont_len;
@@ -275,7 +276,8 @@ lv_obj_t* create_cont_btn(cont_t* parent_cont, const char* cont_bl, void(*lv_cal
     // create button
     lv_obj_t *my_cont_btn = lv_btn_create(parent_cont->cont_obj);
     lv_obj_add_style(my_cont_btn,&lv_app_styles.color_combo1,LV_PART_MAIN | LV_STATE_DEFAULT);
-    
+    lv_obj_add_flag(my_cont_btn, LV_OBJ_FLAG_EVENT_BUBBLE);
+
     // create button label
     lv_obj_t *my_cont_btn_l = lv_label_create(my_cont_btn);
     lv_label_set_long_mode(my_cont_btn_l, LV_LABEL_LONG_SCROLL_CIRCULAR);
