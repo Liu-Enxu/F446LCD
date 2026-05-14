@@ -313,8 +313,8 @@ static void scrn_load_t_enter(scrn_t* self){
 	lv_obj_set_pos(load->b_obj , 330, 240);
 	lv_obj_set_size(load->b_obj , 100, 50);
 	lv_obj_add_style(load->b_obj,&lv_app_styles.color_combo1,LV_PART_MAIN | LV_STATE_DEFAULT);
-	lv_obj_add_flag(load->b_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
 	lv_obj_add_event_cb(load->b_obj, load_exit_cb, LV_EVENT_ALL, load);
+	lv_obj_add_flag(load->b_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
 	
 	//	label obj on button obj
 	load->l_obj = lv_label_create(load->b_obj);
@@ -322,6 +322,7 @@ static void scrn_load_t_enter(scrn_t* self){
 	lv_obj_set_size(load->l_obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
 	lv_obj_set_style_align(load->l_obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
 	lv_label_set_text(load->l_obj, "MAIN\nMENU");
+	lv_obj_add_flag(load->l_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
 	
 	// 	ascii img obj
 	load->ascii_obj = lv_label_create(load->scrn_base.screen);
@@ -383,6 +384,10 @@ scrn_load_t* create_screen_load(void) {
 /* ================================================================== */
 /*  Main Screen	                                                      */
 /* ================================================================== */
+
+static void heap_label_cb(lv_timer_t *t) {
+    lv_label_set_text_fmt((lv_obj_t *)t->user_data, "][RAM: %u%%", xPortGetFreeHeapSize() * 100 / configTOTAL_HEAP_SIZE);
+}
 
 static void menu_toggle_cb(lv_event_t* e) {
 	if (lv_event_get_code(e) == LV_EVENT_RELEASED) {
@@ -526,12 +531,14 @@ static void scrn_main_t_enter(scrn_t* self){
 	lv_obj_add_flag(main->terminal_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
 	// terminal label
 	main->terminal_l_obj = lv_label_create(main->terminal_obj);
-	lv_label_set_text(main->terminal_l_obj,"\xEF\x8B\x90"); //f2d0
+	// lv_label_set_text(main->terminal_l_obj,"\xEF\x8B\x90"); //f2d0
+	lv_label_set_text(main->terminal_l_obj,">_");
 	lv_obj_set_pos(main->terminal_l_obj, 0, 0);
 	lv_obj_set_size(main->terminal_l_obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
 	lv_obj_set_style_align(main->terminal_l_obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
-	lv_obj_add_style(main->terminal_l_obj, &lv_app_styles.sym_font, LV_PART_MAIN | LV_STATE_DEFAULT);	// explicit, otherwise overwritten
-	
+	// lv_obj_add_style(main->terminal_l_obj, &lv_app_styles.sym_font, LV_PART_MAIN | LV_STATE_DEFAULT);	// explicit, otherwise overwritten
+	lv_obj_add_style(main->terminal_l_obj, &lv_app_styles.char_color1, LV_PART_MAIN | LV_STATE_DEFAULT);	// explicit, otherwise overwritten
+	lv_obj_add_flag(main->terminal_l_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
 	
 	
 	// tabs
@@ -544,7 +551,7 @@ static void scrn_main_t_enter(scrn_t* self){
 	
 	lv_obj_set_layout(main->bar_obj, LV_LAYOUT_FLEX);
 	lv_obj_set_flex_flow(main->bar_obj, LV_FLEX_FLOW_ROW);
-	lv_obj_set_style_pad_column(main->bar_obj, 10, 0); // spacing between items
+	lv_obj_set_style_pad_column(main->bar_obj, 1, 0); // spacing between items
 	lv_obj_set_style_pad_all(main->bar_obj, 0, 0);	//	MUST SET 0!! Inner margin of the container. on all 4 sides to children
 	lv_obj_set_style_radius(main->bar_obj, 0, 0);
 	lv_obj_set_style_bg_opa(main->bar_obj, LV_OPA_TRANSP, 0);
@@ -553,7 +560,7 @@ static void scrn_main_t_enter(scrn_t* self){
 
 	//	return status label obj
 	main->ret_obj = lv_label_create(main->bar_obj);
-	lv_label_set_text(main->ret_obj , "[FSret:");
+	lv_label_set_text(main->ret_obj , "[RET:");
 	lv_obj_add_style(main->ret_obj ,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
 	lv_obj_add_flag(main->ret_obj , LV_OBJ_FLAG_EVENT_BUBBLE);
 	
@@ -565,7 +572,7 @@ static void scrn_main_t_enter(scrn_t* self){
 	
 	//	cursor pos label obj
 	main->scrn_base.pos_obj = lv_label_create(main->bar_obj);
-	lv_label_set_text(main->scrn_base.pos_obj, "][Pos:   ,   ][");
+	lv_label_set_text(main->scrn_base.pos_obj, "][Pos:   ,   ");
 	lv_obj_add_style(main->scrn_base.pos_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
 	lv_obj_add_flag(main->scrn_base.pos_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
 	
@@ -585,9 +592,13 @@ static void scrn_main_t_enter(scrn_t* self){
 	lv_obj_add_style(main->scrn_base.posY_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
 	lv_obj_add_flag(main->scrn_base.posY_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
 	
-	// free heap
-	// TODO: pring free heap
-	
+	//	ucHeap label obj
+	main->ucHeap_l_obj = lv_label_create(main->bar_obj);
+	lv_label_set_text(main->ucHeap_l_obj, "][RAM: __%");
+	lv_obj_add_style(main->ucHeap_l_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_flag(main->ucHeap_l_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+	lv_timer_create(heap_label_cb, 1000, main->ucHeap_l_obj);
+
 	//	tray obj
 	main->tray_obj = lv_obj_create(main->bar_obj);
 	lv_obj_set_flex_grow(main->tray_obj, 1);	//	MUST HAVE: expand to the end!!!

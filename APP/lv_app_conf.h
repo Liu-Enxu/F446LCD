@@ -50,8 +50,6 @@ typedef struct {
 	lv_coord_t cursor_y;
 	u16        raw_x;
 	u16        raw_y;
-	lv_obj_t * label_x;
-	lv_obj_t * label_y;
 }lv_cursor_pos_t;
 extern lv_cursor_pos_t lv_cursor_pos;
 
