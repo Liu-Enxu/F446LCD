@@ -4,7 +4,7 @@
 
 A Linux-inspired handheld system built from scratch on an STM32F446RE Nucleo-64 — purpose-built to extract maximum capability from a microcontroller not designed for this workload.
 
-![Project Banner](banner.png)
+![Project Banner](files/preview.png)
 
 ---
 
