@@ -8,8 +8,77 @@
 
 #include "LCD.h"
 
-static u16 circle_pos[6][2] = {{30,30},{HOR_RESOLUTION/2,30},{HOR_RESOLUTION,30},{30,VER_RESOLUTION},{HOR_RESOLUTION/2,VER_RESOLUTION},{HOR_RESOLUTION,VER_RESOLUTION}};
 
+
+/*
+ *private variable
+ */ 
+// calibration circle positions
+static u16 circle_pos[6][2] = {
+	{30,30},{HOR_RESOLUTION/2,30},{HOR_RESOLUTION,30},
+	{30,VER_RESOLUTION},{HOR_RESOLUTION/2,VER_RESOLUTION},{HOR_RESOLUTION,VER_RESOLUTION}
+};
+
+/* ================================================================== */
+/*  Screen Manager				   									*/
+/* ================================================================== */
+scrn_manager_t* scrn_manager_inst(void){
+	static scrn_manager_t scrn_manager;
+	static u8 scrn_manager_inited = 0;
+	if (!scrn_manager_inited){
+		// scrn_manager.curr_scrn_type = SCREEN_LOAD;
+		scrn_manager.curr_scrn_ptr = NULL;
+		scrn_manager_inited = 1;
+	}
+	return &scrn_manager;
+}
+
+void scrn_manager_switch(scrn_t *next) {	// use this in all exiting callback
+    scrn_t *curr = scrn_manager_inst()->curr_scrn_ptr;
+    if (curr) curr->scrn_t_exit(curr);
+    next->scrn_t_enter(next);
+    scrn_manager_inst()->curr_scrn_ptr = next;
+}
+
+
+/* ================================================================== */
+/*  General Screen (some kind of abstract base class?)					*/
+/* ================================================================== */
+
+// private operation functions for general screen management
+static void scrn_t_update(scrn_t self){
+	taskENTER_CRITICAL();
+	lv_cursor_pos.label_x = self.posX_obj;
+	lv_cursor_pos.label_y = self.posY_obj;
+	taskEXIT_CRITICAL();
+}
+
+static void scrn_t_enter_t(scrn_t* self){
+	(void)self; // for now, nothing to do when entering a screen. could add animation later?
+	// this should init all lvgl objects for specific screen
+}
+
+static void scrn_t_exit_t(scrn_t* self){
+	taskENTER_CRITICAL();
+	lv_cursor_pos.label_x = NULL;
+	lv_cursor_pos.label_y = NULL;
+	taskEXIT_CRITICAL();
+	lv_obj_clean(self->screen);	//	lv_obj_del should del all children...lv_obj_clean?
+	lv_refr_now(lv_obj_get_disp(lv_scr_act()));
+	// scrn_t* next_scrn = next->scrn_t_enter(next);
+	lv_obj_del(self->screen);
+	lv_mem_free(self);	// free memory explicitly
+}
+
+static void create_scrn_t(scrn_t* self){
+	self->scrn_t_enter = scrn_t_enter_t;
+	self->scrn_t_exit = scrn_t_exit_t;
+}
+/* ================================================================== */
+/*  Calibration Screen                                                */
+/* ================================================================== */
+
+// callbacks for calibration screen - calibraiton touch
 static void cali_cb(lv_event_t* e){
 	lv_event_code_t code = lv_event_get_code(e);
 	scrn_cali_t *cali_scrn = lv_event_get_user_data(e);
@@ -106,38 +175,34 @@ static void cali_cb(lv_event_t* e){
 				calibrat_t.bm_x, calibrat_t.bm_y,
 				calibrat_t.br_x, calibrat_t.br_y);
 			lv_label_set_text(cali_scrn->circle_pos_obj, "Done! Exiting..");
-			lv_refr_now(lv_obj_get_disp(cali_scrn->screen));
+			lv_refr_now(lv_obj_get_disp(cali_scrn->scrn_base.screen));
 			vTaskDelay(pdMS_TO_TICKS(1000));
 			// load actual screen
-			taskENTER_CRITICAL();
-			lv_cursor_pos.label_x = NULL;
-			lv_cursor_pos.label_y = NULL;
-			taskEXIT_CRITICAL();
-			lv_obj_clean(cali_scrn->screen);
-			create_screen_main();
-			lv_obj_del(cali_scrn->screen);
-			lv_mem_free(cali_scrn);
+			srnc_manager_switch((scrn_t*)create_screen_main());
 			return;
 		}
 	}
-
-	
-		
 }
 
-void create_screen_cali(void){
-	scrn_cali_t *cali = lv_mem_alloc(sizeof(scrn_cali_t));
-	lv_memset_00(cali, sizeof(scrn_cali_t));
-	
+// callbacks for calibration screen - exit button
+static void cali_exit_cb(lv_event_t * e) {
+	lv_event_code_t code = lv_event_get_code(e);
+	if (code == LV_EVENT_RELEASED){
+		scrn_manager_switch((scrn_t*)create_screen_main());
+	}
+}
+
+static void scrn_cali_t_enter(scrn_t* self){
+	scrn_cali_t *cali = (scrn_cali_t *)self;
 	// screen
-	cali->screen = lv_obj_create(NULL);
-	lv_obj_set_pos(cali->screen, 0, 0);
-	lv_obj_set_size(cali->screen, HOR_RESOLUTION, VER_RESOLUTION);
-	lv_obj_clear_flag(cali->screen, LV_OBJ_FLAG_SCROLLABLE);
-	lv_obj_add_event_cb(cali->screen, cali_cb, LV_EVENT_ALL, cali);
+	cali->scrn_base.screen = lv_obj_create(NULL);
+	lv_obj_set_pos(cali->scrn_base.screen, 0, 0);
+	lv_obj_set_size(cali->scrn_base.screen, HOR_RESOLUTION, VER_RESOLUTION);
+	lv_obj_clear_flag(cali->scrn_base.screen, LV_OBJ_FLAG_SCROLLABLE);
+	lv_obj_add_event_cb(cali->scrn_base.screen, cali_cb, LV_EVENT_ALL, cali);
 	
 	// circle
-	cali->circle = lv_obj_create(cali->screen);
+	cali->circle = lv_obj_create(cali->scrn_base.screen);
 	lv_obj_set_size(cali->circle, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
 	lv_obj_set_pos(cali->circle,circle_pos[calibrat_t.id][0]-30,circle_pos[calibrat_t.id][1]-30);
 	lv_obj_set_style_radius(cali->circle, 30, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -146,53 +211,71 @@ void create_screen_cali(void){
 	lv_obj_add_flag(cali->circle, LV_OBJ_FLAG_EVENT_BUBBLE);	
 	
 	// pos row container
-	cali->pos_obj = lv_obj_create(cali->screen);
-	lv_obj_center(cali->pos_obj);
-	lv_obj_set_size(cali->pos_obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-	lv_obj_clear_flag(cali->pos_obj, LV_OBJ_FLAG_SCROLLABLE);
+	cali->scrn_base.pos_obj = lv_obj_create(cali->scrn_base.screen);
+	lv_obj_center(cali->scrn_base.pos_obj);
+	lv_obj_set_size(cali->scrn_base.pos_obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+	lv_obj_clear_flag(cali->scrn_base.pos_obj, LV_OBJ_FLAG_SCROLLABLE);
 
-	lv_obj_set_layout(cali->pos_obj, LV_LAYOUT_FLEX);
-	lv_obj_set_flex_flow(cali->pos_obj, LV_FLEX_FLOW_ROW);
-	lv_obj_set_style_pad_column(cali->pos_obj, 4, LV_PART_MAIN);
-	lv_obj_set_style_pad_all(cali->pos_obj, 0, LV_PART_MAIN);
-	lv_obj_set_style_radius(cali->pos_obj, 0, LV_PART_MAIN);
-	lv_obj_set_style_bg_opa(cali->pos_obj, LV_OPA_TRANSP, LV_PART_MAIN);
-	lv_obj_set_style_border_width(cali->pos_obj, 0, LV_PART_MAIN);
-	lv_obj_set_flex_align(cali->pos_obj, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
-	lv_obj_add_flag(cali->pos_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+	lv_obj_set_layout(cali->scrn_base.pos_obj, LV_LAYOUT_FLEX);
+	lv_obj_set_flex_flow(cali->scrn_base.pos_obj, LV_FLEX_FLOW_ROW);
+	lv_obj_set_style_pad_column(cali->scrn_base.pos_obj, 4, LV_PART_MAIN);
+	lv_obj_set_style_pad_all(cali->scrn_base.pos_obj, 0, LV_PART_MAIN);
+	lv_obj_set_style_radius(cali->scrn_base.pos_obj, 0, LV_PART_MAIN);
+	lv_obj_set_style_bg_opa(cali->scrn_base.pos_obj, LV_OPA_TRANSP, LV_PART_MAIN);
+	lv_obj_set_style_border_width(cali->scrn_base.pos_obj, 0, LV_PART_MAIN);
+	lv_obj_set_flex_align(cali->scrn_base.pos_obj, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
+	lv_obj_add_flag(cali->scrn_base.pos_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
 
-	cali->lbl_pref_obj = lv_label_create(cali->pos_obj);
+	cali->lbl_pref_obj = lv_label_create(cali->scrn_base.pos_obj);
 	lv_label_set_text(cali->lbl_pref_obj, "Point (");
 	lv_obj_add_flag(cali->lbl_pref_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
 
 	// circle pos
-	cali->circle_pos_obj = lv_label_create(cali->pos_obj);
+	cali->circle_pos_obj = lv_label_create(cali->scrn_base.pos_obj);
 	lv_label_set_text_fmt(cali->circle_pos_obj,"%u,%u (0/3)",circle_pos[calibrat_t.id][0],circle_pos[calibrat_t.id][1]);
 	lv_obj_add_flag(cali->circle_pos_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
 
-	cali->lbl_sep_obj = lv_label_create(cali->pos_obj);
+	cali->lbl_sep_obj = lv_label_create(cali->scrn_base.pos_obj);
 	lv_label_set_text(cali->lbl_sep_obj, "):");
 	lv_obj_add_flag(cali->lbl_sep_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
 
 	// posX
-	cali->posX_obj = lv_label_create(cali->pos_obj); lv_cursor_pos.label_x = cali->posX_obj;
-	lv_label_set_text(cali->posX_obj,"___");
-	lv_obj_add_flag(cali->posX_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+	cali->scrn_base.posX_obj = lv_label_create(cali->scrn_base.pos_obj); 
+	// lv_cursor_pos.label_x = cali->scrn_base.posX_obj;
+	lv_label_set_text(cali->scrn_base.posX_obj,"___");
+	lv_obj_add_flag(cali->scrn_base.posX_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
 
-	cali->lbl_comma_obj = lv_label_create(cali->pos_obj);
+	cali->lbl_comma_obj = lv_label_create(cali->scrn_base.pos_obj);
 	lv_label_set_text(cali->lbl_comma_obj, ",");
 	lv_obj_add_flag(cali->lbl_comma_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
 
 	// posY
-	cali->posY_obj = lv_label_create(cali->pos_obj); lv_cursor_pos.label_y = cali->posY_obj;
-	lv_label_set_text(cali->posY_obj,"___");
-	lv_obj_add_flag(cali->posY_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+	cali->scrn_base.posY_obj = lv_label_create(cali->scrn_base.pos_obj); 
+	// lv_cursor_pos.label_y = cali->scrn_base.posY_obj;
+	lv_label_set_text(cali->scrn_base.posY_obj,"___");
+	lv_obj_add_flag(cali->scrn_base.posY_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
 	
-	lv_disp_load_scr(cali->screen);
+	lv_disp_load_scr(cali->scrn_base.screen);
+}
+
+scrn_cali_t* create_screen_cali(void){
+	scrn_cali_t *cali = lv_mem_alloc(sizeof(scrn_cali_t));
+	if(cali == NULL){
+		printf("Failed to allocate memory for scrn_cali_t\r\n");
+		return NULL;
+	}
+	lv_memset_00(cali, sizeof(scrn_cali_t));
+	cali->scrn_base.scrn_t_enter = scrn_cali_t_enter;
+	cali->scrn_base.scrn_t_exit = scrn_t_exit_t;
+	return cali;	
 }
 	
-	
-static void touch_cb(lv_event_t* e){
+/* ================================================================== */
+/*  Load/Splash Screen                                                */
+/* ================================================================== */
+
+// could be deprecated since OOP structure already handles this?
+static void touch_cb(lv_event_t* e){	
 	lv_event_code_t code = lv_event_get_code(e);
 	if(lv_cursor_pos.label_x!= NULL && lv_cursor_pos.label_y != NULL && (code == LV_EVENT_PRESSED || code==LV_EVENT_RELEASED)){
 //		printf("RELEASED\n");
@@ -203,100 +286,108 @@ static void touch_cb(lv_event_t* e){
 
 static void load_exit_cb(lv_event_t * e) {
 	lv_event_code_t code = lv_event_get_code(e);
-	scrn_load_t* load_scrn= lv_event_get_user_data(e);
 	if (code == LV_EVENT_RELEASED){
-//		printf("RELEASED");
-		taskENTER_CRITICAL();
-		lv_cursor_pos.label_x = NULL;
-		lv_cursor_pos.label_y = NULL;
-		taskEXIT_CRITICAL();
-		lv_obj_clean(load_scrn->screen);	//	lv_obj_del should del all children...lv_obj_clean?
-		lv_refr_now(lv_obj_get_disp(lv_scr_act()));
-		create_screen_main();
-		lv_obj_del(load_scrn->screen);
-		lv_mem_free(load_scrn);	// free memory explicitly
+		scrn_manager_switch((scrn_t*)create_screen_main());
 	}
 }
 
-void create_screen_load(void) {
-		scrn_load_t *load = lv_mem_alloc(sizeof(scrn_load_t));
-		lv_memset_00(load, sizeof(scrn_load_t));
-		
-		// screen
-		load->screen = lv_obj_create(NULL);
-		lv_obj_set_pos(load->screen, 0, 0);
-		lv_obj_set_size(load->screen, HOR_RESOLUTION, VER_RESOLUTION);
-		lv_obj_clear_flag(load->screen, LV_OBJ_FLAG_SCROLLABLE);
-	//    lv_obj_set_style_border_opa(obj, LV_OPA_TRANSP, 0);	// optional??
-		lv_obj_add_event_cb(load->screen, touch_cb, LV_EVENT_ALL, load);
-	
-		// 	label obj
-		load->L_obj = lv_label_create(load->screen);
-		lv_obj_set_pos(load->L_obj, 480, 10);
-		lv_obj_set_size(load->L_obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-		lv_label_set_text(load->L_obj, " __     __   __  __ _ \n(  )   / _\\ (  )(  ( \\\n/ (_/\\/    \\ )( /    /\n\\____/\\_/\\_/(__)\\_)__)\n  __   ____ \n /  \\ / ___)	V0.2\n(  O )\\___ \\\n \\__/ (____/");
-		lv_obj_set_style_transform_angle(load->L_obj, 900, LV_PART_MAIN | LV_STATE_DEFAULT);	
-		lv_obj_add_style(load->L_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
-		lv_obj_add_flag(load->L_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+static void scrn_load_t_enter(scrn_t* self){
+	scrn_load_t *load = (scrn_load_t *)self;
+	// screen
+	load->scrn_base.screen = lv_obj_create(NULL);
+	lv_obj_set_pos(load->scrn_base.screen, 0, 0);
+	lv_obj_set_size(load->scrn_base.screen, HOR_RESOLUTION, VER_RESOLUTION);
+	lv_obj_clear_flag(load->scrn_base.screen, LV_OBJ_FLAG_SCROLLABLE);
+//    lv_obj_set_style_border_opa(obj, LV_OPA_TRANSP, 0);	// optional??
+	lv_obj_add_event_cb(load->scrn_base.screen, touch_cb, LV_EVENT_ALL, load);
 
-		//	button obj
-		load->b_obj = lv_btn_create(load->screen);
-		lv_obj_set_pos(load->b_obj , 330, 240);
-		lv_obj_set_size(load->b_obj , 100, 50);
-		lv_obj_add_style(load->b_obj,&lv_app_styles.color_combo1,LV_PART_MAIN | LV_STATE_DEFAULT);
-		lv_obj_add_flag(load->b_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
-		lv_obj_add_event_cb(load->b_obj, load_exit_cb, LV_EVENT_ALL, load);
-		
-		//	label obj on button obj
-		load->l_obj = lv_label_create(load->b_obj);
-		lv_obj_set_pos(load->l_obj, 0, 0);
-		lv_obj_set_size(load->l_obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-		lv_obj_set_style_align(load->l_obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
-		lv_label_set_text(load->l_obj, "MAIN\nMENU");
-		
-		// 	ascii img obj
-		load->ascii_obj = lv_label_create(load->screen);
-		lv_obj_set_pos(load->ascii_obj, 10, 0);
-		lv_obj_set_size(load->ascii_obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-		lv_label_set_text(load->ascii_obj, "         @@@@@@@@@@@     \n      @@@@@@@@@@@@@@@@   \n     @@@@@@@@@@@@@@@@@@@ \n    @@@@@@@@@@@@@@@@@@@@@\n    @@@@@@#%@%+=-=#%@@@@@\n   @@@@@@#=-:-==:-#*%%@@@\n    @@*%#::=*%+:::::-#%@@\n    @@-::::::::::::#%*@@@\n    @@@*:::::::::-::-*   \n     @@*-:::::------+%   \n    %=   ---------=#@@   \n   %%%%%%#***+++*% @@@   \n  %%%%%%%%%%@@@@   @@@   \n%%%%%%%%%%%%%%%%  @@@    ");
-		lv_obj_add_style(load->ascii_obj,&lv_app_styles.char_color2,LV_PART_MAIN | LV_STATE_DEFAULT);
-		lv_obj_add_flag(load->ascii_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+	// 	label obj
+	load->L_obj = lv_label_create(load->scrn_base.screen);
+	lv_obj_set_pos(load->L_obj, 480, 10);
+	lv_obj_set_size(load->L_obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+	lv_label_set_text(load->L_obj, " __     __   __  __ _ \n(  )   / _\\ (  )(  ( \\\n/ (_/\\/    \\ )( /    /\n\\____/\\_/\\_/(__)\\_)__)\n  __   ____ \n /  \\ / ___)	V0.2\n(  O )\\___ \\\n \\__/ (____/");
+	lv_obj_set_style_transform_angle(load->L_obj, 900, LV_PART_MAIN | LV_STATE_DEFAULT);	
+	lv_obj_add_style(load->L_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_flag(load->L_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+
+	//	button obj
+	load->b_obj = lv_btn_create(load->scrn_base.screen);
+	lv_obj_set_pos(load->b_obj , 330, 240);
+	lv_obj_set_size(load->b_obj , 100, 50);
+	lv_obj_add_style(load->b_obj,&lv_app_styles.color_combo1,LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_flag(load->b_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+	lv_obj_add_event_cb(load->b_obj, load_exit_cb, LV_EVENT_ALL, load);
 	
-		//	pointer position obj
-		load->pos_obj = lv_label_create(load->screen);
-		lv_obj_set_pos(load->pos_obj, 240, 170);
-		lv_obj_set_size(load->pos_obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-		lv_label_set_text(load->pos_obj, "[Cursor]\n[X:    ]\n[Y:    ]");
-		lv_obj_add_style(load->pos_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
-		lv_obj_add_flag(load->pos_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
-		
-		//	posX val
-		load->posX_obj = lv_label_create(load->pos_obj);lv_cursor_pos.label_x=load->posX_obj;
-		lv_obj_set_pos(load->posX_obj, 40, 20);
-		lv_obj_set_size(load->posX_obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-		lv_label_set_text(load->posX_obj, "_  ");
-		lv_obj_add_style(load->posX_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
-		lv_obj_add_flag(load->posX_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
-		
-		//	posY val
-		load->posY_obj = lv_label_create(load->pos_obj);lv_cursor_pos.label_y=load->posY_obj;
-		lv_obj_set_pos(load->posY_obj, 40, 40);
-		lv_obj_set_size(load->posY_obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-		lv_label_set_text(load->posY_obj, "_  ");
-		lv_obj_add_style(load->posY_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
-		lv_obj_add_flag(load->posY_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
-		
-		// welcome label
-		load->welcome_obj = lv_label_create(load->screen);
-		lv_obj_set_pos(load->welcome_obj, 0, 300);
-		lv_obj_set_size(load->welcome_obj, LV_SIZE_CONTENT, 20);
-		lv_label_set_text(load->welcome_obj, "Let's all love Lain! <3<3<3"); // TODO: make it move
-		lv_obj_add_style(load->welcome_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
-		lv_obj_add_flag(load->welcome_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
-		
-		lv_disp_load_scr(load->screen);
+	//	label obj on button obj
+	load->l_obj = lv_label_create(load->b_obj);
+	lv_obj_set_pos(load->l_obj, 0, 0);
+	lv_obj_set_size(load->l_obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+	lv_obj_set_style_align(load->l_obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_label_set_text(load->l_obj, "MAIN\nMENU");
+	
+	// 	ascii img obj
+	load->ascii_obj = lv_label_create(load->scrn_base.screen);
+	lv_obj_set_pos(load->ascii_obj, 10, 0);
+	lv_obj_set_size(load->ascii_obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+	lv_label_set_text(load->ascii_obj, "         @@@@@@@@@@@     \n      @@@@@@@@@@@@@@@@   \n     @@@@@@@@@@@@@@@@@@@ \n    @@@@@@@@@@@@@@@@@@@@@\n    @@@@@@#%@%+=-=#%@@@@@\n   @@@@@@#=-:-==:-#*%%@@@\n    @@*%#::=*%+:::::-#%@@\n    @@-::::::::::::#%*@@@\n    @@@*:::::::::-::-*   \n     @@*-:::::------+%   \n    %=   ---------=#@@   \n   %%%%%%#***+++*% @@@   \n  %%%%%%%%%%@@@@   @@@   \n%%%%%%%%%%%%%%%%  @@@    ");
+	lv_obj_add_style(load->ascii_obj,&lv_app_styles.char_color2,LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_flag(load->ascii_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+
+	//	pointer position obj
+	load->scrn_base.pos_obj = lv_label_create(load->scrn_base.screen);
+	lv_obj_set_pos(load->scrn_base.pos_obj, 240, 170);
+	lv_obj_set_size(load->scrn_base.pos_obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+	lv_label_set_text(load->scrn_base.pos_obj, "[Cursor]\n[X:    ]\n[Y:    ]");
+	lv_obj_add_style(load->scrn_base.pos_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_flag(load->scrn_base.pos_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+	
+	//	posX val
+	load->scrn_base.posX_obj = lv_label_create(load->scrn_base.pos_obj);
+	// lv_cursor_pos.label_x=load->scrn_base.posX_obj;
+	lv_obj_set_pos(load->scrn_base.posX_obj, 40, 20);
+	lv_obj_set_size(load->scrn_base.posX_obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+	lv_label_set_text(load->scrn_base.posX_obj, "_  ");
+	lv_obj_add_style(load->scrn_base.posX_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_flag(load->scrn_base.posX_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+	
+	//	posY val
+	load->scrn_base.posY_obj = lv_label_create(load->scrn_base.pos_obj);
+	// lv_cursor_pos.label_y=load->scrn_base.posY_obj;
+	lv_obj_set_pos(load->scrn_base.posY_obj, 40, 40);
+	lv_obj_set_size(load->scrn_base.posY_obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+	lv_label_set_text(load->scrn_base.posY_obj, "_  ");
+	lv_obj_add_style(load->scrn_base.posY_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_flag(load->scrn_base.posY_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+	
+	// welcome label
+	load->welcome_obj = lv_label_create(load->scrn_base.screen);
+	lv_obj_set_pos(load->welcome_obj, 0, 300);
+	lv_obj_set_size(load->welcome_obj, LV_SIZE_CONTENT, 20);
+	lv_label_set_text(load->welcome_obj, "Let's all love Lain! <3<3<3"); // TODO: make it move
+	lv_obj_add_style(load->welcome_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_flag(load->welcome_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+	
+	// update (could be deprecated since OOP structure already handles this?)
+	scrn_t_update(load->scrn_base);
+
+	lv_disp_load_scr(load->scrn_base.screen);
 }
 
+scrn_load_t* create_screen_load(void) {
+	scrn_load_t *load = lv_mem_alloc(sizeof(scrn_load_t));
+	if(load == NULL){
+		printf("Failed to allocate memory for scrn_load_t\r\n");
+		return NULL;
+	}
+	lv_memset_00(load, sizeof(scrn_load_t));
+	load->scrn_base.scrn_t_enter = scrn_load_t_enter;
+	load->scrn_base.scrn_t_exit = scrn_t_exit_t;
+	return load;
+}
+
+/* ================================================================== */
+/*  Main Screen	                                                      */
+/* ================================================================== */
 
 static void menu_toggle_cb(lv_event_t* e) {
 	if (lv_event_get_code(e) == LV_EVENT_RELEASED) {
@@ -312,31 +403,15 @@ static void menu_toggle_cb(lv_event_t* e) {
 
 static void menu_to_splash_cb(lv_event_t* e) {
 	if (lv_event_get_code(e) == LV_EVENT_RELEASED) {
-		scrn_main_t *s = lv_event_get_user_data(e);
-		taskENTER_CRITICAL();
-		lv_cursor_pos.label_x = NULL;
-		lv_cursor_pos.label_y = NULL;
-		taskEXIT_CRITICAL();
-		free_menu(s->menu);	// need to free menu manually
-		lv_obj_clean(s->screen);
-		create_screen_load();
-		lv_obj_del(s->screen);
-		lv_mem_free(s);
+		free_menu(((scrn_main_t *)lv_event_get_user_data(e))->menu);
+		scrn_manager_switch((scrn_t*)create_screen_load());
 	}
 }
 
 static void menu_to_cali_cb(lv_event_t* e) {
 	if (lv_event_get_code(e) == LV_EVENT_RELEASED) {
-		scrn_main_t *s = lv_event_get_user_data(e);
-		taskENTER_CRITICAL();
-		lv_cursor_pos.label_x = NULL;
-		lv_cursor_pos.label_y = NULL;
-		taskEXIT_CRITICAL();
-		free_menu(s->menu);	// need to free menu manually
-		lv_obj_clean(s->screen);
-		create_screen_cali();
-		lv_obj_del(s->screen);
-		lv_mem_free(s);
+		free_menu(((scrn_main_t *)lv_event_get_user_data(e))->menu);
+		scrn_manager_switch((scrn_t*)create_screen_cali());
 	}
 }
 
@@ -344,271 +419,284 @@ static void menu_to_settings_cb(lv_event_t* e) {
 	(void)e; // not yet implemented
 }
 
-void create_screen_main(void){
-		scrn_main_t *main = lv_mem_alloc(sizeof(scrn_main_t));
-		lv_memset_00(main, sizeof(scrn_main_t));
-		
-		// screen ----------------------------------------------------------------
-		main->screen = lv_obj_create(NULL);
-		lv_obj_set_pos(main->screen, 0, 0);
-		lv_obj_set_size(main->screen, HOR_RESOLUTION, VER_RESOLUTION);
-		lv_obj_clear_flag(main->screen, LV_OBJ_FLAG_SCROLLABLE);
-	//    lv_obj_set_style_border_opa(obj, LV_OPA_TRANSP, 0);	// optional??
-		lv_obj_add_event_cb(main->screen, touch_cb, LV_EVENT_ALL, main);
-		
-		// header bar ----------------------------------------------------------------
-		
-		main->header_obj = lv_obj_create(main->screen);
-		lv_obj_set_pos(main->header_obj, 0, 0);
-		lv_obj_set_size(main->header_obj, HOR_RESOLUTION, 30);
-		lv_obj_clear_flag(main->header_obj, LV_OBJ_FLAG_SCROLLABLE);
+static void scrn_main_t_enter(scrn_t* self){
+	scrn_main_t *main = (scrn_main_t *)self;
+// screen ----------------------------------------------------------------
+	main->scrn_base.screen = lv_obj_create(NULL);
+	lv_obj_set_pos(main->scrn_base.screen, 0, 0);
+	lv_obj_set_size(main->scrn_base.screen, HOR_RESOLUTION, VER_RESOLUTION);
+	lv_obj_clear_flag(main->scrn_base.screen, LV_OBJ_FLAG_SCROLLABLE);
+//    lv_obj_set_style_border_opa(obj, LV_OPA_TRANSP, 0);	// optional??
+	lv_obj_add_event_cb(main->scrn_base.screen, touch_cb, LV_EVENT_ALL, main);
 	
-		lv_obj_set_layout(main->header_obj, LV_LAYOUT_FLEX);
-		lv_obj_set_flex_flow(main->header_obj, LV_FLEX_FLOW_ROW);
-		lv_obj_set_style_pad_column(main->header_obj, 3, 0); // spacing between items
-		lv_obj_set_style_pad_all(main->header_obj, 0, 0);	//	MUST SET 0!! Inner margin of the container. on all 4 sides to children
-		lv_obj_set_style_radius(main->header_obj, 0, 0);
-		lv_obj_set_style_bg_opa(main->header_obj, LV_OPA_TRANSP, 0);
-		lv_obj_set_style_border_width(main->header_obj, 0, 0);
-		lv_obj_add_flag(main->header_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
-		
-		
-		// menu button
-		main->menu_b_obj = lv_btn_create(main->header_obj);
-		lv_obj_set_size(main->menu_b_obj , LV_SIZE_CONTENT, 30);
-		lv_obj_add_style(main->menu_b_obj,&lv_app_styles.color_combo1,LV_PART_MAIN | LV_STATE_DEFAULT);
-		lv_obj_set_style_radius(main->menu_b_obj, 4, LV_PART_MAIN | LV_STATE_DEFAULT);
-		lv_obj_add_event_cb(main->menu_b_obj, menu_toggle_cb, LV_EVENT_ALL, main);
-		lv_obj_add_flag(main->menu_b_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
-		// menu label
-		main->menu_l_obj = lv_label_create(main->menu_b_obj);
-		lv_label_set_text(main->menu_l_obj,"\xEF\x83\x89"); // f0c9
-		lv_obj_set_pos(main->menu_l_obj, 0, 0);
-		lv_obj_set_size(main->menu_l_obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-		lv_obj_set_style_align(main->menu_l_obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
-		lv_obj_add_style(main->menu_l_obj, &lv_app_styles.sym_font, LV_PART_MAIN | LV_STATE_DEFAULT);	// explicit, otherwise overwritten
-		lv_obj_add_flag(main->menu_l_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
-		
-		// menu (using menu lib)
-		main->menu = create_menu(main->screen, 0, 30, 300, 100);
-
-			// root page: 1 section with 3 contents (splash, calibrate, settings)
-			page_t    *root_page     = create_page(main->menu, NULL, 1);
-			section_t *main_section  = create_section(root_page, 3);
-
-				// splash
-				cont_t *splash_cont = create_content(main_section, 30);
-				create_cont_lbl(splash_cont, "splash");
-
-					// splash subpage
-					page_t    *splash_page    = create_page(main->menu, splash_cont, 1);
-					section_t *splash_section = create_section(splash_page, 2);
-					cont_t    *splash_item    = create_content(splash_section, 30);
-					create_cont_lbl(splash_item, "go to splash screen");
-					cont_t    *splash_btn_item    = create_content(splash_section, 60);
-					create_cont_btn(splash_btn_item, "GO", menu_to_splash_cb, main);
-
-				// calibrate
-				cont_t *calibrate_cont = create_content(main_section, 30);
-				create_cont_lbl(calibrate_cont, "calibrate");
-				// lv_obj_add_event_cb(calibrate_cont->cont_obj, menu_to_cali_cb, LV_EVENT_ALL, main);
-
-					// calibrate subpage
-					page_t    *calibrate_page    = create_page(main->menu, calibrate_cont, 1);
-					section_t *calibrate_section = create_section(calibrate_page, 2);
-					cont_t    *calibrate_item    = create_content(calibrate_section, 30);
-					create_cont_lbl(calibrate_item, "go to calibration screen");
-					cont_t    *calibrate_btn_item    = create_content(calibrate_section, 60);
-					create_cont_btn(calibrate_btn_item, "GO", menu_to_cali_cb, main);
-
-				// settings (with subpage)
-				cont_t *settings_cont = create_content(main_section, 30);
-				create_cont_lbl(settings_cont, "settings");
-				// lv_obj_add_event_cb(settings_cont->cont_obj, menu_to_settings_cb, LV_EVENT_ALL, main);
-
-					// settings subpage
-					page_t    *settings_page    = create_page(main->menu, settings_cont, 1);
-					section_t *settings_section = create_section(settings_page, 2);
-					cont_t    *settings_item    = create_content(settings_section, 30);
-					create_cont_lbl(settings_item, "go to settings app");
-					cont_t    *settings_btn_item    = create_content(settings_section, 60);
-					create_cont_btn(settings_btn_item, "GO", menu_to_settings_cb, main);
-
-
-		// folder
-		main->folder_obj = lv_btn_create(main->header_obj);
-		lv_obj_set_size(main->folder_obj , LV_SIZE_CONTENT, 30);
-		lv_obj_add_style(main->folder_obj,&lv_app_styles.color_combo1,LV_PART_MAIN | LV_STATE_DEFAULT);
-		lv_obj_set_style_radius(main->folder_obj, 4, LV_PART_MAIN | LV_STATE_DEFAULT);
-		lv_obj_add_flag(main->folder_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
-		// folder label
-		main->folder_l_obj = lv_label_create(main->folder_obj);
-		lv_label_set_text(main->folder_l_obj,"\xEF\x81\xBC");
-		lv_obj_set_pos(main->folder_l_obj, 0, 0);
-		lv_obj_set_size(main->folder_l_obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-		lv_obj_set_style_align(main->folder_l_obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
-		lv_obj_add_style(main->folder_l_obj, &lv_app_styles.sym_font, LV_PART_MAIN | LV_STATE_DEFAULT);	// explicit, otherwise overwritten
-		lv_obj_add_flag(main->folder_l_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
-		
-		// terminal
-		main->terminal_obj = lv_btn_create(main->header_obj);
-		lv_obj_set_size(main->terminal_obj , LV_SIZE_CONTENT, 30);
-		lv_obj_add_style(main->terminal_obj,&lv_app_styles.color_combo1,LV_PART_MAIN | LV_STATE_DEFAULT);
-		lv_obj_set_style_radius(main->terminal_obj, 4, LV_PART_MAIN | LV_STATE_DEFAULT);
-		lv_obj_add_flag(main->terminal_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
-		// terminal label
-		main->terminal_l_obj = lv_label_create(main->terminal_obj);
-		lv_label_set_text(main->terminal_l_obj,"\xEF\x8B\x90"); //f2d0
-		lv_obj_set_pos(main->terminal_l_obj, 0, 0);
-		lv_obj_set_size(main->terminal_l_obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-		lv_obj_set_style_align(main->terminal_l_obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
-		lv_obj_add_style(main->terminal_l_obj, &lv_app_styles.sym_font, LV_PART_MAIN | LV_STATE_DEFAULT);	// explicit, otherwise overwritten
-		
-		
-		
-		// tabs
-		
-		//	footer/status bar obj ----------------------------------------------------------------
-		main->bar_obj = lv_obj_create(main->screen);
-		lv_obj_set_pos(main->bar_obj, 0, 300);
-		lv_obj_set_size(main->bar_obj, HOR_RESOLUTION, 20);
-		lv_obj_clear_flag(main->bar_obj, LV_OBJ_FLAG_SCROLLABLE);
-		
-		lv_obj_set_layout(main->bar_obj, LV_LAYOUT_FLEX);
-		lv_obj_set_flex_flow(main->bar_obj, LV_FLEX_FLOW_ROW);
-		lv_obj_set_style_pad_column(main->bar_obj, 10, 0); // spacing between items
-		lv_obj_set_style_pad_all(main->bar_obj, 0, 0);	//	MUST SET 0!! Inner margin of the container. on all 4 sides to children
-		lv_obj_set_style_radius(main->bar_obj, 0, 0);
-		lv_obj_set_style_bg_opa(main->bar_obj, LV_OPA_TRANSP, 0);
-		lv_obj_set_style_border_width(main->bar_obj, 0, 0);
-		lv_obj_add_flag(main->bar_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+	// header bar ----------------------------------------------------------------
 	
-		//	return status label obj
-		main->ret_obj = lv_label_create(main->bar_obj);
-		lv_label_set_text(main->ret_obj , "[FSret:");
-		lv_obj_add_style(main->ret_obj ,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
-		lv_obj_add_flag(main->ret_obj , LV_OBJ_FLAG_EVENT_BUBBLE);
-		
-		//	ret status content obj
-		main->ret_val_obj = lv_label_create(main->bar_obj);
-		lv_label_set_text(main->ret_val_obj, "NONE");
-		lv_obj_add_style(main->ret_val_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
-		lv_obj_add_flag(main->ret_val_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
-		
-		//	cursor pos label obj
-		main->pos_obj = lv_label_create(main->bar_obj);
-		lv_label_set_text(main->pos_obj, "][Pos:   ,   ][");
-		lv_obj_add_style(main->pos_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
-		lv_obj_add_flag(main->pos_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
-		
-		//	cursor pos val X label obj
-		main->posX_obj = lv_label_create(main->pos_obj);lv_cursor_pos.label_x=main->posX_obj;
-		lv_label_set_text(main->posX_obj, "___");
-		lv_obj_set_pos(main->posX_obj, 60, 0);
-		lv_obj_add_style(main->posX_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
-		lv_obj_add_flag(main->posX_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
-		
-		//	cursor pos val Y label obj
-		main->posY_obj = lv_label_create(main->pos_obj);lv_cursor_pos.label_y=main->posY_obj;
-		lv_label_set_text(main->posY_obj, "___");
-		lv_obj_set_pos(main->posY_obj, 100, 0);
-		lv_obj_add_style(main->posY_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
-		lv_obj_add_flag(main->posY_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
-		
-		// free heap
-		// TODO: pring free heap
-		
-		//	tray obj
-		main->tray_obj = lv_obj_create(main->bar_obj);
-		lv_obj_set_flex_grow(main->tray_obj, 1);	//	MUST HAVE: expand to the end!!!
+	main->header_obj = lv_obj_create(main->scrn_base.screen);
+	lv_obj_set_pos(main->header_obj, 0, 0);
+	lv_obj_set_size(main->header_obj, HOR_RESOLUTION, 30);
+	lv_obj_clear_flag(main->header_obj, LV_OBJ_FLAG_SCROLLABLE);
+
+	lv_obj_set_layout(main->header_obj, LV_LAYOUT_FLEX);
+	lv_obj_set_flex_flow(main->header_obj, LV_FLEX_FLOW_ROW);
+	lv_obj_set_style_pad_column(main->header_obj, 3, 0); // spacing between items
+	lv_obj_set_style_pad_all(main->header_obj, 0, 0);	//	MUST SET 0!! Inner margin of the container. on all 4 sides to children
+	lv_obj_set_style_radius(main->header_obj, 0, 0);
+	lv_obj_set_style_bg_opa(main->header_obj, LV_OPA_TRANSP, 0);
+	lv_obj_set_style_border_width(main->header_obj, 0, 0);
+	lv_obj_add_flag(main->header_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+	
+	
+	// menu button
+	main->menu_b_obj = lv_btn_create(main->header_obj);
+	lv_obj_set_size(main->menu_b_obj , LV_SIZE_CONTENT, 30);
+	lv_obj_add_style(main->menu_b_obj,&lv_app_styles.color_combo1,LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_set_style_radius(main->menu_b_obj, 4, LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_event_cb(main->menu_b_obj, menu_toggle_cb, LV_EVENT_ALL, main);
+	lv_obj_add_flag(main->menu_b_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+	// menu label
+	main->menu_l_obj = lv_label_create(main->menu_b_obj);
+	lv_label_set_text(main->menu_l_obj,"\xEF\x83\x89"); // f0c9
+	lv_obj_set_pos(main->menu_l_obj, 0, 0);
+	lv_obj_set_size(main->menu_l_obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+	lv_obj_set_style_align(main->menu_l_obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_style(main->menu_l_obj, &lv_app_styles.sym_font, LV_PART_MAIN | LV_STATE_DEFAULT);	// explicit, otherwise overwritten
+	lv_obj_add_flag(main->menu_l_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+	
+	// menu (using menu lib)
+	main->menu = create_menu(main->scrn_base.screen, 0, 30, 300, 100);
+
+		// root page: 1 section with 3 contents (splash, calibrate, settings)
+		page_t    *root_page     = create_page(main->menu, NULL, 1);
+		section_t *main_section  = create_section(root_page, 3);
+
+			// splash
+			cont_t *splash_cont = create_content(main_section, 30);
+			create_cont_lbl(splash_cont, "splash");
+
+				// splash subpage
+				page_t    *splash_page    = create_page(main->menu, splash_cont, 1);
+				section_t *splash_section = create_section(splash_page, 2);
+				cont_t    *splash_item    = create_content(splash_section, 30);
+				create_cont_lbl(splash_item, "go to splash screen");
+				cont_t    *splash_btn_item    = create_content(splash_section, 60);
+				create_cont_btn(splash_btn_item, "GO", menu_to_splash_cb, main);
+
+			// calibrate
+			cont_t *calibrate_cont = create_content(main_section, 30);
+			create_cont_lbl(calibrate_cont, "calibrate");
+			// lv_obj_add_event_cb(calibrate_cont->cont_obj, menu_to_cali_cb, LV_EVENT_ALL, main);
+
+				// calibrate subpage
+				page_t    *calibrate_page    = create_page(main->menu, calibrate_cont, 1);
+				section_t *calibrate_section = create_section(calibrate_page, 2);
+				cont_t    *calibrate_item    = create_content(calibrate_section, 30);
+				create_cont_lbl(calibrate_item, "go to calibration screen");
+				cont_t    *calibrate_btn_item    = create_content(calibrate_section, 60);
+				create_cont_btn(calibrate_btn_item, "GO", menu_to_cali_cb, main);
+
+			// settings (with subpage)
+			cont_t *settings_cont = create_content(main_section, 30);
+			create_cont_lbl(settings_cont, "settings");
+			// lv_obj_add_event_cb(settings_cont->cont_obj, menu_to_settings_cb, LV_EVENT_ALL, main);
+
+				// settings subpage
+				page_t    *settings_page    = create_page(main->menu, settings_cont, 1);
+				section_t *settings_section = create_section(settings_page, 2);
+				cont_t    *settings_item    = create_content(settings_section, 30);
+				create_cont_lbl(settings_item, "go to settings app");
+				cont_t    *settings_btn_item    = create_content(settings_section, 60);
+				create_cont_btn(settings_btn_item, "GO", menu_to_settings_cb, main);
+
+
+	// folder
+	main->folder_obj = lv_btn_create(main->header_obj);
+	lv_obj_set_size(main->folder_obj , LV_SIZE_CONTENT, 30);
+	lv_obj_add_style(main->folder_obj,&lv_app_styles.color_combo1,LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_set_style_radius(main->folder_obj, 4, LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_flag(main->folder_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+	// folder label
+	main->folder_l_obj = lv_label_create(main->folder_obj);
+	lv_label_set_text(main->folder_l_obj,"\xEF\x81\xBC");
+	lv_obj_set_pos(main->folder_l_obj, 0, 0);
+	lv_obj_set_size(main->folder_l_obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+	lv_obj_set_style_align(main->folder_l_obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_style(main->folder_l_obj, &lv_app_styles.sym_font, LV_PART_MAIN | LV_STATE_DEFAULT);	// explicit, otherwise overwritten
+	lv_obj_add_flag(main->folder_l_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+	
+	// terminal
+	main->terminal_obj = lv_btn_create(main->header_obj);
+	lv_obj_set_size(main->terminal_obj , LV_SIZE_CONTENT, 30);
+	lv_obj_add_style(main->terminal_obj,&lv_app_styles.color_combo1,LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_set_style_radius(main->terminal_obj, 4, LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_flag(main->terminal_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+	// terminal label
+	main->terminal_l_obj = lv_label_create(main->terminal_obj);
+	lv_label_set_text(main->terminal_l_obj,"\xEF\x8B\x90"); //f2d0
+	lv_obj_set_pos(main->terminal_l_obj, 0, 0);
+	lv_obj_set_size(main->terminal_l_obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+	lv_obj_set_style_align(main->terminal_l_obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_style(main->terminal_l_obj, &lv_app_styles.sym_font, LV_PART_MAIN | LV_STATE_DEFAULT);	// explicit, otherwise overwritten
+	
+	
+	
+	// tabs
+	
+	//	footer/status bar obj ----------------------------------------------------------------
+	main->bar_obj = lv_obj_create(main->scrn_base.screen);
+	lv_obj_set_pos(main->bar_obj, 0, 300);
+	lv_obj_set_size(main->bar_obj, HOR_RESOLUTION, 20);
+	lv_obj_clear_flag(main->bar_obj, LV_OBJ_FLAG_SCROLLABLE);
+	
+	lv_obj_set_layout(main->bar_obj, LV_LAYOUT_FLEX);
+	lv_obj_set_flex_flow(main->bar_obj, LV_FLEX_FLOW_ROW);
+	lv_obj_set_style_pad_column(main->bar_obj, 10, 0); // spacing between items
+	lv_obj_set_style_pad_all(main->bar_obj, 0, 0);	//	MUST SET 0!! Inner margin of the container. on all 4 sides to children
+	lv_obj_set_style_radius(main->bar_obj, 0, 0);
+	lv_obj_set_style_bg_opa(main->bar_obj, LV_OPA_TRANSP, 0);
+	lv_obj_set_style_border_width(main->bar_obj, 0, 0);
+	lv_obj_add_flag(main->bar_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+
+	//	return status label obj
+	main->ret_obj = lv_label_create(main->bar_obj);
+	lv_label_set_text(main->ret_obj , "[FSret:");
+	lv_obj_add_style(main->ret_obj ,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_flag(main->ret_obj , LV_OBJ_FLAG_EVENT_BUBBLE);
+	
+	//	ret status content obj
+	main->ret_val_obj = lv_label_create(main->bar_obj);
+	lv_label_set_text(main->ret_val_obj, "NONE");
+	lv_obj_add_style(main->ret_val_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_flag(main->ret_val_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+	
+	//	cursor pos label obj
+	main->scrn_base.pos_obj = lv_label_create(main->bar_obj);
+	lv_label_set_text(main->scrn_base.pos_obj, "][Pos:   ,   ][");
+	lv_obj_add_style(main->scrn_base.pos_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_flag(main->scrn_base.pos_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+	
+	//	cursor pos val X label obj
+	main->scrn_base.posX_obj = lv_label_create(main->scrn_base.pos_obj);
+	// lv_cursor_pos.label_x=main->scrn_base.posX_obj;
+	lv_label_set_text(main->scrn_base.posX_obj, "___");
+	lv_obj_set_pos(main->scrn_base.posX_obj, 60, 0);
+	lv_obj_add_style(main->scrn_base.posX_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_flag(main->scrn_base.posX_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+	
+	//	cursor pos val Y label obj
+	main->scrn_base.posY_obj = lv_label_create(main->scrn_base.pos_obj);
+	// lv_cursor_pos.label_y=main->scrn_base.posY_obj;
+	lv_label_set_text(main->scrn_base.posY_obj, "___");
+	lv_obj_set_pos(main->scrn_base.posY_obj, 100, 0);
+	lv_obj_add_style(main->scrn_base.posY_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_flag(main->scrn_base.posY_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+	
+	// free heap
+	// TODO: pring free heap
+	
+	//	tray obj
+	main->tray_obj = lv_obj_create(main->bar_obj);
+	lv_obj_set_flex_grow(main->tray_obj, 1);	//	MUST HAVE: expand to the end!!!
 //		lv_obj_set_pos(tray_obj, 0, 300);
-		lv_obj_set_size(main->tray_obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);	//	MUST HAVE
-		lv_obj_clear_flag(main->tray_obj, LV_OBJ_FLAG_SCROLLABLE);
-		
-		lv_obj_set_layout(main->tray_obj, LV_LAYOUT_FLEX);
-		lv_obj_set_flex_flow(main->tray_obj, LV_FLEX_FLOW_ROW_REVERSE);
-		lv_obj_set_style_pad_column(main->tray_obj, 5, 0); // spacing between items
-		lv_obj_set_style_pad_all(main->tray_obj, 0, 0);
-		lv_obj_set_style_radius(main->tray_obj, 0, 0);
-		lv_obj_set_style_border_width(main->tray_obj, 0, 0);
-		lv_obj_set_style_bg_opa(main->tray_obj, LV_OPA_TRANSP, 0);
+	lv_obj_set_size(main->tray_obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);	//	MUST HAVE
+	lv_obj_clear_flag(main->tray_obj, LV_OBJ_FLAG_SCROLLABLE);
+	
+	lv_obj_set_layout(main->tray_obj, LV_LAYOUT_FLEX);
+	lv_obj_set_flex_flow(main->tray_obj, LV_FLEX_FLOW_ROW_REVERSE);
+	lv_obj_set_style_pad_column(main->tray_obj, 5, 0); // spacing between items
+	lv_obj_set_style_pad_all(main->tray_obj, 0, 0);
+	lv_obj_set_style_radius(main->tray_obj, 0, 0);
+	lv_obj_set_style_border_width(main->tray_obj, 0, 0);
+	lv_obj_set_style_bg_opa(main->tray_obj, LV_OPA_TRANSP, 0);
 
-		lv_obj_set_flex_align(main->tray_obj,	//	MUST HAVE
-                      LV_FLEX_ALIGN_END,
-                      LV_FLEX_ALIGN_CENTER,
-                      LV_FLEX_ALIGN_CENTER);
-											
-		lv_obj_add_flag(main->tray_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
-		
-		// ]
-		main->end_obj = lv_label_create(main->tray_obj);
-		lv_label_set_text(main->end_obj,"]");
-		lv_obj_add_style(main->end_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
-		lv_obj_add_flag(main->end_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
-		
-		// wifi sym
-		main->wifi_obj = lv_label_create(main->tray_obj);
-		lv_label_set_text(main->wifi_obj,LV_SYMBOL_WIFI);	// cant use any char here, only syms since set by style
-		lv_obj_add_style(main->wifi_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
-		lv_obj_add_style(main->wifi_obj,&lv_app_styles.sym_font,LV_PART_MAIN | LV_STATE_DEFAULT);
-		lv_obj_add_flag(main->wifi_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
-		
-		// wifi disconn slash
-		main->wifix_obj = lv_label_create(main->wifi_obj);
-		lv_label_set_text(main->wifix_obj,"\xEF\x9C\x95");
-		lv_obj_add_style(main->wifix_obj,&lv_app_styles.char_color2, LV_PART_MAIN | LV_STATE_DEFAULT);
-		lv_obj_add_style(main->wifix_obj, &lv_app_styles.sym_font, LV_PART_MAIN | LV_STATE_DEFAULT);	// explicit, otherwise overwritten
-		lv_obj_add_flag(main->wifix_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
-		
-		// sound sym
-		main->sound_obj = lv_label_create(main->tray_obj);
-		lv_label_set_text(main->sound_obj, LV_SYMBOL_MUTE);
-		lv_obj_add_style(main->sound_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
-		lv_obj_add_style(main->sound_obj,&lv_app_styles.sym_font,LV_PART_MAIN | LV_STATE_DEFAULT);
-		lv_obj_add_flag(main->sound_obj , LV_OBJ_FLAG_EVENT_BUBBLE);
-		
-		// sound disconn slash
-		main->soundx_obj = lv_label_create(main->sound_obj);
-		lv_label_set_text(main->soundx_obj,"\xEF\x9C\x95");
-		lv_obj_add_style(main->soundx_obj,&lv_app_styles.char_color2, LV_PART_MAIN | LV_STATE_DEFAULT);
-		lv_obj_add_style(main->soundx_obj, &lv_app_styles.sym_font, LV_PART_MAIN | LV_STATE_DEFAULT);	// explicit, otherwise overwritten
-		lv_obj_add_flag(main->soundx_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
-		
-		// battery
-		main->battery_obj = lv_label_create(main->tray_obj);
-		lv_label_set_text(main->battery_obj, LV_SYMBOL_BATTERY_EMPTY);
-		lv_obj_add_style(main->battery_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
-		lv_obj_add_style(main->battery_obj,&lv_app_styles.sym_font,LV_PART_MAIN | LV_STATE_DEFAULT);
-		lv_obj_add_flag(main->battery_obj , LV_OBJ_FLAG_EVENT_BUBBLE);
-		
-		// battery disconn slash
-		main->batteryx_obj = lv_label_create(main->battery_obj);
-		lv_label_set_text(main->batteryx_obj,"\xEF\x9C\x95");
-		lv_obj_add_style(main->batteryx_obj,&lv_app_styles.char_color2, LV_PART_MAIN | LV_STATE_DEFAULT);
-		lv_obj_add_style(main->batteryx_obj, &lv_app_styles.sym_font, LV_PART_MAIN | LV_STATE_DEFAULT);	// explicit, otherwise overwritten
-		lv_obj_add_flag(main->batteryx_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
-		
-		//	SD
-		main->SD_obj = lv_label_create(main->tray_obj);
-		lv_label_set_text(main->SD_obj, "\xEF\x9F\x82");
-		lv_obj_add_style(main->SD_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
-		lv_obj_add_style(main->SD_obj,&lv_app_styles.sym_font,LV_PART_MAIN | LV_STATE_DEFAULT);
-		lv_obj_add_flag(main->SD_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
-		
-		// SD disconn slash
-		main->SDx_obj = lv_label_create(main->SD_obj);
-		lv_label_set_text(main->SDx_obj,"\xEF\x9C\x95");
-		lv_obj_add_style(main->SDx_obj,&lv_app_styles.char_color2, LV_PART_MAIN | LV_STATE_DEFAULT);
-		lv_obj_add_style(main->SDx_obj, &lv_app_styles.sym_font, LV_PART_MAIN | LV_STATE_DEFAULT);	// explicit, otherwise overwritten
-		lv_obj_add_flag(main->SDx_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
-		
-		// ][
-		main->sta_obj = lv_label_create(main->tray_obj);
-		lv_label_set_text(main->sta_obj,"][");
-		lv_obj_add_style(main->sta_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
-		lv_obj_add_flag(main->sta_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
-		
-		printf("Free heap main: %d\r\n", xPortGetFreeHeapSize());
-		lv_disp_load_scr(main->screen);
-		
+	lv_obj_set_flex_align(main->tray_obj,	//	MUST HAVE
+					LV_FLEX_ALIGN_END,
+					LV_FLEX_ALIGN_CENTER,
+					LV_FLEX_ALIGN_CENTER);
+										
+	lv_obj_add_flag(main->tray_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+	
+	// ]
+	main->end_obj = lv_label_create(main->tray_obj);
+	lv_label_set_text(main->end_obj,"]");
+	lv_obj_add_style(main->end_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_flag(main->end_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+	
+	// wifi sym
+	main->wifi_obj = lv_label_create(main->tray_obj);
+	lv_label_set_text(main->wifi_obj,LV_SYMBOL_WIFI);	// cant use any char here, only syms since set by style
+	lv_obj_add_style(main->wifi_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_style(main->wifi_obj,&lv_app_styles.sym_font,LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_flag(main->wifi_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+	
+	// wifi disconn slash
+	main->wifix_obj = lv_label_create(main->wifi_obj);
+	lv_label_set_text(main->wifix_obj,"\xEF\x9C\x95");
+	lv_obj_add_style(main->wifix_obj,&lv_app_styles.char_color2, LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_style(main->wifix_obj, &lv_app_styles.sym_font, LV_PART_MAIN | LV_STATE_DEFAULT);	// explicit, otherwise overwritten
+	lv_obj_add_flag(main->wifix_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+	
+	// sound sym
+	main->sound_obj = lv_label_create(main->tray_obj);
+	lv_label_set_text(main->sound_obj, LV_SYMBOL_MUTE);
+	lv_obj_add_style(main->sound_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_style(main->sound_obj,&lv_app_styles.sym_font,LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_flag(main->sound_obj , LV_OBJ_FLAG_EVENT_BUBBLE);
+	
+	// sound disconn slash
+	main->soundx_obj = lv_label_create(main->sound_obj);
+	lv_label_set_text(main->soundx_obj,"\xEF\x9C\x95");
+	lv_obj_add_style(main->soundx_obj,&lv_app_styles.char_color2, LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_style(main->soundx_obj, &lv_app_styles.sym_font, LV_PART_MAIN | LV_STATE_DEFAULT);	// explicit, otherwise overwritten
+	lv_obj_add_flag(main->soundx_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+	
+	// battery
+	main->battery_obj = lv_label_create(main->tray_obj);
+	lv_label_set_text(main->battery_obj, LV_SYMBOL_BATTERY_EMPTY);
+	lv_obj_add_style(main->battery_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_style(main->battery_obj,&lv_app_styles.sym_font,LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_flag(main->battery_obj , LV_OBJ_FLAG_EVENT_BUBBLE);
+	
+	// battery disconn slash
+	main->batteryx_obj = lv_label_create(main->battery_obj);
+	lv_label_set_text(main->batteryx_obj,"\xEF\x9C\x95");
+	lv_obj_add_style(main->batteryx_obj,&lv_app_styles.char_color2, LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_style(main->batteryx_obj, &lv_app_styles.sym_font, LV_PART_MAIN | LV_STATE_DEFAULT);	// explicit, otherwise overwritten
+	lv_obj_add_flag(main->batteryx_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+	
+	//	SD
+	main->SD_obj = lv_label_create(main->tray_obj);
+	lv_label_set_text(main->SD_obj, "\xEF\x9F\x82");
+	lv_obj_add_style(main->SD_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_style(main->SD_obj,&lv_app_styles.sym_font,LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_flag(main->SD_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+	
+	// SD disconn slash
+	main->SDx_obj = lv_label_create(main->SD_obj);
+	lv_label_set_text(main->SDx_obj,"\xEF\x9C\x95");
+	lv_obj_add_style(main->SDx_obj,&lv_app_styles.char_color2, LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_style(main->SDx_obj, &lv_app_styles.sym_font, LV_PART_MAIN | LV_STATE_DEFAULT);	// explicit, otherwise overwritten
+	lv_obj_add_flag(main->SDx_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+	
+	// ][
+	main->sta_obj = lv_label_create(main->tray_obj);
+	lv_label_set_text(main->sta_obj,"][");
+	lv_obj_add_style(main->sta_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_flag(main->sta_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+	
+	// update (could be deprecated since OOP structure already handles this?)
+	scrn_t_update(main->scrn_base);
+	printf("Free heap main: %d\r\n", xPortGetFreeHeapSize());
+	lv_disp_load_scr(main->scrn_base.screen);
+}
+
+scrn_main_t* create_screen_main(void){
+	scrn_main_t *main = lv_mem_alloc(sizeof(scrn_main_t));
+	if(main == NULL){
+		printf("Failed to allocate memory for scrn_main_t\r\n");
+		return NULL;
+	}
+	lv_memset_00(main, sizeof(scrn_main_t));
+	main->scrn_base.scrn_t_enter = scrn_main_t_enter;
+	main->scrn_base.scrn_t_exit = scrn_t_exit_t;
+	return main;
 }

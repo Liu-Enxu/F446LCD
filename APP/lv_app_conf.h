@@ -2,6 +2,7 @@
 #define __LV_APP_CONF_H
 #include <lvgl/lvgl.h>
 #include "FreeRTOS.h"
+//#include "screens.h"
 
 // system wide
 typedef struct {
@@ -65,8 +66,9 @@ extern peri_status_t peri_status;
 
 typedef struct {
 	u8 isMenuOpen;
-} header_status_t;
-extern header_status_t header_status;
+//	scrn_t *currScrn;
+} disp_status_t;
+extern disp_status_t disp_status;
 
 typedef struct {
 	char notiSource[5];

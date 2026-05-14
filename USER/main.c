@@ -39,7 +39,7 @@
 TaskHandle_t dispTaskHandle;
 void disp_task(void *pvParameters){
 	pvParameters = pvParameters;
-	create_screen_load();
+	scrn_manager_switch((scrn_t*)create_screen_load());
 	while(1){
 		lv_timer_handler();
 		vTaskDelay(5);
@@ -79,10 +79,10 @@ int main(void)
 //		u8 frame_idx = 0;
 	
 	// must haves ------------------------
-	delay_init();	    	 //ÑÓÊ±º¯Êý³õÊ¼»¯	  
-	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);	 //ÉèÖÃNVICÖÐ¶Ï·Ö×é2:2Î»ÇÀÕ¼ÓÅÏÈ¼¶£¬2Î»ÏìÓ¦ÓÅÏÈ¼¶
-	uart_init(115200);	 	//´®¿Ú³õÊ¼»¯Îª115200
-//	TIM2_Int_Init(999,89); // 90M/(89+1)=1Mhz --> 1us, 9999+1-->10ms	//ÈôÊ¹ÓÃRTOSÔò²»ÐèÒªTIMx£¡
+	delay_init();	    	 //ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½	  
+	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);	 //ï¿½ï¿½ï¿½ï¿½NVICï¿½Ð¶Ï·ï¿½ï¿½ï¿½2:2Î»ï¿½ï¿½Õ¼ï¿½ï¿½ï¿½È¼ï¿½ï¿½ï¿½2Î»ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½È¼ï¿½
+	uart_init(115200);	 	//ï¿½ï¿½ï¿½Ú³ï¿½Ê¼ï¿½ï¿½Îª115200
+//	TIM2_Int_Init(999,89); // 90M/(89+1)=1Mhz --> 1us, 9999+1-->10ms	//ï¿½ï¿½Ê¹ï¿½ï¿½RTOSï¿½ï¿½ï¿½ï¿½ÒªTIMxï¿½ï¿½
 	printf("begin!\n");	
 	
 	RTOS_init();
@@ -140,7 +140,7 @@ int main(void)
 //		if(times%10==0)get_touchXY();
 //		
 //		if(USART_RX_STA&0x8000){					   
-//			len=USART_RX_STA&0x3fff;//µÃµ½´Ë´Î½ÓÊÕµ½µÄÊý¾Ý³¤¶È
+//			len=USART_RX_STA&0x3fff;//ï¿½Ãµï¿½ï¿½Ë´Î½ï¿½ï¿½Õµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý³ï¿½ï¿½ï¿½
 //			LCD_ShowString(30,200,300,16,16,USART_RX_BUF);
 //			for(t=0;t<len;t++)
 //			{

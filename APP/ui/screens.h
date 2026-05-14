@@ -5,39 +5,68 @@
 #include "sys.h"
 #include "menu.h"
 
+// forward declarations
+typedef struct scrn_t scrn_t;
+typedef struct scrn_cali_t scrn_cali_t;
+typedef struct scrn_load_t scrn_load_t;
+typedef struct scrn_main_t scrn_main_t;
+
+//	screen manager -------------------------------------------------
+typedef enum {
+	SCREEN_LOAD = 0,
+	SCREEN_MAIN,
+	SCREEN_CALIBRATE,
+} scrn_type_t;
+
 typedef struct {
+	// scrn_type_t curr_scrn_type;
+	scrn_t* curr_scrn_ptr;
+} scrn_manager_t;
+scrn_manager_t* scrn_manager_inst(void);
+void scrn_manager_switch(scrn_t *next); 
+
+//	father class/general screen ---------------------------------
+struct scrn_t {
+	// member
 	lv_obj_t *screen;
-	lv_obj_t *circle;
 	lv_obj_t *pos_obj;
-	lv_obj_t *circle_pos_obj;
 	lv_obj_t *posX_obj;
 	lv_obj_t *posY_obj;
+	
+	// operation funcs
+	scrn_t* (*scrn_t_enter)(scrn_t* self);
+	scrn_t* (*scrn_t_exit)(scrn_t* self);
+};
+
+//	children classes ---------------------------------------------
+struct scrn_cali_t {	// inherit from scrn_t
+	scrn_t	 scrn_base;
+
+	lv_obj_t *circle;
+	lv_obj_t *circle_pos_obj;
 	lv_obj_t *lbl_pref_obj;
 	lv_obj_t *lbl_sep_obj;
 	lv_obj_t *lbl_comma_obj;
 	
-} scrn_cali_t;
+};
 
-typedef struct {
-	lv_obj_t *screen;
+struct scrn_load_t{	// inherit from scrn_t
+	scrn_t	 scrn_base;
+
     lv_obj_t *L_obj;
     lv_obj_t *b_obj;
 	lv_obj_t *l_obj;
 	lv_obj_t *ascii_obj;
-	lv_obj_t *pos_obj;
-	lv_obj_t *posX_obj;
-	lv_obj_t *posY_obj;
 	lv_obj_t *welcome_obj;
-} scrn_load_t;
+};
 
+struct scrn_main_t {	// inherit from scrn_t
+	scrn_t	 scrn_base;
 
-typedef struct {
-	lv_obj_t *screen;
 	// header
 	lv_obj_t *header_obj;
 	lv_obj_t *menu_b_obj;
 	lv_obj_t *menu_l_obj;
-
 	menu_t *menu;
 
 	lv_obj_t *folder_obj;
@@ -49,9 +78,6 @@ typedef struct {
 	lv_obj_t *bar_obj;
 	lv_obj_t *ret_obj;
 	lv_obj_t *ret_val_obj;
-	lv_obj_t *pos_obj;
-	lv_obj_t *posX_obj;
-	lv_obj_t *posY_obj;
 	lv_obj_t *tray_obj;
 	lv_obj_t *end_obj;
 	lv_obj_t *wifi_obj;
@@ -63,18 +89,21 @@ typedef struct {
 	lv_obj_t *SD_obj;
 	lv_obj_t *SDx_obj;
 	lv_obj_t *sta_obj;
-} scrn_main_t;
+};
 
 
+// app tabs -  in developement
 typedef struct{	// need revise
 	u8 id;
 	lv_obj_t *tab;
 	void* other_obj;
 } app_tab_t;
-	
-void create_screen_cali(void);
-void create_screen_load(void);
-void create_screen_main(void);
+
+// constructor funcs
+// should be private now since scrn_manager already handles screen switching?
+scrn_load_t* create_screen_load(void);
+scrn_main_t* create_screen_main(void);
+scrn_cali_t* create_screen_cali(void);
 
 
 

@@ -5,7 +5,7 @@ lv_cursor_pos_t lv_cursor_pos;
 calibration_param_t calibrat_t = {0};
 
 peri_status_t peri_status = {0};
-header_status_t header_status = {0};
+disp_status_t disp_status = {0};
 
 uint32_t LV_NOTI_NEW;
 
