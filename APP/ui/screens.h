@@ -75,6 +75,8 @@ struct scrn_main_t {	// inherit from scrn_t
 	lv_obj_t *terminal_obj;
 	lv_obj_t *terminal_l_obj;
 
+	lv_obj_t *app_tab_obj;
+
 	// footer/status bar
 	lv_obj_t *bar_obj;
 	lv_obj_t *ret_obj;
@@ -92,14 +94,6 @@ struct scrn_main_t {	// inherit from scrn_t
 	lv_obj_t *SDx_obj;
 	lv_obj_t *sta_obj;
 };
-
-
-// app tabs -  in developement
-typedef struct{	// need revise
-	u8 id;
-	lv_obj_t *tab;
-	void* other_obj;
-} app_tab_t;
 
 // constructor funcs
 // should be private now since scrn_manager already handles screen switching?

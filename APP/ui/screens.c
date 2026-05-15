@@ -11,13 +11,20 @@
 
 
 /*
- *private variable
+ * private variable
  */ 
 // calibration circle positions
 static u16 circle_pos[6][2] = {
 	{30,30},{HOR_RESOLUTION/2,30},{HOR_RESOLUTION,30},
 	{30,VER_RESOLUTION},{HOR_RESOLUTION/2,VER_RESOLUTION},{HOR_RESOLUTION,VER_RESOLUTION}
 };
+
+/*
+ * private functions forward declarations
+ */ 
+static scrn_load_t*	create_screen_load(void);
+static scrn_main_t* create_screen_main(void);
+static scrn_cali_t* create_screen_cali(void);
 
 /* ================================================================== */
 /*  Screen Manager				   									*/
@@ -426,14 +433,56 @@ static void scrn_main_t_enter(scrn_t* self){
 	lv_obj_set_pos(main->scrn_base.screen, 0, 0);
 	lv_obj_set_size(main->scrn_base.screen, HOR_RESOLUTION, VER_RESOLUTION);
 	lv_obj_clear_flag(main->scrn_base.screen, LV_OBJ_FLAG_SCROLLABLE);
-//    lv_obj_set_style_border_opa(obj, LV_OPA_TRANSP, 0);	// optional??
 	lv_obj_add_event_cb(main->scrn_base.screen, touch_cb, LV_EVENT_ALL, main);
 	
-	// header bar ----------------------------------------------------------------
+	// tabs
+	main->app_tab_obj = lv_tabview_create(main->scrn_base.screen, LV_DIR_TOP, 34);
+	lv_obj_set_pos(main->app_tab_obj, 0, 0);
+	lv_obj_set_size(main->app_tab_obj, HOR_RESOLUTION, VER_RESOLUTION-20);
 	
+	lv_obj_clear_flag(main->app_tab_obj, LV_OBJ_FLAG_SCROLLABLE);
+	lv_obj_add_flag(main->app_tab_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+
+	lv_obj_t * tab1 = lv_tabview_add_tab(main->app_tab_obj, "     ");
+	lv_obj_t * tab2 = lv_tabview_add_tab(main->app_tab_obj, "Demo1");
+	lv_obj_t * tab3 = lv_tabview_add_tab(main->app_tab_obj, "Demo2");
+	lv_obj_t * label = lv_label_create(tab1);
+	lv_label_set_text(label, "This the first tab\n\n"
+                      "If the content\n"
+                      "of a tab\n"
+                      "becomes too\n"
+                      "longer\n"
+                      "than the\n"
+                      "container\n"
+                      "then it\n"
+                      "automatically\n"
+                      "becomes\n"
+                      "scrollable.\n"
+                      "\n"
+                      "\n"
+                      "\n"
+                      "Can you see it?");
+	
+	lv_obj_scroll_to_view_recursive(label, LV_ANIM_ON);
+	lv_obj_t *tab_btns = lv_tabview_get_tab_btns(main->app_tab_obj);
+	lv_obj_add_style(tab_btns,&lv_app_styles.color_combo1,LV_PART_ITEMS | LV_STATE_DEFAULT);
+	lv_obj_set_style_bg_opa(tab_btns, LV_OPA_10, LV_PART_ITEMS | LV_STATE_DEFAULT);
+	lv_obj_set_style_border_opa(tab_btns, LV_OPA_TRANSP, LV_PART_ITEMS | LV_STATE_DEFAULT);
+	
+	lv_obj_add_style(tab_btns,&lv_app_styles.color_combo1,LV_PART_ITEMS | LV_STATE_CHECKED);
+	lv_obj_set_style_border_opa(tab_btns, LV_OPA_COVER, LV_PART_ITEMS | LV_STATE_CHECKED);
+	lv_obj_set_style_border_color(tab_btns, lv_app_styles.color1, LV_PART_ITEMS | LV_STATE_CHECKED);
+	
+	lv_btnmatrix_set_btn_width(tab_btns, 0, 3);  // index 0, relative width unit
+	lv_btnmatrix_set_btn_ctrl(tab_btns, 0, LV_BTNMATRIX_CTRL_HIDDEN);
+	// lv_btnmatrix_set_btn_ctrl(tab_btns, 1, LV_BTNMATRIX_CTRL_CHECKED);
+	lv_obj_set_style_bg_opa(tab_btns, LV_OPA_TRANSP, LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_flag(label, LV_OBJ_FLAG_EVENT_BUBBLE);
+
+	// header bar ----------------------------------------------------------------
 	main->header_obj = lv_obj_create(main->scrn_base.screen);
 	lv_obj_set_pos(main->header_obj, 0, 0);
-	lv_obj_set_size(main->header_obj, HOR_RESOLUTION, 30);
+	lv_obj_set_size(main->header_obj, LV_SIZE_CONTENT, 30);
 	lv_obj_clear_flag(main->header_obj, LV_OBJ_FLAG_SCROLLABLE);
 
 	lv_obj_set_layout(main->header_obj, LV_LAYOUT_FLEX);
@@ -443,6 +492,8 @@ static void scrn_main_t_enter(scrn_t* self){
 	lv_obj_set_style_radius(main->header_obj, 0, 0);
 	lv_obj_set_style_bg_opa(main->header_obj, LV_OPA_TRANSP, 0);
 	lv_obj_set_style_border_width(main->header_obj, 0, 0);
+	lv_obj_add_flag(main->header_obj, LV_OBJ_FLAG_FLOATING);
+	lv_obj_move_foreground(main->header_obj);
 	lv_obj_add_flag(main->header_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
 	
 	
@@ -539,10 +590,7 @@ static void scrn_main_t_enter(scrn_t* self){
 	// lv_obj_add_style(main->terminal_l_obj, &lv_app_styles.sym_font, LV_PART_MAIN | LV_STATE_DEFAULT);	// explicit, otherwise overwritten
 	lv_obj_add_style(main->terminal_l_obj, &lv_app_styles.char_color1, LV_PART_MAIN | LV_STATE_DEFAULT);	// explicit, otherwise overwritten
 	lv_obj_add_flag(main->terminal_l_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
-	
-	
-	// tabs
-	
+		
 	//	footer/status bar obj ----------------------------------------------------------------
 	main->bar_obj = lv_obj_create(main->scrn_base.screen);
 	lv_obj_set_pos(main->bar_obj, 0, 300);
