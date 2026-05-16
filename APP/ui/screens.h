@@ -4,6 +4,7 @@
 #include <lvgl/lvgl.h>
 #include "sys.h"
 #include "menu.h"
+#include "tab.h"
 
 // forward declarations
 typedef struct scrn_t scrn_t;
@@ -75,7 +76,7 @@ struct scrn_main_t {	// inherit from scrn_t
 	lv_obj_t *terminal_obj;
 	lv_obj_t *terminal_l_obj;
 
-	lv_obj_t *app_tab_obj;
+	tabview_t *app_tab_obj;
 
 	// footer/status bar
 	lv_obj_t *bar_obj;

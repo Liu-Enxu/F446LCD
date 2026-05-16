@@ -786,6 +786,11 @@
               <FileType>1</FileType>
               <FilePath>..\APP\ui\menu.c</FilePath>
             </File>
+            <File>
+              <FileName>tab.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\APP\ui\tab.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

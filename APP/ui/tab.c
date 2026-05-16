@@ -1,4 +1,88 @@
 #include "tab.h"
+#include "lv_app_conf.h"
+#include "lcd.h"
+
+tab_t* create_tab(tabview_t* my_tabview, const char* tab_name){
+    // check for valid args
+    if (my_tabview == NULL || tab_name == NULL) {
+        printf("Invalid args in create_tab!\r\n");
+        return NULL;
+    }
+
+    // struct malloc
+    tab_t* my_tab = lv_mem_alloc(sizeof(tab_t));
+    if (my_tab == NULL) {
+        printf("Error allocating memory for tab_t!!\r\n");
+        return NULL;
+    }
+
+    // tab id
+    my_tab->id = my_tabview->tab_cnt++;
+    // tab obj
+    my_tab->tab = lv_tabview_add_tab(my_tabview->tabview, tab_name);
+    lv_obj_clear_flag(my_tab->tab, LV_OBJ_FLAG_SCROLLABLE);
+    // next tab
+    my_tab->next_tab = NULL;
+
+    // add to previous tab_t
+    if(my_tabview->tab_head != NULL) {
+        tab_t *tail = my_tabview->tab_head;
+        while(tail->next_tab != NULL) {
+            tail = tail->next_tab;
+        }
+        tail->next_tab = my_tab;
+        lv_btnmatrix_set_btn_width(lv_tabview_get_tab_btns(my_tabview->tabview), 0, my_tab->id);
+    }
+
+    return my_tab;
+}
+
+static void tab_draw_event_cb(lv_event_t * e)
+{
+    lv_event_code_t code = lv_event_get_code(e);
+	if(code == LV_EVENT_DRAW_PART_BEGIN) {
+        lv_obj_draw_part_dsc_t * dsc = lv_event_get_draw_part_dsc(e);
+		if(dsc->class_p == &lv_btnmatrix_class && dsc->type == LV_BTNMATRIX_DRAW_PART_BTN) {
+            /*Change the draw descriptor of the 2nd button*/
+            if(dsc->id == 0) {
+				dsc->rect_dsc->bg_opa = LV_OPA_0;
+				dsc->rect_dsc->border_opa = LV_OPA_0;
+			}
+		}
+	}
+}
+
+
+
+static void tab_changed_cb(lv_event_t *e) {
+    tabview_t *my_tabview = (tabview_t *)lv_event_get_user_data(e);
+    if(LV_EVENT_VALUE_CHANGED != lv_event_get_code(e)) return;
+    // if(my_tabview->tab_line_hidden == 0 && lv_tabview_get_tab_act(my_tabview->tabview) == 0){
+    //     my_tabview->tab_line_hidden = 1;
+    //     lv_obj_invalidate(lv_event_get_target(e));  // force redraw
+    // } else if(my_tabview->tab_line_hidden) {
+    //     my_tabview->tab_line_hidden = 0;
+    
+    //     lv_draw_ctx_t *draw_ctx = lv_event_get_draw_ctx(e);
+    //     lv_area_t area;
+    //     area.x1 = 0;
+    //     area.x2 = HOR_RESOLUTION;
+    //     area.y1 = 30;   // bottom of tab bar
+    //     area.y2 = 34;   // 2px line
+    //     lv_draw_rect(draw_ctx, &my_tabview->tab_line, &area);
+    // }
+
+    // if(my_tabview->tab_line_hidden) {
+    //     my_tabview->tab_line_hidden = 0;
+    //     lv_draw_ctx_t *draw_ctx = lv_event_get_draw_ctx(e);
+    //     lv_area_t area;
+    //     area.x1 = 0;
+    //     area.x2 = HOR_RESOLUTION;
+    //     area.y1 = 30;   // bottom of tab bar
+    //     area.y2 = 34;   // 2px line
+    //     lv_draw_rect(draw_ctx, &my_tabview->tab_line, &area);
+    // }
+}
 
 tabview_t* create_tabview(lv_obj_t *parent, uint16_t tabview_x, uint16_t tabview_y, uint16_t tabview_w, uint16_t tabview_h, uint8_t head_h){
     
@@ -21,50 +105,35 @@ tabview_t* create_tabview(lv_obj_t *parent, uint16_t tabview_x, uint16_t tabview
 	lv_obj_set_size(my_tabview->tabview, tabview_w, tabview_h);
 	lv_obj_clear_flag(my_tabview->tabview, LV_OBJ_FLAG_SCROLLABLE);
 	lv_obj_add_flag(my_tabview->tabview, LV_OBJ_FLAG_EVENT_BUBBLE);
+    
+    // tab_line
+    my_tabview->tab_line_hidden = 1; // initially hidden since first tab is active
+    lv_draw_rect_dsc_init(&my_tabview->tab_line);
+    my_tabview->tab_line.bg_color     = lv_app_styles.color1;
+    my_tabview->tab_line.bg_opa       = LV_OPA_COVER;
+    my_tabview->tab_line.radius       = 0;
+    my_tabview->tab_line.border_width = 0;
 
     // tabs array
     my_tabview->tab_cnt = 0;
-    my_tabview->tabs = NULL;
+    my_tabview->tab_head = create_tab(my_tabview, "     "); // create first tab as head
 
+    lv_obj_t *tab_btns = lv_tabview_get_tab_btns(my_tabview->tabview);
+	lv_obj_add_style(tab_btns,&lv_app_styles.color_combo1,LV_PART_ITEMS | LV_STATE_DEFAULT);
+	lv_obj_set_style_bg_opa(tab_btns, LV_OPA_10, LV_PART_ITEMS | LV_STATE_DEFAULT);
+	lv_obj_set_style_border_opa(tab_btns, LV_OPA_TRANSP, LV_PART_ITEMS | LV_STATE_DEFAULT);
+	
+	lv_obj_add_style(tab_btns,&lv_app_styles.color_combo1,LV_PART_ITEMS | LV_STATE_CHECKED);
+	lv_obj_set_style_border_opa(tab_btns, LV_OPA_COVER, LV_PART_ITEMS | LV_STATE_CHECKED);
+	lv_obj_set_style_border_color(tab_btns, lv_app_styles.color1, LV_PART_ITEMS | LV_STATE_CHECKED);
+
+    lv_btnmatrix_set_btn_width(tab_btns, 0, 1);
+    lv_obj_add_event_cb(tab_btns, tab_draw_event_cb, LV_EVENT_ALL, NULL);
+	lv_obj_set_style_bg_opa(tab_btns, LV_OPA_TRANSP, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+
+    lv_obj_add_event_cb(my_tabview->tabview, tab_changed_cb, LV_EVENT_ALL, my_tabview);
     return my_tabview;
 }
 
-tab_t* create_tab(tabview_t* my_tabview, const char* tab_name){
-    // check for valid args
-    if (my_tabview == NULL || tab_name == NULL) {
-        printf("Invalid args in create_tab!\r\n");
-        return NULL;
-    }
 
-    // struct malloc
-    tab_t* my_tab = lv_mem_alloc(sizeof(tab_t));
-    if (my_tab == NULL) {
-        printf("Error allocating memory for tab_t!!\r\n");
-        return NULL;
-    }
-
-    // tab obj
-    my_tab->tab = lv_tabview_add_tab(my_tabview->tabview, tab_name);
-    lv_obj_clear_flag(my_tab->tab, LV_OBJ_FLAG_SCROLLABLE);
-    lv_obj_add_flag(my_tab->tab, LV_OBJ_FLAG_EVENT_BUBBLE);
-
-    // add to tabview's tabs array
-    uint8_t new_cnt = my_tabview->tab_cnt + 1;
-    lv_obj_t** new_tabs = lv_mem_alloc(new_cnt * sizeof(lv_obj_t*));
-    if (new_tabs == NULL) {
-        printf("Error allocating memory for new_tabs array in create_tab!!\r\n");
-        lv_mem_free(my_tab);
-        return NULL;
-    }
-    for (uint8_t i = 0; i < my_tabview->tab_cnt; i++) {
-        new_tabs[i] = my_tabview->tabs[i];
-    }
-    new_tabs[my_tabview->tab_cnt] = my_tab->tab;
-    if (my_tabview->tabs != NULL) {
-        lv_mem_free(my_tabview->tabs);
-    }
-    my_tabview->tabs = new_tabs;
-    my_tabview->tab_cnt = new_cnt;
-
-    return my_tab;
-}
