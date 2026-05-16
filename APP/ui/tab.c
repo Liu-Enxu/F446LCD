@@ -55,33 +55,20 @@ static void tab_draw_event_cb(lv_event_t * e)
 
 
 static void tab_changed_cb(lv_event_t *e) {
+    if (lv_event_get_code(e) != LV_EVENT_VALUE_CHANGED) return;
     tabview_t *my_tabview = (tabview_t *)lv_event_get_user_data(e);
-    if(LV_EVENT_VALUE_CHANGED != lv_event_get_code(e)) return;
-    // if(my_tabview->tab_line_hidden == 0 && lv_tabview_get_tab_act(my_tabview->tabview) == 0){
-    //     my_tabview->tab_line_hidden = 1;
-    //     lv_obj_invalidate(lv_event_get_target(e));  // force redraw
-    // } else if(my_tabview->tab_line_hidden) {
-    //     my_tabview->tab_line_hidden = 0;
-    
-    //     lv_draw_ctx_t *draw_ctx = lv_event_get_draw_ctx(e);
-    //     lv_area_t area;
-    //     area.x1 = 0;
-    //     area.x2 = HOR_RESOLUTION;
-    //     area.y1 = 30;   // bottom of tab bar
-    //     area.y2 = 34;   // 2px line
-    //     lv_draw_rect(draw_ctx, &my_tabview->tab_line, &area);
-    // }
+    uint16_t active = lv_tabview_get_tab_act(my_tabview->tabview);
+    my_tabview->tab_line_hidden = (active == 0);
+    lv_obj_invalidate(lv_event_get_target(e));  // trigger redraw only
+}
 
-    // if(my_tabview->tab_line_hidden) {
-    //     my_tabview->tab_line_hidden = 0;
-    //     lv_draw_ctx_t *draw_ctx = lv_event_get_draw_ctx(e);
-    //     lv_area_t area;
-    //     area.x1 = 0;
-    //     area.x2 = HOR_RESOLUTION;
-    //     area.y1 = 30;   // bottom of tab bar
-    //     area.y2 = 34;   // 2px line
-    //     lv_draw_rect(draw_ctx, &my_tabview->tab_line, &area);
-    // }
+static void tab_line_draw_event_cb(lv_event_t *e) {
+    if (lv_event_get_code(e) != LV_EVENT_DRAW_POST) return;
+    tabview_t *my_tabview = (tabview_t *)lv_event_get_user_data(e);
+    if (my_tabview->tab_line_hidden) return;
+    lv_draw_ctx_t *draw_ctx = lv_event_get_draw_ctx(e);
+    lv_area_t area = { .x1 = 0, .x2 = HOR_RESOLUTION, .y1 = 30, .y2 = 34 };
+    lv_draw_rect(draw_ctx, &my_tabview->tab_line, &area);
 }
 
 tabview_t* create_tabview(lv_obj_t *parent, uint16_t tabview_x, uint16_t tabview_y, uint16_t tabview_w, uint16_t tabview_h, uint8_t head_h){
@@ -133,6 +120,8 @@ tabview_t* create_tabview(lv_obj_t *parent, uint16_t tabview_x, uint16_t tabview
 
 
     lv_obj_add_event_cb(my_tabview->tabview, tab_changed_cb, LV_EVENT_ALL, my_tabview);
+    lv_obj_add_event_cb(parent, tab_line_draw_event_cb, LV_EVENT_DRAW_POST, my_tabview);
+
     return my_tabview;
 }
 
