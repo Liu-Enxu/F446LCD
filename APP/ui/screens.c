@@ -426,6 +426,43 @@ static void menu_to_settings_cb(lv_event_t* e) {
 	(void)e; // not yet implemented
 }
 
+static void tab_draw_event_cb(lv_event_t * e)
+{
+    lv_event_code_t code = lv_event_get_code(e);
+    lv_obj_t * obj = lv_event_get_target(e);
+	lv_draw_ctx_t *draw_ctx = lv_event_get_draw_ctx(e);
+	if(code == LV_EVENT_DRAW_PART_BEGIN) {
+        lv_obj_draw_part_dsc_t * dsc = lv_event_get_draw_part_dsc(e);
+		if(dsc->class_p == &lv_btnmatrix_class && dsc->type == LV_BTNMATRIX_DRAW_PART_BTN) {
+            /*Change the draw descriptor of the 2nd button*/
+            if(dsc->id == 0) {
+				dsc->rect_dsc->bg_opa = LV_OPA_0;
+				dsc->rect_dsc->border_opa = LV_OPA_0;
+			}
+		}
+	}
+}
+
+static void tab_border_draw_event_cb(lv_event_t *e) {
+    lv_event_code_t code = lv_event_get_code(e);
+    lv_draw_ctx_t *draw_ctx = lv_event_get_draw_ctx(e);
+    if (code == LV_EVENT_DRAW_POST) {
+        lv_draw_rect_dsc_t rect_dsc;
+        lv_draw_rect_dsc_init(&rect_dsc);
+        rect_dsc.bg_color     = lv_app_styles.color1;
+        rect_dsc.bg_opa       = LV_OPA_COVER;
+        rect_dsc.radius       = 0;
+        rect_dsc.border_width = 0;
+
+        lv_area_t area;
+        area.x1 = 0;
+        area.x2 = HOR_RESOLUTION;
+        area.y1 = 30;   // bottom of tab bar
+        area.y2 = 34;   // 2px line
+        lv_draw_rect(draw_ctx, &rect_dsc, &area);
+    }
+}
+
 static void scrn_main_t_enter(scrn_t* self){
 	scrn_main_t *main = (scrn_main_t *)self;
 // screen ----------------------------------------------------------------
@@ -435,11 +472,13 @@ static void scrn_main_t_enter(scrn_t* self){
 	lv_obj_clear_flag(main->scrn_base.screen, LV_OBJ_FLAG_SCROLLABLE);
 	lv_obj_add_event_cb(main->scrn_base.screen, touch_cb, LV_EVENT_ALL, main);
 	
+	//	underline (rect)
+	lv_obj_add_event_cb(main->scrn_base.screen, tab_border_draw_event_cb, LV_EVENT_DRAW_POST, NULL);
+
 	// tabs
-	main->app_tab_obj = lv_tabview_create(main->scrn_base.screen, LV_DIR_TOP, 34);
+	main->app_tab_obj = lv_tabview_create(main->scrn_base.screen, LV_DIR_TOP, 30);
 	lv_obj_set_pos(main->app_tab_obj, 0, 0);
 	lv_obj_set_size(main->app_tab_obj, HOR_RESOLUTION, VER_RESOLUTION-20);
-	
 	lv_obj_clear_flag(main->app_tab_obj, LV_OBJ_FLAG_SCROLLABLE);
 	lv_obj_add_flag(main->app_tab_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
 
@@ -463,7 +502,6 @@ static void scrn_main_t_enter(scrn_t* self){
                       "\n"
                       "Can you see it?");
 	
-	lv_obj_scroll_to_view_recursive(label, LV_ANIM_ON);
 	lv_obj_t *tab_btns = lv_tabview_get_tab_btns(main->app_tab_obj);
 	lv_obj_add_style(tab_btns,&lv_app_styles.color_combo1,LV_PART_ITEMS | LV_STATE_DEFAULT);
 	lv_obj_set_style_bg_opa(tab_btns, LV_OPA_10, LV_PART_ITEMS | LV_STATE_DEFAULT);
@@ -474,11 +512,12 @@ static void scrn_main_t_enter(scrn_t* self){
 	lv_obj_set_style_border_color(tab_btns, lv_app_styles.color1, LV_PART_ITEMS | LV_STATE_CHECKED);
 	
 	lv_btnmatrix_set_btn_width(tab_btns, 0, 3);  // index 0, relative width unit
-	lv_btnmatrix_set_btn_ctrl(tab_btns, 0, LV_BTNMATRIX_CTRL_HIDDEN);
+	// lv_btnmatrix_set_btn_ctrl(tab_btns, 0, LV_BTNMATRIX_CTRL_HIDDEN);
 	// lv_btnmatrix_set_btn_ctrl(tab_btns, 1, LV_BTNMATRIX_CTRL_CHECKED);
+	lv_obj_add_event_cb(tab_btns, tab_draw_event_cb, LV_EVENT_ALL, NULL);
 	lv_obj_set_style_bg_opa(tab_btns, LV_OPA_TRANSP, LV_PART_MAIN | LV_STATE_DEFAULT);
 	lv_obj_add_flag(label, LV_OBJ_FLAG_EVENT_BUBBLE);
-
+	
 	// header bar ----------------------------------------------------------------
 	main->header_obj = lv_obj_create(main->scrn_base.screen);
 	lv_obj_set_pos(main->header_obj, 0, 0);
