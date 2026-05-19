@@ -21,6 +21,7 @@ tab_t* create_tab(tabview_t* my_tabview, const char* tab_name){
     // tab obj
     my_tab->tab = lv_tabview_add_tab(my_tabview->tabview, tab_name);
     lv_obj_clear_flag(my_tab->tab, LV_OBJ_FLAG_SCROLLABLE);
+    lv_obj_add_flag(my_tab->tab, LV_OBJ_FLAG_EVENT_BUBBLE);
     // next tab
     my_tab->next_tab = NULL;
 

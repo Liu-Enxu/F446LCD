@@ -468,7 +468,7 @@ static void scrn_main_t_enter(scrn_t* self){
 	
 	lv_obj_t * btnm1 = lv_btnmatrix_create(main->app_tab_obj->tab_head->tab);
 	lv_btnmatrix_set_map(btnm1, btnm_map);
-	lv_obj_set_size(btnm1, HOR_RESOLUTION, VER_RESOLUTION-50);
+	lv_obj_set_size(btnm1, HOR_RESOLUTION-50, VER_RESOLUTION-50);
     lv_obj_add_style(btnm1,&lv_app_styles.color_combo1,LV_PART_ITEMS | LV_STATE_DEFAULT);
 	lv_obj_align(btnm1, LV_ALIGN_CENTER, 0, 0);
 	lv_obj_set_style_bg_opa(btnm1, LV_OPA_TRANSP, LV_PART_MAIN | LV_STATE_DEFAULT);
