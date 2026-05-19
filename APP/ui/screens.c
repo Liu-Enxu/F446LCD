@@ -462,13 +462,15 @@ static void scrn_main_t_enter(scrn_t* self){
 	lv_obj_clear_flag(main->scrn_base.screen, LV_OBJ_FLAG_SCROLLABLE);
 	lv_obj_add_event_cb(main->scrn_base.screen, touch_cb, LV_EVENT_ALL, main);
 	
+	// header tab
 	main->app_tab_obj = create_tabview(main->scrn_base.screen, 0, 0, HOR_RESOLUTION, VER_RESOLUTION-20, 30);
 	create_tab(main->app_tab_obj, "Demo1");
 	create_tab(main->app_tab_obj, "Demo2");
 	
+	// for default tab, add app icons btnm
 	lv_obj_t * btnm1 = lv_btnmatrix_create(main->app_tab_obj->tab_head->tab);
 	lv_btnmatrix_set_map(btnm1, btnm_map);
-	lv_obj_set_size(btnm1, HOR_RESOLUTION-50, VER_RESOLUTION-50);
+	lv_obj_set_size(btnm1, HOR_RESOLUTION-80, VER_RESOLUTION-50);
     lv_obj_add_style(btnm1,&lv_app_styles.color_combo1,LV_PART_ITEMS | LV_STATE_DEFAULT);
 	lv_obj_align(btnm1, LV_ALIGN_CENTER, 0, 0);
 	lv_obj_set_style_bg_opa(btnm1, LV_OPA_TRANSP, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -477,7 +479,29 @@ static void scrn_main_t_enter(scrn_t* self){
 	lv_obj_clear_flag(btnm1, LV_OBJ_FLAG_SCROLLABLE);
 	lv_obj_add_flag(btnm1, LV_OBJ_FLAG_EVENT_BUBBLE);
 	lv_obj_add_event_cb(btnm1, btnm_draw_event_cb, LV_EVENT_ALL, NULL);
+	
+	// left and right button to change page
+	lv_obj_t * btn_l = lv_btn_create(main->app_tab_obj->tab_head->tab);
+	lv_obj_set_size(btn_l,30,VER_RESOLUTION-250);
+	lv_obj_align(btn_l, LV_ALIGN_LEFT_MID, 0, 0);
+	lv_obj_add_style(btn_l,&lv_app_styles.color_combo1,LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_flag(btn_l,LV_OBJ_FLAG_EVENT_BUBBLE);
+	lv_obj_t * btn_l_lbl = lv_label_create(btn_l);
+	lv_label_set_text(btn_l_lbl,"<");
+	lv_obj_align(btn_l_lbl, LV_ALIGN_CENTER, 0, 0);
+	lv_obj_add_flag(btn_l_lbl,LV_OBJ_FLAG_EVENT_BUBBLE);
 
+	lv_obj_t * btn_r = lv_btn_create(main->app_tab_obj->tab_head->tab);
+	lv_obj_set_size(btn_r,30,VER_RESOLUTION-250);
+	lv_obj_align(btn_r, LV_ALIGN_RIGHT_MID, 0, 0);
+	lv_obj_add_style(btn_r,&lv_app_styles.color_combo1,LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_flag(btn_r,LV_OBJ_FLAG_EVENT_BUBBLE);
+	lv_obj_t * btn_r_lbl = lv_label_create(btn_r);
+	lv_label_set_text(btn_r_lbl,">");
+	lv_obj_align(btn_r_lbl, LV_ALIGN_CENTER, 0, 0);
+	lv_obj_add_flag(btn_r_lbl,LV_OBJ_FLAG_EVENT_BUBBLE);
+
+	
 	// header bar ----------------------------------------------------------------
 	main->header_obj = lv_obj_create(main->scrn_base.screen);
 	lv_obj_set_pos(main->header_obj, 0, 0);

@@ -1002,6 +1002,9 @@ Section Cross References
     screens.o(i.scrn_main_t_enter) refers to lv_obj_style_gen.o(i.lv_obj_set_style_bg_opa) for lv_obj_set_style_bg_opa
     screens.o(i.scrn_main_t_enter) refers to lv_obj_style_gen.o(i.lv_obj_set_style_border_width) for lv_obj_set_style_border_width
     screens.o(i.scrn_main_t_enter) refers to lv_obj.o(i.lv_obj_add_flag) for lv_obj_add_flag
+    screens.o(i.scrn_main_t_enter) refers to lv_btn.o(i.lv_btn_create) for lv_btn_create
+    screens.o(i.scrn_main_t_enter) refers to lv_label.o(i.lv_label_create) for lv_label_create
+    screens.o(i.scrn_main_t_enter) refers to lv_label.o(i.lv_label_set_text) for lv_label_set_text
     screens.o(i.scrn_main_t_enter) refers to lv_obj_pos.o(i.lv_obj_set_layout) for lv_obj_set_layout
     screens.o(i.scrn_main_t_enter) refers to lv_flex.o(i.lv_obj_set_flex_flow) for lv_obj_set_flex_flow
     screens.o(i.scrn_main_t_enter) refers to lv_obj_style_gen.o(i.lv_obj_set_style_pad_column) for lv_obj_set_style_pad_column
@@ -1010,9 +1013,6 @@ Section Cross References
     screens.o(i.scrn_main_t_enter) refers to lv_obj_tree.o(i.lv_obj_get_parent) for lv_obj_get_parent
     screens.o(i.scrn_main_t_enter) refers to lv_obj_tree.o(i.lv_obj_get_child_cnt) for lv_obj_get_child_cnt
     screens.o(i.scrn_main_t_enter) refers to lv_obj_tree.o(i.lv_obj_move_to_index) for lv_obj_move_to_index
-    screens.o(i.scrn_main_t_enter) refers to lv_btn.o(i.lv_btn_create) for lv_btn_create
-    screens.o(i.scrn_main_t_enter) refers to lv_label.o(i.lv_label_create) for lv_label_create
-    screens.o(i.scrn_main_t_enter) refers to lv_label.o(i.lv_label_set_text) for lv_label_set_text
     screens.o(i.scrn_main_t_enter) refers to lv_obj_style_gen.o(i.lv_obj_set_style_align) for lv_obj_set_style_align
     screens.o(i.scrn_main_t_enter) refers to menu.o(i.create_menu) for create_menu
     screens.o(i.scrn_main_t_enter) refers to menu.o(i.create_page) for create_page
@@ -1028,11 +1028,11 @@ Section Cross References
     screens.o(i.scrn_main_t_enter) refers to screens.o(i.menu_toggle_cb) for menu_toggle_cb
     screens.o(i.scrn_main_t_enter) refers to screens.o(i.menu_to_splash_cb) for menu_to_splash_cb
     screens.o(i.scrn_main_t_enter) refers to screens.o(i.menu_to_cali_cb) for menu_to_cali_cb
-    screens.o(i.scrn_main_t_enter) refers to screens.o(i.menu_to_settings_cb) for menu_to_settings_cb
     screens.o(i.scrn_main_t_enter) refers to lv_timer.o(i.lv_timer_create) for lv_timer_create
     screens.o(i.scrn_main_t_enter) refers to lv_flex.o(i.lv_obj_set_flex_grow) for lv_obj_set_flex_grow
-    screens.o(i.scrn_main_t_enter) refers to lv_flex.o(i.lv_obj_set_flex_align) for lv_obj_set_flex_align
+    screens.o(i.scrn_main_t_enter) refers to screens.o(i.menu_to_settings_cb) for menu_to_settings_cb
     screens.o(i.scrn_main_t_enter) refers to screens.o(i.heap_label_cb) for heap_label_cb
+    screens.o(i.scrn_main_t_enter) refers to lv_flex.o(i.lv_obj_set_flex_align) for lv_obj_set_flex_align
     screens.o(i.scrn_main_t_enter) refers to heap_4.o(i.xPortGetFreeHeapSize) for xPortGetFreeHeapSize
     screens.o(i.scrn_main_t_enter) refers to __2printf.o(.text) for __2printf
     screens.o(i.scrn_main_t_enter) refers to lv_disp.o(i.lv_disp_load_scr) for lv_disp_load_scr
@@ -13936,466 +13936,466 @@ Image Symbol Table
     i.scrn_load_t_enter                      0x0803617c   Section        0  screens.o(i.scrn_load_t_enter)
     scrn_load_t_enter                        0x0803617d   Thumb Code   554  screens.o(i.scrn_load_t_enter)
     i.scrn_main_t_enter                      0x08036404   Section        0  screens.o(i.scrn_main_t_enter)
-    scrn_main_t_enter                        0x08036405   Thumb Code  2990  screens.o(i.scrn_main_t_enter)
-    i.scrn_manager_inst                      0x08036fe4   Section        0  screens.o(i.scrn_manager_inst)
-    i.scrn_manager_switch                    0x08036ffc   Section        0  screens.o(i.scrn_manager_switch)
-    scrn_manager_switch                      0x08036ffd   Thumb Code    32  screens.o(i.scrn_manager_switch)
-    i.scrn_t_exit_t                          0x0803701c   Section        0  screens.o(i.scrn_t_exit_t)
-    scrn_t_exit_t                            0x0803701d   Thumb Code    52  screens.o(i.scrn_t_exit_t)
-    i.scroll_anim_ready_cb                   0x08037050   Section        0  lv_obj_scroll.o(i.scroll_anim_ready_cb)
-    scroll_anim_ready_cb                     0x08037051   Thumb Code    16  lv_obj_scroll.o(i.scroll_anim_ready_cb)
-    i.scroll_anim_ready_cb                   0x08037060   Section        0  lv_roller.o(i.scroll_anim_ready_cb)
-    scroll_anim_ready_cb                     0x08037061   Thumb Code    20  lv_roller.o(i.scroll_anim_ready_cb)
-    i.scroll_area_into_view                  0x08037074   Section        0  lv_obj_scroll.o(i.scroll_area_into_view)
-    scroll_area_into_view                    0x08037075   Thumb Code   864  lv_obj_scroll.o(i.scroll_area_into_view)
-    i.scroll_limit_diff                      0x080373dc   Section        0  lv_indev_scroll.o(i.scroll_limit_diff)
-    scroll_limit_diff                        0x080373dd   Thumb Code   120  lv_indev_scroll.o(i.scroll_limit_diff)
-    i.scroll_throw_predict_x                 0x08037454   Section        0  lv_indev_scroll.o(i.scroll_throw_predict_x)
-    scroll_throw_predict_x                   0x08037455   Thumb Code    54  lv_indev_scroll.o(i.scroll_throw_predict_x)
-    i.scroll_throw_predict_y                 0x0803748a   Section        0  lv_indev_scroll.o(i.scroll_throw_predict_y)
-    scroll_throw_predict_y                   0x0803748b   Thumb Code    54  lv_indev_scroll.o(i.scroll_throw_predict_y)
-    i.scroll_to_selected_cell                0x080374c0   Section        0  lv_table.o(i.scroll_to_selected_cell)
-    scroll_to_selected_cell                  0x080374c1   Thumb Code   156  lv_table.o(i.scroll_to_selected_cell)
-    i.scroll_x_anim                          0x0803755c   Section        0  lv_obj_scroll.o(i.scroll_x_anim)
-    scroll_x_anim                            0x0803755d   Thumb Code    28  lv_obj_scroll.o(i.scroll_x_anim)
-    i.scroll_y_anim                          0x08037578   Section        0  lv_obj_scroll.o(i.scroll_y_anim)
-    scroll_y_anim                            0x08037579   Thumb Code    28  lv_obj_scroll.o(i.scroll_y_anim)
-    i.scrollbar_init_draw_dsc                0x08037594   Section        0  lv_obj.o(i.scrollbar_init_draw_dsc)
-    scrollbar_init_draw_dsc                  0x08037595   Thumb Code   344  lv_obj.o(i.scrollbar_init_draw_dsc)
-    i.set_ofs_x_anim                         0x080376ec   Section        0  lv_label.o(i.set_ofs_x_anim)
-    set_ofs_x_anim                           0x080376ed   Thumb Code    22  lv_label.o(i.set_ofs_x_anim)
-    i.set_ofs_y_anim                         0x08037702   Section        0  lv_label.o(i.set_ofs_y_anim)
-    set_ofs_y_anim                           0x08037703   Thumb Code    22  lv_label.o(i.set_ofs_y_anim)
-    i.set_px_argb                            0x08037718   Section        0  lv_draw_sw_blend.o(i.set_px_argb)
-    set_px_argb                              0x08037719   Thumb Code    70  lv_draw_sw_blend.o(i.set_px_argb)
-    i.set_px_argb_blend                      0x08037760   Section        0  lv_draw_sw_blend.o(i.set_px_argb_blend)
-    set_px_argb_blend                        0x08037761   Thumb Code   130  lv_draw_sw_blend.o(i.set_px_argb_blend)
-    i.set_x_anim                             0x080377f4   Section        0  lv_disp.o(i.set_x_anim)
-    set_x_anim                               0x080377f5   Thumb Code    16  lv_disp.o(i.set_x_anim)
-    i.set_y_anim                             0x08037804   Section        0  lv_disp.o(i.set_y_anim)
-    set_y_anim                               0x08037805   Thumb Code    16  lv_disp.o(i.set_y_anim)
-    i.set_y_anim                             0x08037814   Section        0  lv_roller.o(i.set_y_anim)
-    set_y_anim                               0x08037815   Thumb Code    16  lv_roller.o(i.set_y_anim)
-    i.shadow_blur_corner                     0x08037824   Section        0  lv_draw_sw_rect.o(i.shadow_blur_corner)
-    shadow_blur_corner                       0x08037825   Thumb Code   380  lv_draw_sw_rect.o(i.shadow_blur_corner)
-    i.shadow_draw_corner_buf                 0x080379a0   Section        0  lv_draw_sw_rect.o(i.shadow_draw_corner_buf)
-    shadow_draw_corner_buf                   0x080379a1   Thumb Code   454  lv_draw_sw_rect.o(i.shadow_draw_corner_buf)
-    i.show_error                             0x08037b66   Section        0  lv_draw_img.o(i.show_error)
-    show_error                               0x08037b67   Thumb Code    82  lv_draw_img.o(i.show_error)
-    i.st_clust                               0x08037bb8   Section        0  ff.o(i.st_clust)
-    st_clust                                 0x08037bb9   Thumb Code    16  ff.o(i.st_clust)
-    i.start_cursor_blink                     0x08037bc8   Section        0  lv_textarea.o(i.start_cursor_blink)
-    start_cursor_blink                       0x08037bc9   Thumb Code   130  lv_textarea.o(i.start_cursor_blink)
-    i.start_scrn_manager                     0x08037c54   Section        0  screens.o(i.start_scrn_manager)
-    i.style_init                             0x08037ca0   Section        0  lv_theme_default.o(i.style_init)
-    style_init                               0x08037ca1   Thumb Code  7616  lv_theme_default.o(i.style_init)
-    i.style_init_reset                       0x08039a6c   Section        0  lv_theme_default.o(i.style_init_reset)
-    style_init_reset                         0x08039a6d   Thumb Code    26  lv_theme_default.o(i.style_init_reset)
-    i.sum_sfn                                0x08039a8c   Section        0  ff.o(i.sum_sfn)
-    sum_sfn                                  0x08039a8d   Thumb Code    32  ff.o(i.sum_sfn)
-    i.sync_fs                                0x08039aac   Section        0  ff.o(i.sync_fs)
-    sync_fs                                  0x08039aad   Thumb Code   200  ff.o(i.sync_fs)
-    i.sync_window                            0x08039b74   Section        0  ff.o(i.sync_window)
-    sync_window                              0x08039b75   Thumb Code    82  ff.o(i.sync_window)
-    i.tab_changed_cb                         0x08039bc6   Section        0  tab.o(i.tab_changed_cb)
-    tab_changed_cb                           0x08039bc7   Thumb Code    62  tab.o(i.tab_changed_cb)
-    i.tab_draw_event_cb                      0x08039c04   Section        0  tab.o(i.tab_draw_event_cb)
-    tab_draw_event_cb                        0x08039c05   Thumb Code    56  tab.o(i.tab_draw_event_cb)
-    i.tab_line_draw_event_cb                 0x08039c40   Section        0  tab.o(i.tab_line_draw_event_cb)
-    tab_line_draw_event_cb                   0x08039c41   Thumb Code    62  tab.o(i.tab_line_draw_event_cb)
-    i.theme_apply                            0x08039c84   Section        0  lv_theme_default.o(i.theme_apply)
-    theme_apply                              0x08039c85   Thumb Code  4636  lv_theme_default.o(i.theme_apply)
-    i.tileview_event_cb                      0x0803aec0   Section        0  lv_tileview.o(i.tileview_event_cb)
-    tileview_event_cb                        0x0803aec1   Thumb Code   238  lv_tileview.o(i.tileview_event_cb)
-    i.touch_cb                               0x0803afb0   Section        0  screens.o(i.touch_cb)
-    touch_cb                                 0x0803afb1   Thumb Code    68  screens.o(i.touch_cb)
-    i.touchpad_get_xy                        0x0803affc   Section        0  lv_port_indev_template.o(i.touchpad_get_xy)
-    touchpad_get_xy                          0x0803affd   Thumb Code   420  lv_port_indev_template.o(i.touchpad_get_xy)
-    i.touchpad_is_pressed                    0x0803b1b8   Section        0  lv_port_indev_template.o(i.touchpad_is_pressed)
-    touchpad_is_pressed                      0x0803b1b9   Thumb Code   140  lv_port_indev_template.o(i.touchpad_is_pressed)
-    i.touchpad_read                          0x0803b260   Section        0  lv_port_indev_template.o(i.touchpad_read)
-    touchpad_read                            0x0803b261   Thumb Code    48  lv_port_indev_template.o(i.touchpad_read)
-    i.trans_anim_cb                          0x0803b294   Section        0  lv_obj_style.o(i.trans_anim_cb)
-    trans_anim_cb                            0x0803b295   Thumb Code   468  lv_obj_style.o(i.trans_anim_cb)
-    i.trans_anim_ready_cb                    0x0803b46c   Section        0  lv_obj_style.o(i.trans_anim_ready_cb)
-    trans_anim_ready_cb                      0x0803b46d   Thumb Code   204  lv_obj_style.o(i.trans_anim_ready_cb)
-    i.trans_anim_start_cb                    0x0803b53c   Section        0  lv_obj_style.o(i.trans_anim_start_cb)
-    trans_anim_start_cb                      0x0803b53d   Thumb Code    72  lv_obj_style.o(i.trans_anim_start_cb)
-    i.trans_del                              0x0803b584   Section        0  lv_obj_style.o(i.trans_del)
-    trans_del                                0x0803b585   Thumb Code   180  lv_obj_style.o(i.trans_del)
-    i.transform_point                        0x0803b63c   Section        0  lv_obj_pos.o(i.transform_point)
-    transform_point                          0x0803b63d   Thumb Code   378  lv_obj_pos.o(i.transform_point)
-    i.transform_point_upscaled               0x0803b7b6   Section        0  lv_draw_sw_transform.o(i.transform_point_upscaled)
-    transform_point_upscaled                 0x0803b7b7   Thumb Code   158  lv_draw_sw_transform.o(i.transform_point_upscaled)
-    i.uart_init                              0x0803b854   Section        0  usart.o(i.uart_init)
-    i.unicode_list_compare                   0x0803b8f8   Section        0  lv_font_fmt_txt.o(i.unicode_list_compare)
-    unicode_list_compare                     0x0803b8f9   Thumb Code    10  lv_font_fmt_txt.o(i.unicode_list_compare)
-    i.unlock_fs                              0x0803b902   Section        0  ff.o(i.unlock_fs)
-    unlock_fs                                0x0803b903   Thumb Code    32  ff.o(i.unlock_fs)
-    i.update_cursor_position_on_click        0x0803b922   Section        0  lv_textarea.o(i.update_cursor_position_on_click)
-    update_cursor_position_on_click          0x0803b923   Thumb Code   508  lv_textarea.o(i.update_cursor_position_on_click)
-    i.uxListRemove                           0x0803bb1e   Section        0  list.o(i.uxListRemove)
-    i.uxTaskGetNumberOfTasks                 0x0803bb48   Section        0  tasks.o(i.uxTaskGetNumberOfTasks)
-    i.vApplicationGetIdleTaskMemory          0x0803bb54   Section        0  port.o(i.vApplicationGetIdleTaskMemory)
-    i.vApplicationGetTimerTaskMemory         0x0803bb6c   Section        0  port.o(i.vApplicationGetTimerTaskMemory)
-    i.vApplicationMallocFailedHook           0x0803bb84   Section        0  port.o(i.vApplicationMallocFailedHook)
-    i.vApplicationStackOverflowHook          0x0803bbb0   Section        0  heap_4.o(i.vApplicationStackOverflowHook)
-    i.vListInitialise                        0x0803bbe0   Section        0  list.o(i.vListInitialise)
-    i.vListInitialiseItem                    0x0803bc00   Section        0  list.o(i.vListInitialiseItem)
-    i.vListInsert                            0x0803bc06   Section        0  list.o(i.vListInsert)
-    i.vPortEnterCritical                     0x0803bc3c   Section        0  port.o(i.vPortEnterCritical)
-    i.vPortExitCritical                      0x0803bcc4   Section        0  port.o(i.vPortExitCritical)
-    i.vPortFree                              0x0803bd34   Section        0  heap_4.o(i.vPortFree)
-    i.vPortSetupTimerInterrupt               0x0803be28   Section        0  port.o(i.vPortSetupTimerInterrupt)
-    i.vQueueAddToRegistry                    0x0803be50   Section        0  queue.o(i.vQueueAddToRegistry)
-    i.vQueueWaitForMessageRestricted         0x0803becc   Section        0  queue.o(i.vQueueWaitForMessageRestricted)
-    i.vTaskDelay                             0x0803bf18   Section        0  tasks.o(i.vTaskDelay)
-    i.vTaskInternalSetTimeOutState           0x0803bf8c   Section        0  tasks.o(i.vTaskInternalSetTimeOutState)
-    i.vTaskMissedYield                       0x0803bfa4   Section        0  tasks.o(i.vTaskMissedYield)
-    i.vTaskPlaceOnEventList                  0x0803bfb0   Section        0  tasks.o(i.vTaskPlaceOnEventList)
-    i.vTaskPlaceOnEventListRestricted        0x0803c004   Section        0  tasks.o(i.vTaskPlaceOnEventListRestricted)
-    i.vTaskPriorityDisinheritAfterTimeout    0x0803c084   Section        0  tasks.o(i.vTaskPriorityDisinheritAfterTimeout)
-    i.vTaskStartScheduler                    0x0803c1a0   Section        0  tasks.o(i.vTaskStartScheduler)
-    i.vTaskSuspendAll                        0x0803c234   Section        0  tasks.o(i.vTaskSuspendAll)
-    i.vTaskSwitchContext                     0x0803c244   Section        0  tasks.o(i.vTaskSwitchContext)
-    i.validate                               0x0803c338   Section        0  ff.o(i.validate)
-    validate                                 0x0803c339   Thumb Code    66  ff.o(i.validate)
-    i.value_changed_event_cb                 0x0803c37c   Section        0  lv_calendar_header_arrow.o(i.value_changed_event_cb)
-    value_changed_event_cb                   0x0803c37d   Thumb Code    66  lv_calendar_header_arrow.o(i.value_changed_event_cb)
-    i.value_changed_event_cb                 0x0803c3cc   Section        0  lv_calendar_header_dropdown.o(i.value_changed_event_cb)
-    value_changed_event_cb                   0x0803c3cd   Thumb Code   134  lv_calendar_header_dropdown.o(i.value_changed_event_cb)
-    i.value_update                           0x0803c454   Section        0  lv_arc.o(i.value_update)
-    value_update                             0x0803c455   Thumb Code   294  lv_arc.o(i.value_update)
-    i.xPortGetFreeHeapSize                   0x0803c5b8   Section        0  heap_4.o(i.xPortGetFreeHeapSize)
-    i.xPortStartScheduler                    0x0803c5c4   Section        0  port.o(i.xPortStartScheduler)
-    i.xPortSysTickHandler                    0x0803c740   Section        0  port.o(i.xPortSysTickHandler)
-    i.xQueueCreateMutexStatic                0x0803c774   Section        0  queue.o(i.xQueueCreateMutexStatic)
-    i.xQueueGenericCreateStatic              0x0803c7a0   Section        0  queue.o(i.xQueueGenericCreateStatic)
-    i.xQueueGenericReset                     0x0803c840   Section        0  queue.o(i.xQueueGenericReset)
-    i.xQueueGenericSend                      0x0803c92c   Section        0  queue.o(i.xQueueGenericSend)
-    i.xQueueReceive                          0x0803cb00   Section        0  queue.o(i.xQueueReceive)
-    i.xQueueSemaphoreTake                    0x0803cc70   Section        0  queue.o(i.xQueueSemaphoreTake)
-    i.xTaskCheckForTimeOut                   0x0803ce08   Section        0  tasks.o(i.xTaskCheckForTimeOut)
-    i.xTaskCreate                            0x0803cea8   Section        0  tasks.o(i.xTaskCreate)
-    i.xTaskCreateStatic                      0x0803cee0   Section        0  tasks.o(i.xTaskCreateStatic)
-    i.xTaskGetSchedulerState                 0x0803cf20   Section        0  tasks.o(i.xTaskGetSchedulerState)
-    i.xTaskGetTickCount                      0x0803cf40   Section        0  tasks.o(i.xTaskGetTickCount)
-    i.xTaskIncrementTick                     0x0803cf4c   Section        0  tasks.o(i.xTaskIncrementTick)
-    i.xTaskPriorityDisinherit                0x0803d134   Section        0  tasks.o(i.xTaskPriorityDisinherit)
-    i.xTaskPriorityInherit                   0x0803d228   Section        0  tasks.o(i.xTaskPriorityInherit)
-    i.xTaskRemoveFromEventList               0x0803d308   Section        0  tasks.o(i.xTaskRemoveFromEventList)
-    i.xTaskResumeAll                         0x0803d454   Section        0  tasks.o(i.xTaskResumeAll)
-    i.xTimerCreateTimerTask                  0x0803d610   Section        0  timers.o(i.xTimerCreateTimerTask)
-    i.year_event_cb                          0x0803d6a8   Section        0  lv_calendar_header_dropdown.o(i.year_event_cb)
-    year_event_cb                            0x0803d6a9   Thumb Code   126  lv_calendar_header_dropdown.o(i.year_event_cb)
-    x$fpl$fpinit                             0x0803d726   Section       10  fpinit.o(x$fpl$fpinit)
-    $v0                                      0x0803d726   Number         0  fpinit.o(x$fpl$fpinit)
-    .constdata                               0x0803d730   Section       58  ff.o(.constdata)
-    LfnOfs                                   0x0803d730   Data          13  ff.o(.constdata)
-    vst                                      0x0803d73e   Data          22  ff.o(.constdata)
-    cst                                      0x0803d754   Data          22  ff.o(.constdata)
-    .constdata                               0x0803d76a   Section    175304  cc936.o(.constdata)
-    uni2oem                                  0x0803d76a   Data       87172  cc936.o(.constdata)
-    oem2uni                                  0x08052bee   Data       87172  cc936.o(.constdata)
-    tbl_lower                                0x08068072   Data         480  cc936.o(.constdata)
-    tbl_upper                                0x08068252   Data         480  cc936.o(.constdata)
-    .constdata                               0x08068434   Section        8  tab.o(.constdata)
-    .constdata                               0x0806843c   Section      291  lv_disp.o(.constdata)
-    __func__                                 0x0806843c   Data          20  lv_disp.o(.constdata)
-    __func__                                 0x08068450   Data          21  lv_disp.o(.constdata)
-    __func__                                 0x08068465   Data          22  lv_disp.o(.constdata)
-    __func__                                 0x0806847b   Data          22  lv_disp.o(.constdata)
-    __func__                                 0x08068491   Data          18  lv_disp.o(.constdata)
-    __func__                                 0x080684a3   Data          21  lv_disp.o(.constdata)
-    __func__                                 0x080684b8   Data          21  lv_disp.o(.constdata)
-    __func__                                 0x080684cd   Data          19  lv_disp.o(.constdata)
-    __func__                                 0x080684e0   Data          22  lv_disp.o(.constdata)
-    __func__                                 0x080684f6   Data          21  lv_disp.o(.constdata)
-    __func__                                 0x0806850b   Data          28  lv_disp.o(.constdata)
-    __func__                                 0x08068527   Data          32  lv_disp.o(.constdata)
-    __func__                                 0x08068547   Data          24  lv_disp.o(.constdata)
-    .constdata                               0x0806855f   Section      366  lv_event.o(.constdata)
-    __func__                                 0x0806855f   Data          20  lv_event.o(.constdata)
-    __func__                                 0x08068573   Data          23  lv_event.o(.constdata)
-    __func__                                 0x0806858a   Data          38  lv_event.o(.constdata)
-    __func__                                 0x080685b0   Data          24  lv_event.o(.constdata)
-    __func__                                 0x080685c8   Data          19  lv_event.o(.constdata)
-    __func__                                 0x080685db   Data          27  lv_event.o(.constdata)
-    __func__                                 0x080685f6   Data          22  lv_event.o(.constdata)
-    __func__                                 0x0806860c   Data          22  lv_event.o(.constdata)
-    __func__                                 0x08068622   Data          17  lv_event.o(.constdata)
-    __func__                                 0x08068633   Data          25  lv_event.o(.constdata)
-    __func__                                 0x0806864c   Data          27  lv_event.o(.constdata)
-    __func__                                 0x08068667   Data          28  lv_event.o(.constdata)
-    __func__                                 0x08068683   Data          27  lv_event.o(.constdata)
-    __func__                                 0x0806869e   Data          24  lv_event.o(.constdata)
-    __func__                                 0x080686b6   Data          23  lv_event.o(.constdata)
-    .constdata                               0x080686cd   Section       33  lv_group.o(.constdata)
-    __func__                                 0x080686cd   Data          16  lv_group.o(.constdata)
-    __func__                                 0x080686dd   Data          17  lv_group.o(.constdata)
-    .constdata                               0x080686ee   Section       61  lv_indev.o(.constdata)
-    __func__                                 0x080686ee   Data          24  lv_indev.o(.constdata)
-    __func__                                 0x08068706   Data          19  lv_indev.o(.constdata)
-    __func__                                 0x08068719   Data          18  lv_indev.o(.constdata)
-    .constdata                               0x0806872c   Section       62  lv_obj.o(.constdata)
-    __func__                                 0x08068748   Data           8  lv_obj.o(.constdata)
-    __func__                                 0x08068750   Data          26  lv_obj.o(.constdata)
-    .constdata                               0x0806876a   Section       24  lv_obj_class.o(.constdata)
-    __func__                                 0x0806876a   Data          24  lv_obj_class.o(.constdata)
-    .constdata                               0x08068784   Section       28  lv_obj_pos.o(.constdata)
-    __func__                                 0x08068784   Data          19  lv_obj_pos.o(.constdata)
-    .constdata                               0x080687a0   Section       48  lv_obj_style.o(.constdata)
-    __func__                                 0x080687a0   Data          32  lv_obj_style.o(.constdata)
-    __func__                                 0x080687c0   Data          16  lv_obj_style.o(.constdata)
-    .constdata                               0x080687d0   Section       45  lv_obj_tree.o(.constdata)
-    __func__                                 0x080687d0   Data          11  lv_obj_tree.o(.constdata)
-    __func__                                 0x080687db   Data          18  lv_obj_tree.o(.constdata)
-    __func__                                 0x080687ed   Data          16  lv_obj_tree.o(.constdata)
-    .constdata                               0x080687fd   Section      100  lv_refr.o(.constdata)
-    __func__                                 0x080687fd   Data          13  lv_refr.o(.constdata)
-    __func__                                 0x0806880a   Data          20  lv_refr.o(.constdata)
-    __func__                                 0x0806881e   Data          15  lv_refr.o(.constdata)
-    __func__                                 0x0806882d   Data          15  lv_refr.o(.constdata)
-    __func__                                 0x0806883c   Data           9  lv_refr.o(.constdata)
-    __func__                                 0x08068845   Data          12  lv_refr.o(.constdata)
-    __func__                                 0x08068851   Data          16  lv_refr.o(.constdata)
-    .constdata                               0x08068861   Section       48  lv_draw_img.o(.constdata)
-    __func__                                 0x08068861   Data          12  lv_draw_img.o(.constdata)
-    __func__                                 0x0806886d   Data          20  lv_draw_img.o(.constdata)
-    __func__                                 0x08068881   Data          16  lv_draw_img.o(.constdata)
-    .constdata                               0x08068891   Section       14  lv_draw_label.o(.constdata)
-    __func__                                 0x08068891   Data          14  lv_draw_label.o(.constdata)
-    .constdata                               0x0806889f   Section       21  lv_draw_layer.o(.constdata)
-    __func__                                 0x0806889f   Data          21  lv_draw_layer.o(.constdata)
-    .constdata                               0x080688b4   Section       80  lv_draw_mask.o(.constdata)
-    __func__                                 0x080688b4   Data          17  lv_draw_mask.o(.constdata)
-    __func__                                 0x080688c5   Data          24  lv_draw_mask.o(.constdata)
-    __func__                                 0x080688dd   Data          25  lv_draw_mask.o(.constdata)
-    __func__                                 0x080688f6   Data          14  lv_draw_mask.o(.constdata)
-    .constdata                               0x08068904   Section       18  lv_draw_transform.o(.constdata)
-    __func__                                 0x08068904   Data          18  lv_draw_transform.o(.constdata)
-    .constdata                               0x08068916   Section       41  lv_img_cache.o(.constdata)
-    __func__                                 0x08068916   Data          19  lv_img_cache.o(.constdata)
-    __func__                                 0x08068929   Data          22  lv_img_cache.o(.constdata)
-    .constdata                               0x0806893f   Section      195  lv_img_decoder.o(.constdata)
-    __func__                                 0x0806893f   Data          21  lv_img_decoder.o(.constdata)
-    __func__                                 0x08068954   Data          20  lv_img_decoder.o(.constdata)
-    __func__                                 0x08068968   Data          22  lv_img_decoder.o(.constdata)
-    __func__                                 0x0806897e   Data          29  lv_img_decoder.o(.constdata)
-    __func__                                 0x0806899b   Data          29  lv_img_decoder.o(.constdata)
-    __func__                                 0x080689b8   Data          34  lv_img_decoder.o(.constdata)
-    __func__                                 0x080689da   Data          40  lv_img_decoder.o(.constdata)
-    .constdata                               0x08068a02   Section       49  lv_draw_sw_blend.o(.constdata)
-    __func__                                 0x08068a02   Data          24  lv_draw_sw_blend.o(.constdata)
-    __func__                                 0x08068a1a   Data          13  lv_draw_sw_blend.o(.constdata)
-    __func__                                 0x08068a27   Data          12  lv_draw_sw_blend.o(.constdata)
-    .constdata                               0x08068a33   Section       79  lv_draw_sw_gradient.o(.constdata)
-    __func__                                 0x08068a33   Data          14  lv_draw_sw_gradient.o(.constdata)
-    __func__                                 0x08068a41   Data          27  lv_draw_sw_gradient.o(.constdata)
-    __func__                                 0x08068a5c   Data          16  lv_draw_sw_gradient.o(.constdata)
-    __func__                                 0x08068a6c   Data          22  lv_draw_sw_gradient.o(.constdata)
-    .constdata                               0x08068a82   Section       24  lv_draw_sw_layer.o(.constdata)
-    __func__                                 0x08068a82   Data          24  lv_draw_sw_layer.o(.constdata)
-    .constdata                               0x08068a9a   Section      323  lv_draw_sw_letter.o(.constdata)
-    __func__                                 0x08068bb8   Data          18  lv_draw_sw_letter.o(.constdata)
-    __func__                                 0x08068bca   Data          19  lv_draw_sw_letter.o(.constdata)
-    .constdata                               0x08068bdd   Section       33  lv_draw_sw_line.o(.constdata)
-    wcorr                                    0x08068bdd   Data          33  lv_draw_sw_line.o(.constdata)
-    .constdata                               0x08068c00   Section        8  lv_draw_sw_polygon.o(.constdata)
-    .constdata                               0x08068c08   Section       12  lv_draw_sw_rect.o(.constdata)
-    __func__                                 0x08068c08   Data          12  lv_draw_sw_rect.o(.constdata)
-    .constdata                               0x08068c14   Section       30  lv_flex.o(.constdata)
-    __func__                                 0x08068c14   Data          15  lv_flex.o(.constdata)
-    __func__                                 0x08068c23   Data          15  lv_flex.o(.constdata)
-    .constdata                               0x08068c32   Section       22  lv_theme_default.o(.constdata)
-    trans_props                              0x08068c32   Data          22  lv_theme_default.o(.constdata)
-    .constdata                               0x08068c48   Section       62  lv_calendar.o(.constdata)
-    __func__                                 0x08068c64   Data          34  lv_calendar.o(.constdata)
-    .constdata                               0x08068c88   Section       28  lv_calendar_header_arrow.o(.constdata)
-    .constdata                               0x08068ca4   Section       28  lv_calendar_header_dropdown.o(.constdata)
-    .constdata                               0x08068cc0   Section      566  lv_chart.o(.constdata)
-    __func__                                 0x08068cdc   Data          18  lv_chart.o(.constdata)
-    __func__                                 0x08068cee   Data          19  lv_chart.o(.constdata)
-    __func__                                 0x08068d01   Data          27  lv_chart.o(.constdata)
-    __func__                                 0x08068d1c   Data          29  lv_chart.o(.constdata)
-    __func__                                 0x08068d39   Data          20  lv_chart.o(.constdata)
-    __func__                                 0x08068d4d   Data          23  lv_chart.o(.constdata)
-    __func__                                 0x08068d64   Data          21  lv_chart.o(.constdata)
-    __func__                                 0x08068d79   Data          26  lv_chart.o(.constdata)
-    __func__                                 0x08068d93   Data          27  lv_chart.o(.constdata)
-    __func__                                 0x08068dae   Data          20  lv_chart.o(.constdata)
-    __func__                                 0x08068dc2   Data          24  lv_chart.o(.constdata)
-    __func__                                 0x08068dda   Data          26  lv_chart.o(.constdata)
-    __func__                                 0x08068df4   Data          26  lv_chart.o(.constdata)
-    __func__                                 0x08068e0e   Data          23  lv_chart.o(.constdata)
-    __func__                                 0x08068e25   Data          24  lv_chart.o(.constdata)
-    __func__                                 0x08068e3d   Data          25  lv_chart.o(.constdata)
-    __func__                                 0x08068e56   Data          25  lv_chart.o(.constdata)
-    __func__                                 0x08068e6f   Data          26  lv_chart.o(.constdata)
-    __func__                                 0x08068e89   Data          25  lv_chart.o(.constdata)
-    __func__                                 0x08068ea2   Data          25  lv_chart.o(.constdata)
-    __func__                                 0x08068ebb   Data          21  lv_chart.o(.constdata)
-    __func__                                 0x08068ed0   Data          21  lv_chart.o(.constdata)
-    __func__                                 0x08068ee5   Data          17  lv_chart.o(.constdata)
-    .constdata                               0x08068ef8   Section       28  lv_colorwheel.o(.constdata)
-    .constdata                               0x08068f14   Section      914  lv_keyboard.o(.constdata)
-    default_kb_map_lc                        0x08068f30   Data         176  lv_keyboard.o(.constdata)
-    default_kb_ctrl_lc_map                   0x08068fe0   Data          80  lv_keyboard.o(.constdata)
-    default_kb_map_uc                        0x08069030   Data         176  lv_keyboard.o(.constdata)
-    default_kb_ctrl_uc_map                   0x080690e0   Data          80  lv_keyboard.o(.constdata)
-    default_kb_map_spec                      0x08069130   Data         176  lv_keyboard.o(.constdata)
-    default_kb_ctrl_spec_map                 0x080691e0   Data          80  lv_keyboard.o(.constdata)
-    default_kb_map_num                       0x08069230   Data          84  lv_keyboard.o(.constdata)
-    default_kb_ctrl_num_map                  0x08069284   Data          34  lv_keyboard.o(.constdata)
-    .constdata                               0x080692a8   Section       28  lv_led.o(.constdata)
-    .constdata                               0x080692c4   Section       84  lv_list.o(.constdata)
-    .constdata                               0x08069318   Section      289  lv_menu.o(.constdata)
-    __func__                                 0x08069414   Data          20  lv_menu.o(.constdata)
-    __func__                                 0x08069428   Data          17  lv_menu.o(.constdata)
-    .constdata                               0x0806943c   Section      138  lv_meter.o(.constdata)
-    __func__                                 0x08069458   Data          19  lv_meter.o(.constdata)
-    __func__                                 0x0806946b   Data          25  lv_meter.o(.constdata)
-    __func__                                 0x08069484   Data          24  lv_meter.o(.constdata)
-    __func__                                 0x0806949c   Data          17  lv_meter.o(.constdata)
-    __func__                                 0x080694ad   Data          25  lv_meter.o(.constdata)
-    .constdata                               0x080694c8   Section      101  lv_msgbox.o(.constdata)
-    __func__                                 0x0806951c   Data          17  lv_msgbox.o(.constdata)
-    .constdata                               0x08069530   Section       28  lv_spinbox.o(.constdata)
-    .constdata                               0x0806954c   Section       28  lv_spinner.o(.constdata)
-    .constdata                               0x08069568   Section       28  lv_tabview.o(.constdata)
-    .constdata                               0x08069584   Section       75  lv_tileview.o(.constdata)
-    __func__                                 0x080695bc   Data          19  lv_tileview.o(.constdata)
-    .constdata                               0x080695d0   Section       28  lv_win.o(.constdata)
-    .constdata                               0x080695ec   Section       71  lv_font.o(.constdata)
-    __func__                                 0x080695ec   Data          25  lv_font.o(.constdata)
-    __func__                                 0x08069605   Data          22  lv_font.o(.constdata)
-    __func__                                 0x0806961b   Data          24  lv_font.o(.constdata)
-    .constdata                               0x08069633   Section       27  lv_font_fmt_txt.o(.constdata)
-    __func__                                 0x08069633   Data          27  lv_font_fmt_txt.o(.constdata)
-    .constdata                               0x08069650   Section     4992  fixedsys.o(.constdata)
-    glyph_bitmap                             0x08069650   Data        4141  fixedsys.o(.constdata)
-    glyph_dsc                                0x0806a680   Data         776  fixedsys.o(.constdata)
-    cmaps                                    0x0806a988   Data          20  fixedsys.o(.constdata)
-    font_dsc                                 0x0806a99c   Data          24  fixedsys.o(.constdata)
-    .constdata                               0x0806a9d0   Section    51860  awesomesyms.o(.constdata)
-    glyph_bitmap                             0x0806a9d0   Data       48538  awesomesyms.o(.constdata)
-    glyph_dsc                                0x0807676c   Data        2632  awesomesyms.o(.constdata)
-    glyph_id_ofs_list_0                      0x080771b4   Data         178  awesomesyms.o(.constdata)
-    glyph_id_ofs_list_1                      0x08077266   Data         165  awesomesyms.o(.constdata)
-    unicode_list_2                           0x0807730c   Data         232  awesomesyms.o(.constdata)
-    cmaps                                    0x080773f4   Data          60  awesomesyms.o(.constdata)
-    font_dsc                                 0x08077430   Data          24  awesomesyms.o(.constdata)
-    .constdata                               0x08077464   Section       64  lv_hal_disp.o(.constdata)
-    __func__                                 0x08077464   Data          24  lv_hal_disp.o(.constdata)
-    __func__                                 0x0807747c   Data          21  lv_hal_disp.o(.constdata)
-    __func__                                 0x08077491   Data          19  lv_hal_disp.o(.constdata)
-    .constdata                               0x080774a4   Section       73  lv_hal_indev.o(.constdata)
-    __func__                                 0x080774a4   Data          22  lv_hal_indev.o(.constdata)
-    __func__                                 0x080774ba   Data          20  lv_hal_indev.o(.constdata)
-    __func__                                 0x080774ce   Data          16  lv_hal_indev.o(.constdata)
-    __func__                                 0x080774de   Data          15  lv_hal_indev.o(.constdata)
-    .constdata                               0x080774ed   Section       14  lv_anim.o(.constdata)
-    __func__                                 0x080774ed   Data          14  lv_anim.o(.constdata)
-    .constdata                               0x080774fc   Section      434  lv_color.o(.constdata)
-    colors                                   0x080774fc   Data          38  lv_color.o(.constdata)
-    __func__                                 0x08077522   Data          16  lv_color.o(.constdata)
-    colors                                   0x08077532   Data         190  lv_color.o(.constdata)
-    __func__                                 0x080775f0   Data          19  lv_color.o(.constdata)
-    colors                                   0x08077604   Data         152  lv_color.o(.constdata)
-    __func__                                 0x0807769c   Data          18  lv_color.o(.constdata)
-    .constdata                               0x080776ae   Section       48  lv_fs.o(.constdata)
-    __func__                                 0x080776ae   Data          11  lv_fs.o(.constdata)
-    __func__                                 0x080776b9   Data          18  lv_fs.o(.constdata)
-    __func__                                 0x080776cb   Data          19  lv_fs.o(.constdata)
-    .constdata                               0x080776de   Section      182  lv_math.o(.constdata)
-    sin0_90_table                            0x080776de   Data         182  lv_math.o(.constdata)
-    .constdata                               0x08077794   Section       61  lv_mem.o(.constdata)
-    __func__                                 0x08077794   Data          15  lv_mem.o(.constdata)
-    __func__                                 0x080777a3   Data          12  lv_mem.o(.constdata)
-    __func__                                 0x080777af   Data          15  lv_mem.o(.constdata)
-    __func__                                 0x080777be   Data          19  lv_mem.o(.constdata)
-    .constdata                               0x080777d4   Section      238  lv_style.o(.constdata)
-    null_style_value                         0x08077848   Data           4  lv_style.o(.constdata)
-    __func__                                 0x0807784c   Data          14  lv_style.o(.constdata)
-    __func__                                 0x0807785a   Data          15  lv_style.o(.constdata)
-    __func__                                 0x08077869   Data          23  lv_style.o(.constdata)
-    __func__                                 0x08077880   Data          21  lv_style.o(.constdata)
-    __func__                                 0x08077895   Data          18  lv_style.o(.constdata)
-    __func__                                 0x080778a7   Data          27  lv_style.o(.constdata)
-    .constdata                               0x080778c2   Section       33  lv_timer.o(.constdata)
-    __func__                                 0x080778c2   Data          17  lv_timer.o(.constdata)
-    __func__                                 0x080778d3   Data          16  lv_timer.o(.constdata)
-    .constdata                               0x080778e3   Section       38  lv_txt.o(.constdata)
-    __func__                                 0x080778e3   Data          16  lv_txt.o(.constdata)
-    __func__                                 0x080778f3   Data          22  lv_txt.o(.constdata)
-    .constdata                               0x0807790c   Section       94  lv_arc.o(.constdata)
-    __func__                                 0x08077928   Data          26  lv_arc.o(.constdata)
-    __func__                                 0x08077942   Data          27  lv_arc.o(.constdata)
-    __func__                                 0x0807795d   Data          13  lv_arc.o(.constdata)
-    .constdata                               0x0807796c   Section       28  lv_bar.o(.constdata)
-    .constdata                               0x08077988   Section       28  lv_btn.o(.constdata)
-    .constdata                               0x080779a4   Section       60  lv_btnmatrix.o(.constdata)
-    __func__                                 0x080779c0   Data          32  lv_btnmatrix.o(.constdata)
-    .constdata                               0x080779e0   Section       28  lv_checkbox.o(.constdata)
-    .constdata                               0x080779fc   Section      163  lv_dropdown.o(.constdata)
-    __func__                                 0x08077a34   Data          24  lv_dropdown.o(.constdata)
-    __func__                                 0x08077a4c   Data          31  lv_dropdown.o(.constdata)
-    __func__                                 0x08077a6b   Data          23  lv_dropdown.o(.constdata)
-    __func__                                 0x08077a82   Data          29  lv_dropdown.o(.constdata)
-    .constdata                               0x08077aa0   Section       52  lv_img.o(.constdata)
-    __func__                                 0x08077abc   Data          15  lv_img.o(.constdata)
-    __func__                                 0x08077acb   Data           9  lv_img.o(.constdata)
-    .constdata                               0x08077ad4   Section      181  lv_label.o(.constdata)
-    __func__                                 0x08077af0   Data          18  lv_label.o(.constdata)
-    __func__                                 0x08077b02   Data          22  lv_label.o(.constdata)
-    __func__                                 0x08077b18   Data          24  lv_label.o(.constdata)
-    __func__                                 0x08077b30   Data          23  lv_label.o(.constdata)
-    __func__                                 0x08077b47   Data          27  lv_label.o(.constdata)
-    __func__                                 0x08077b62   Data          18  lv_label.o(.constdata)
-    __func__                                 0x08077b74   Data          21  lv_label.o(.constdata)
-    .constdata                               0x08077b8c   Section       28  lv_line.o(.constdata)
-    .constdata                               0x08077ba8   Section      105  lv_roller.o(.constdata)
-    __func__                                 0x08077be0   Data          22  lv_roller.o(.constdata)
-    __func__                                 0x08077bf6   Data          27  lv_roller.o(.constdata)
-    .constdata                               0x08077c14   Section       28  lv_slider.o(.constdata)
-    .constdata                               0x08077c30   Section       28  lv_switch.o(.constdata)
-    .constdata                               0x08077c4c   Section      296  lv_table.o(.constdata)
-    __func__                                 0x08077c68   Data          24  lv_table.o(.constdata)
-    __func__                                 0x08077c80   Data          28  lv_table.o(.constdata)
-    __func__                                 0x08077c9c   Data          21  lv_table.o(.constdata)
-    __func__                                 0x08077cb1   Data          21  lv_table.o(.constdata)
-    __func__                                 0x08077cc6   Data          23  lv_table.o(.constdata)
-    __func__                                 0x08077cdd   Data          25  lv_table.o(.constdata)
-    __func__                                 0x08077cf6   Data          28  lv_table.o(.constdata)
-    __func__                                 0x08077d12   Data          24  lv_table.o(.constdata)
-    __func__                                 0x08077d2a   Data          23  lv_table.o(.constdata)
-    __func__                                 0x08077d41   Data          23  lv_table.o(.constdata)
-    __func__                                 0x08077d58   Data          28  lv_table.o(.constdata)
-    .constdata                               0x08077d74   Section      229  lv_textarea.o(.constdata)
-    __func__                                 0x08077d90   Data          21  lv_textarea.o(.constdata)
-    __func__                                 0x08077da5   Data          21  lv_textarea.o(.constdata)
-    __func__                                 0x08077dba   Data          21  lv_textarea.o(.constdata)
-    __func__                                 0x08077dcf   Data          21  lv_textarea.o(.constdata)
-    __func__                                 0x08077de4   Data          33  lv_textarea.o(.constdata)
-    __func__                                 0x08077e05   Data          30  lv_textarea.o(.constdata)
-    __func__                                 0x08077e23   Data          32  lv_textarea.o(.constdata)
-    __func__                                 0x08077e43   Data          22  lv_textarea.o(.constdata)
-    .conststring                             0x08077e5c   Section      525  screens.o(.conststring)
-    .conststring                             0x0807806c   Section       67  menu.o(.conststring)
-    .conststring                             0x080780b0   Section      158  lv_obj.o(.conststring)
-    .conststring                             0x08078150   Section       90  lv_refr.o(.conststring)
-    .conststring                             0x080781ac   Section       65  lv_draw_label.o(.conststring)
-    .conststring                             0x080781f0   Section       94  lv_draw_sw_layer.o(.conststring)
-    .conststring                             0x08078250   Section       81  lv_draw_sw_letter.o(.conststring)
-    .conststring                             0x080782a4   Section       27  lv_calendar.o(.conststring)
-    .conststring                             0x080782c0   Section      105  lv_calendar_header_arrow.o(.conststring)
-    .conststring                             0x0807832c   Section      652  lv_calendar_header_dropdown.o(.conststring)
-    .conststring                             0x080785b8   Section      388  lv_keyboard.o(.conststring)
-    .conststring                             0x0807873c   Section       80  lv_font_fmt_txt.o(.conststring)
-    .conststring                             0x0807878c   Section       87  lv_hal_indev.o(.conststring)
-    .conststring                             0x080787e4   Section       38  lv_log.o(.conststring)
-    .conststring                             0x0807880c   Section       81  lv_mem.o(.conststring)
-    .conststring                             0x08078860   Section       37  lv_btnmatrix.o(.conststring)
+    scrn_main_t_enter                        0x08036405   Thumb Code  3178  screens.o(i.scrn_main_t_enter)
+    i.scrn_manager_inst                      0x080370a8   Section        0  screens.o(i.scrn_manager_inst)
+    i.scrn_manager_switch                    0x080370c0   Section        0  screens.o(i.scrn_manager_switch)
+    scrn_manager_switch                      0x080370c1   Thumb Code    32  screens.o(i.scrn_manager_switch)
+    i.scrn_t_exit_t                          0x080370e0   Section        0  screens.o(i.scrn_t_exit_t)
+    scrn_t_exit_t                            0x080370e1   Thumb Code    52  screens.o(i.scrn_t_exit_t)
+    i.scroll_anim_ready_cb                   0x08037114   Section        0  lv_obj_scroll.o(i.scroll_anim_ready_cb)
+    scroll_anim_ready_cb                     0x08037115   Thumb Code    16  lv_obj_scroll.o(i.scroll_anim_ready_cb)
+    i.scroll_anim_ready_cb                   0x08037124   Section        0  lv_roller.o(i.scroll_anim_ready_cb)
+    scroll_anim_ready_cb                     0x08037125   Thumb Code    20  lv_roller.o(i.scroll_anim_ready_cb)
+    i.scroll_area_into_view                  0x08037138   Section        0  lv_obj_scroll.o(i.scroll_area_into_view)
+    scroll_area_into_view                    0x08037139   Thumb Code   864  lv_obj_scroll.o(i.scroll_area_into_view)
+    i.scroll_limit_diff                      0x080374a0   Section        0  lv_indev_scroll.o(i.scroll_limit_diff)
+    scroll_limit_diff                        0x080374a1   Thumb Code   120  lv_indev_scroll.o(i.scroll_limit_diff)
+    i.scroll_throw_predict_x                 0x08037518   Section        0  lv_indev_scroll.o(i.scroll_throw_predict_x)
+    scroll_throw_predict_x                   0x08037519   Thumb Code    54  lv_indev_scroll.o(i.scroll_throw_predict_x)
+    i.scroll_throw_predict_y                 0x0803754e   Section        0  lv_indev_scroll.o(i.scroll_throw_predict_y)
+    scroll_throw_predict_y                   0x0803754f   Thumb Code    54  lv_indev_scroll.o(i.scroll_throw_predict_y)
+    i.scroll_to_selected_cell                0x08037584   Section        0  lv_table.o(i.scroll_to_selected_cell)
+    scroll_to_selected_cell                  0x08037585   Thumb Code   156  lv_table.o(i.scroll_to_selected_cell)
+    i.scroll_x_anim                          0x08037620   Section        0  lv_obj_scroll.o(i.scroll_x_anim)
+    scroll_x_anim                            0x08037621   Thumb Code    28  lv_obj_scroll.o(i.scroll_x_anim)
+    i.scroll_y_anim                          0x0803763c   Section        0  lv_obj_scroll.o(i.scroll_y_anim)
+    scroll_y_anim                            0x0803763d   Thumb Code    28  lv_obj_scroll.o(i.scroll_y_anim)
+    i.scrollbar_init_draw_dsc                0x08037658   Section        0  lv_obj.o(i.scrollbar_init_draw_dsc)
+    scrollbar_init_draw_dsc                  0x08037659   Thumb Code   344  lv_obj.o(i.scrollbar_init_draw_dsc)
+    i.set_ofs_x_anim                         0x080377b0   Section        0  lv_label.o(i.set_ofs_x_anim)
+    set_ofs_x_anim                           0x080377b1   Thumb Code    22  lv_label.o(i.set_ofs_x_anim)
+    i.set_ofs_y_anim                         0x080377c6   Section        0  lv_label.o(i.set_ofs_y_anim)
+    set_ofs_y_anim                           0x080377c7   Thumb Code    22  lv_label.o(i.set_ofs_y_anim)
+    i.set_px_argb                            0x080377dc   Section        0  lv_draw_sw_blend.o(i.set_px_argb)
+    set_px_argb                              0x080377dd   Thumb Code    70  lv_draw_sw_blend.o(i.set_px_argb)
+    i.set_px_argb_blend                      0x08037824   Section        0  lv_draw_sw_blend.o(i.set_px_argb_blend)
+    set_px_argb_blend                        0x08037825   Thumb Code   130  lv_draw_sw_blend.o(i.set_px_argb_blend)
+    i.set_x_anim                             0x080378b8   Section        0  lv_disp.o(i.set_x_anim)
+    set_x_anim                               0x080378b9   Thumb Code    16  lv_disp.o(i.set_x_anim)
+    i.set_y_anim                             0x080378c8   Section        0  lv_disp.o(i.set_y_anim)
+    set_y_anim                               0x080378c9   Thumb Code    16  lv_disp.o(i.set_y_anim)
+    i.set_y_anim                             0x080378d8   Section        0  lv_roller.o(i.set_y_anim)
+    set_y_anim                               0x080378d9   Thumb Code    16  lv_roller.o(i.set_y_anim)
+    i.shadow_blur_corner                     0x080378e8   Section        0  lv_draw_sw_rect.o(i.shadow_blur_corner)
+    shadow_blur_corner                       0x080378e9   Thumb Code   380  lv_draw_sw_rect.o(i.shadow_blur_corner)
+    i.shadow_draw_corner_buf                 0x08037a64   Section        0  lv_draw_sw_rect.o(i.shadow_draw_corner_buf)
+    shadow_draw_corner_buf                   0x08037a65   Thumb Code   454  lv_draw_sw_rect.o(i.shadow_draw_corner_buf)
+    i.show_error                             0x08037c2a   Section        0  lv_draw_img.o(i.show_error)
+    show_error                               0x08037c2b   Thumb Code    82  lv_draw_img.o(i.show_error)
+    i.st_clust                               0x08037c7c   Section        0  ff.o(i.st_clust)
+    st_clust                                 0x08037c7d   Thumb Code    16  ff.o(i.st_clust)
+    i.start_cursor_blink                     0x08037c8c   Section        0  lv_textarea.o(i.start_cursor_blink)
+    start_cursor_blink                       0x08037c8d   Thumb Code   130  lv_textarea.o(i.start_cursor_blink)
+    i.start_scrn_manager                     0x08037d18   Section        0  screens.o(i.start_scrn_manager)
+    i.style_init                             0x08037d64   Section        0  lv_theme_default.o(i.style_init)
+    style_init                               0x08037d65   Thumb Code  7616  lv_theme_default.o(i.style_init)
+    i.style_init_reset                       0x08039b30   Section        0  lv_theme_default.o(i.style_init_reset)
+    style_init_reset                         0x08039b31   Thumb Code    26  lv_theme_default.o(i.style_init_reset)
+    i.sum_sfn                                0x08039b50   Section        0  ff.o(i.sum_sfn)
+    sum_sfn                                  0x08039b51   Thumb Code    32  ff.o(i.sum_sfn)
+    i.sync_fs                                0x08039b70   Section        0  ff.o(i.sync_fs)
+    sync_fs                                  0x08039b71   Thumb Code   200  ff.o(i.sync_fs)
+    i.sync_window                            0x08039c38   Section        0  ff.o(i.sync_window)
+    sync_window                              0x08039c39   Thumb Code    82  ff.o(i.sync_window)
+    i.tab_changed_cb                         0x08039c8a   Section        0  tab.o(i.tab_changed_cb)
+    tab_changed_cb                           0x08039c8b   Thumb Code    62  tab.o(i.tab_changed_cb)
+    i.tab_draw_event_cb                      0x08039cc8   Section        0  tab.o(i.tab_draw_event_cb)
+    tab_draw_event_cb                        0x08039cc9   Thumb Code    56  tab.o(i.tab_draw_event_cb)
+    i.tab_line_draw_event_cb                 0x08039d04   Section        0  tab.o(i.tab_line_draw_event_cb)
+    tab_line_draw_event_cb                   0x08039d05   Thumb Code    62  tab.o(i.tab_line_draw_event_cb)
+    i.theme_apply                            0x08039d48   Section        0  lv_theme_default.o(i.theme_apply)
+    theme_apply                              0x08039d49   Thumb Code  4636  lv_theme_default.o(i.theme_apply)
+    i.tileview_event_cb                      0x0803af84   Section        0  lv_tileview.o(i.tileview_event_cb)
+    tileview_event_cb                        0x0803af85   Thumb Code   238  lv_tileview.o(i.tileview_event_cb)
+    i.touch_cb                               0x0803b074   Section        0  screens.o(i.touch_cb)
+    touch_cb                                 0x0803b075   Thumb Code    68  screens.o(i.touch_cb)
+    i.touchpad_get_xy                        0x0803b0c0   Section        0  lv_port_indev_template.o(i.touchpad_get_xy)
+    touchpad_get_xy                          0x0803b0c1   Thumb Code   420  lv_port_indev_template.o(i.touchpad_get_xy)
+    i.touchpad_is_pressed                    0x0803b27c   Section        0  lv_port_indev_template.o(i.touchpad_is_pressed)
+    touchpad_is_pressed                      0x0803b27d   Thumb Code   140  lv_port_indev_template.o(i.touchpad_is_pressed)
+    i.touchpad_read                          0x0803b324   Section        0  lv_port_indev_template.o(i.touchpad_read)
+    touchpad_read                            0x0803b325   Thumb Code    48  lv_port_indev_template.o(i.touchpad_read)
+    i.trans_anim_cb                          0x0803b358   Section        0  lv_obj_style.o(i.trans_anim_cb)
+    trans_anim_cb                            0x0803b359   Thumb Code   468  lv_obj_style.o(i.trans_anim_cb)
+    i.trans_anim_ready_cb                    0x0803b530   Section        0  lv_obj_style.o(i.trans_anim_ready_cb)
+    trans_anim_ready_cb                      0x0803b531   Thumb Code   204  lv_obj_style.o(i.trans_anim_ready_cb)
+    i.trans_anim_start_cb                    0x0803b600   Section        0  lv_obj_style.o(i.trans_anim_start_cb)
+    trans_anim_start_cb                      0x0803b601   Thumb Code    72  lv_obj_style.o(i.trans_anim_start_cb)
+    i.trans_del                              0x0803b648   Section        0  lv_obj_style.o(i.trans_del)
+    trans_del                                0x0803b649   Thumb Code   180  lv_obj_style.o(i.trans_del)
+    i.transform_point                        0x0803b700   Section        0  lv_obj_pos.o(i.transform_point)
+    transform_point                          0x0803b701   Thumb Code   378  lv_obj_pos.o(i.transform_point)
+    i.transform_point_upscaled               0x0803b87a   Section        0  lv_draw_sw_transform.o(i.transform_point_upscaled)
+    transform_point_upscaled                 0x0803b87b   Thumb Code   158  lv_draw_sw_transform.o(i.transform_point_upscaled)
+    i.uart_init                              0x0803b918   Section        0  usart.o(i.uart_init)
+    i.unicode_list_compare                   0x0803b9bc   Section        0  lv_font_fmt_txt.o(i.unicode_list_compare)
+    unicode_list_compare                     0x0803b9bd   Thumb Code    10  lv_font_fmt_txt.o(i.unicode_list_compare)
+    i.unlock_fs                              0x0803b9c6   Section        0  ff.o(i.unlock_fs)
+    unlock_fs                                0x0803b9c7   Thumb Code    32  ff.o(i.unlock_fs)
+    i.update_cursor_position_on_click        0x0803b9e6   Section        0  lv_textarea.o(i.update_cursor_position_on_click)
+    update_cursor_position_on_click          0x0803b9e7   Thumb Code   508  lv_textarea.o(i.update_cursor_position_on_click)
+    i.uxListRemove                           0x0803bbe2   Section        0  list.o(i.uxListRemove)
+    i.uxTaskGetNumberOfTasks                 0x0803bc0c   Section        0  tasks.o(i.uxTaskGetNumberOfTasks)
+    i.vApplicationGetIdleTaskMemory          0x0803bc18   Section        0  port.o(i.vApplicationGetIdleTaskMemory)
+    i.vApplicationGetTimerTaskMemory         0x0803bc30   Section        0  port.o(i.vApplicationGetTimerTaskMemory)
+    i.vApplicationMallocFailedHook           0x0803bc48   Section        0  port.o(i.vApplicationMallocFailedHook)
+    i.vApplicationStackOverflowHook          0x0803bc74   Section        0  heap_4.o(i.vApplicationStackOverflowHook)
+    i.vListInitialise                        0x0803bca4   Section        0  list.o(i.vListInitialise)
+    i.vListInitialiseItem                    0x0803bcc4   Section        0  list.o(i.vListInitialiseItem)
+    i.vListInsert                            0x0803bcca   Section        0  list.o(i.vListInsert)
+    i.vPortEnterCritical                     0x0803bd00   Section        0  port.o(i.vPortEnterCritical)
+    i.vPortExitCritical                      0x0803bd88   Section        0  port.o(i.vPortExitCritical)
+    i.vPortFree                              0x0803bdf8   Section        0  heap_4.o(i.vPortFree)
+    i.vPortSetupTimerInterrupt               0x0803beec   Section        0  port.o(i.vPortSetupTimerInterrupt)
+    i.vQueueAddToRegistry                    0x0803bf14   Section        0  queue.o(i.vQueueAddToRegistry)
+    i.vQueueWaitForMessageRestricted         0x0803bf90   Section        0  queue.o(i.vQueueWaitForMessageRestricted)
+    i.vTaskDelay                             0x0803bfdc   Section        0  tasks.o(i.vTaskDelay)
+    i.vTaskInternalSetTimeOutState           0x0803c050   Section        0  tasks.o(i.vTaskInternalSetTimeOutState)
+    i.vTaskMissedYield                       0x0803c068   Section        0  tasks.o(i.vTaskMissedYield)
+    i.vTaskPlaceOnEventList                  0x0803c074   Section        0  tasks.o(i.vTaskPlaceOnEventList)
+    i.vTaskPlaceOnEventListRestricted        0x0803c0c8   Section        0  tasks.o(i.vTaskPlaceOnEventListRestricted)
+    i.vTaskPriorityDisinheritAfterTimeout    0x0803c148   Section        0  tasks.o(i.vTaskPriorityDisinheritAfterTimeout)
+    i.vTaskStartScheduler                    0x0803c264   Section        0  tasks.o(i.vTaskStartScheduler)
+    i.vTaskSuspendAll                        0x0803c2f8   Section        0  tasks.o(i.vTaskSuspendAll)
+    i.vTaskSwitchContext                     0x0803c308   Section        0  tasks.o(i.vTaskSwitchContext)
+    i.validate                               0x0803c3fc   Section        0  ff.o(i.validate)
+    validate                                 0x0803c3fd   Thumb Code    66  ff.o(i.validate)
+    i.value_changed_event_cb                 0x0803c440   Section        0  lv_calendar_header_arrow.o(i.value_changed_event_cb)
+    value_changed_event_cb                   0x0803c441   Thumb Code    66  lv_calendar_header_arrow.o(i.value_changed_event_cb)
+    i.value_changed_event_cb                 0x0803c490   Section        0  lv_calendar_header_dropdown.o(i.value_changed_event_cb)
+    value_changed_event_cb                   0x0803c491   Thumb Code   134  lv_calendar_header_dropdown.o(i.value_changed_event_cb)
+    i.value_update                           0x0803c518   Section        0  lv_arc.o(i.value_update)
+    value_update                             0x0803c519   Thumb Code   294  lv_arc.o(i.value_update)
+    i.xPortGetFreeHeapSize                   0x0803c67c   Section        0  heap_4.o(i.xPortGetFreeHeapSize)
+    i.xPortStartScheduler                    0x0803c688   Section        0  port.o(i.xPortStartScheduler)
+    i.xPortSysTickHandler                    0x0803c804   Section        0  port.o(i.xPortSysTickHandler)
+    i.xQueueCreateMutexStatic                0x0803c838   Section        0  queue.o(i.xQueueCreateMutexStatic)
+    i.xQueueGenericCreateStatic              0x0803c864   Section        0  queue.o(i.xQueueGenericCreateStatic)
+    i.xQueueGenericReset                     0x0803c904   Section        0  queue.o(i.xQueueGenericReset)
+    i.xQueueGenericSend                      0x0803c9f0   Section        0  queue.o(i.xQueueGenericSend)
+    i.xQueueReceive                          0x0803cbc4   Section        0  queue.o(i.xQueueReceive)
+    i.xQueueSemaphoreTake                    0x0803cd34   Section        0  queue.o(i.xQueueSemaphoreTake)
+    i.xTaskCheckForTimeOut                   0x0803cecc   Section        0  tasks.o(i.xTaskCheckForTimeOut)
+    i.xTaskCreate                            0x0803cf6c   Section        0  tasks.o(i.xTaskCreate)
+    i.xTaskCreateStatic                      0x0803cfa4   Section        0  tasks.o(i.xTaskCreateStatic)
+    i.xTaskGetSchedulerState                 0x0803cfe4   Section        0  tasks.o(i.xTaskGetSchedulerState)
+    i.xTaskGetTickCount                      0x0803d004   Section        0  tasks.o(i.xTaskGetTickCount)
+    i.xTaskIncrementTick                     0x0803d010   Section        0  tasks.o(i.xTaskIncrementTick)
+    i.xTaskPriorityDisinherit                0x0803d1f8   Section        0  tasks.o(i.xTaskPriorityDisinherit)
+    i.xTaskPriorityInherit                   0x0803d2ec   Section        0  tasks.o(i.xTaskPriorityInherit)
+    i.xTaskRemoveFromEventList               0x0803d3cc   Section        0  tasks.o(i.xTaskRemoveFromEventList)
+    i.xTaskResumeAll                         0x0803d518   Section        0  tasks.o(i.xTaskResumeAll)
+    i.xTimerCreateTimerTask                  0x0803d6d4   Section        0  timers.o(i.xTimerCreateTimerTask)
+    i.year_event_cb                          0x0803d76c   Section        0  lv_calendar_header_dropdown.o(i.year_event_cb)
+    year_event_cb                            0x0803d76d   Thumb Code   126  lv_calendar_header_dropdown.o(i.year_event_cb)
+    x$fpl$fpinit                             0x0803d7ea   Section       10  fpinit.o(x$fpl$fpinit)
+    $v0                                      0x0803d7ea   Number         0  fpinit.o(x$fpl$fpinit)
+    .constdata                               0x0803d7f4   Section       58  ff.o(.constdata)
+    LfnOfs                                   0x0803d7f4   Data          13  ff.o(.constdata)
+    vst                                      0x0803d802   Data          22  ff.o(.constdata)
+    cst                                      0x0803d818   Data          22  ff.o(.constdata)
+    .constdata                               0x0803d82e   Section    175304  cc936.o(.constdata)
+    uni2oem                                  0x0803d82e   Data       87172  cc936.o(.constdata)
+    oem2uni                                  0x08052cb2   Data       87172  cc936.o(.constdata)
+    tbl_lower                                0x08068136   Data         480  cc936.o(.constdata)
+    tbl_upper                                0x08068316   Data         480  cc936.o(.constdata)
+    .constdata                               0x080684f8   Section        8  tab.o(.constdata)
+    .constdata                               0x08068500   Section      291  lv_disp.o(.constdata)
+    __func__                                 0x08068500   Data          20  lv_disp.o(.constdata)
+    __func__                                 0x08068514   Data          21  lv_disp.o(.constdata)
+    __func__                                 0x08068529   Data          22  lv_disp.o(.constdata)
+    __func__                                 0x0806853f   Data          22  lv_disp.o(.constdata)
+    __func__                                 0x08068555   Data          18  lv_disp.o(.constdata)
+    __func__                                 0x08068567   Data          21  lv_disp.o(.constdata)
+    __func__                                 0x0806857c   Data          21  lv_disp.o(.constdata)
+    __func__                                 0x08068591   Data          19  lv_disp.o(.constdata)
+    __func__                                 0x080685a4   Data          22  lv_disp.o(.constdata)
+    __func__                                 0x080685ba   Data          21  lv_disp.o(.constdata)
+    __func__                                 0x080685cf   Data          28  lv_disp.o(.constdata)
+    __func__                                 0x080685eb   Data          32  lv_disp.o(.constdata)
+    __func__                                 0x0806860b   Data          24  lv_disp.o(.constdata)
+    .constdata                               0x08068623   Section      366  lv_event.o(.constdata)
+    __func__                                 0x08068623   Data          20  lv_event.o(.constdata)
+    __func__                                 0x08068637   Data          23  lv_event.o(.constdata)
+    __func__                                 0x0806864e   Data          38  lv_event.o(.constdata)
+    __func__                                 0x08068674   Data          24  lv_event.o(.constdata)
+    __func__                                 0x0806868c   Data          19  lv_event.o(.constdata)
+    __func__                                 0x0806869f   Data          27  lv_event.o(.constdata)
+    __func__                                 0x080686ba   Data          22  lv_event.o(.constdata)
+    __func__                                 0x080686d0   Data          22  lv_event.o(.constdata)
+    __func__                                 0x080686e6   Data          17  lv_event.o(.constdata)
+    __func__                                 0x080686f7   Data          25  lv_event.o(.constdata)
+    __func__                                 0x08068710   Data          27  lv_event.o(.constdata)
+    __func__                                 0x0806872b   Data          28  lv_event.o(.constdata)
+    __func__                                 0x08068747   Data          27  lv_event.o(.constdata)
+    __func__                                 0x08068762   Data          24  lv_event.o(.constdata)
+    __func__                                 0x0806877a   Data          23  lv_event.o(.constdata)
+    .constdata                               0x08068791   Section       33  lv_group.o(.constdata)
+    __func__                                 0x08068791   Data          16  lv_group.o(.constdata)
+    __func__                                 0x080687a1   Data          17  lv_group.o(.constdata)
+    .constdata                               0x080687b2   Section       61  lv_indev.o(.constdata)
+    __func__                                 0x080687b2   Data          24  lv_indev.o(.constdata)
+    __func__                                 0x080687ca   Data          19  lv_indev.o(.constdata)
+    __func__                                 0x080687dd   Data          18  lv_indev.o(.constdata)
+    .constdata                               0x080687f0   Section       62  lv_obj.o(.constdata)
+    __func__                                 0x0806880c   Data           8  lv_obj.o(.constdata)
+    __func__                                 0x08068814   Data          26  lv_obj.o(.constdata)
+    .constdata                               0x0806882e   Section       24  lv_obj_class.o(.constdata)
+    __func__                                 0x0806882e   Data          24  lv_obj_class.o(.constdata)
+    .constdata                               0x08068848   Section       28  lv_obj_pos.o(.constdata)
+    __func__                                 0x08068848   Data          19  lv_obj_pos.o(.constdata)
+    .constdata                               0x08068864   Section       48  lv_obj_style.o(.constdata)
+    __func__                                 0x08068864   Data          32  lv_obj_style.o(.constdata)
+    __func__                                 0x08068884   Data          16  lv_obj_style.o(.constdata)
+    .constdata                               0x08068894   Section       45  lv_obj_tree.o(.constdata)
+    __func__                                 0x08068894   Data          11  lv_obj_tree.o(.constdata)
+    __func__                                 0x0806889f   Data          18  lv_obj_tree.o(.constdata)
+    __func__                                 0x080688b1   Data          16  lv_obj_tree.o(.constdata)
+    .constdata                               0x080688c1   Section      100  lv_refr.o(.constdata)
+    __func__                                 0x080688c1   Data          13  lv_refr.o(.constdata)
+    __func__                                 0x080688ce   Data          20  lv_refr.o(.constdata)
+    __func__                                 0x080688e2   Data          15  lv_refr.o(.constdata)
+    __func__                                 0x080688f1   Data          15  lv_refr.o(.constdata)
+    __func__                                 0x08068900   Data           9  lv_refr.o(.constdata)
+    __func__                                 0x08068909   Data          12  lv_refr.o(.constdata)
+    __func__                                 0x08068915   Data          16  lv_refr.o(.constdata)
+    .constdata                               0x08068925   Section       48  lv_draw_img.o(.constdata)
+    __func__                                 0x08068925   Data          12  lv_draw_img.o(.constdata)
+    __func__                                 0x08068931   Data          20  lv_draw_img.o(.constdata)
+    __func__                                 0x08068945   Data          16  lv_draw_img.o(.constdata)
+    .constdata                               0x08068955   Section       14  lv_draw_label.o(.constdata)
+    __func__                                 0x08068955   Data          14  lv_draw_label.o(.constdata)
+    .constdata                               0x08068963   Section       21  lv_draw_layer.o(.constdata)
+    __func__                                 0x08068963   Data          21  lv_draw_layer.o(.constdata)
+    .constdata                               0x08068978   Section       80  lv_draw_mask.o(.constdata)
+    __func__                                 0x08068978   Data          17  lv_draw_mask.o(.constdata)
+    __func__                                 0x08068989   Data          24  lv_draw_mask.o(.constdata)
+    __func__                                 0x080689a1   Data          25  lv_draw_mask.o(.constdata)
+    __func__                                 0x080689ba   Data          14  lv_draw_mask.o(.constdata)
+    .constdata                               0x080689c8   Section       18  lv_draw_transform.o(.constdata)
+    __func__                                 0x080689c8   Data          18  lv_draw_transform.o(.constdata)
+    .constdata                               0x080689da   Section       41  lv_img_cache.o(.constdata)
+    __func__                                 0x080689da   Data          19  lv_img_cache.o(.constdata)
+    __func__                                 0x080689ed   Data          22  lv_img_cache.o(.constdata)
+    .constdata                               0x08068a03   Section      195  lv_img_decoder.o(.constdata)
+    __func__                                 0x08068a03   Data          21  lv_img_decoder.o(.constdata)
+    __func__                                 0x08068a18   Data          20  lv_img_decoder.o(.constdata)
+    __func__                                 0x08068a2c   Data          22  lv_img_decoder.o(.constdata)
+    __func__                                 0x08068a42   Data          29  lv_img_decoder.o(.constdata)
+    __func__                                 0x08068a5f   Data          29  lv_img_decoder.o(.constdata)
+    __func__                                 0x08068a7c   Data          34  lv_img_decoder.o(.constdata)
+    __func__                                 0x08068a9e   Data          40  lv_img_decoder.o(.constdata)
+    .constdata                               0x08068ac6   Section       49  lv_draw_sw_blend.o(.constdata)
+    __func__                                 0x08068ac6   Data          24  lv_draw_sw_blend.o(.constdata)
+    __func__                                 0x08068ade   Data          13  lv_draw_sw_blend.o(.constdata)
+    __func__                                 0x08068aeb   Data          12  lv_draw_sw_blend.o(.constdata)
+    .constdata                               0x08068af7   Section       79  lv_draw_sw_gradient.o(.constdata)
+    __func__                                 0x08068af7   Data          14  lv_draw_sw_gradient.o(.constdata)
+    __func__                                 0x08068b05   Data          27  lv_draw_sw_gradient.o(.constdata)
+    __func__                                 0x08068b20   Data          16  lv_draw_sw_gradient.o(.constdata)
+    __func__                                 0x08068b30   Data          22  lv_draw_sw_gradient.o(.constdata)
+    .constdata                               0x08068b46   Section       24  lv_draw_sw_layer.o(.constdata)
+    __func__                                 0x08068b46   Data          24  lv_draw_sw_layer.o(.constdata)
+    .constdata                               0x08068b5e   Section      323  lv_draw_sw_letter.o(.constdata)
+    __func__                                 0x08068c7c   Data          18  lv_draw_sw_letter.o(.constdata)
+    __func__                                 0x08068c8e   Data          19  lv_draw_sw_letter.o(.constdata)
+    .constdata                               0x08068ca1   Section       33  lv_draw_sw_line.o(.constdata)
+    wcorr                                    0x08068ca1   Data          33  lv_draw_sw_line.o(.constdata)
+    .constdata                               0x08068cc4   Section        8  lv_draw_sw_polygon.o(.constdata)
+    .constdata                               0x08068ccc   Section       12  lv_draw_sw_rect.o(.constdata)
+    __func__                                 0x08068ccc   Data          12  lv_draw_sw_rect.o(.constdata)
+    .constdata                               0x08068cd8   Section       30  lv_flex.o(.constdata)
+    __func__                                 0x08068cd8   Data          15  lv_flex.o(.constdata)
+    __func__                                 0x08068ce7   Data          15  lv_flex.o(.constdata)
+    .constdata                               0x08068cf6   Section       22  lv_theme_default.o(.constdata)
+    trans_props                              0x08068cf6   Data          22  lv_theme_default.o(.constdata)
+    .constdata                               0x08068d0c   Section       62  lv_calendar.o(.constdata)
+    __func__                                 0x08068d28   Data          34  lv_calendar.o(.constdata)
+    .constdata                               0x08068d4c   Section       28  lv_calendar_header_arrow.o(.constdata)
+    .constdata                               0x08068d68   Section       28  lv_calendar_header_dropdown.o(.constdata)
+    .constdata                               0x08068d84   Section      566  lv_chart.o(.constdata)
+    __func__                                 0x08068da0   Data          18  lv_chart.o(.constdata)
+    __func__                                 0x08068db2   Data          19  lv_chart.o(.constdata)
+    __func__                                 0x08068dc5   Data          27  lv_chart.o(.constdata)
+    __func__                                 0x08068de0   Data          29  lv_chart.o(.constdata)
+    __func__                                 0x08068dfd   Data          20  lv_chart.o(.constdata)
+    __func__                                 0x08068e11   Data          23  lv_chart.o(.constdata)
+    __func__                                 0x08068e28   Data          21  lv_chart.o(.constdata)
+    __func__                                 0x08068e3d   Data          26  lv_chart.o(.constdata)
+    __func__                                 0x08068e57   Data          27  lv_chart.o(.constdata)
+    __func__                                 0x08068e72   Data          20  lv_chart.o(.constdata)
+    __func__                                 0x08068e86   Data          24  lv_chart.o(.constdata)
+    __func__                                 0x08068e9e   Data          26  lv_chart.o(.constdata)
+    __func__                                 0x08068eb8   Data          26  lv_chart.o(.constdata)
+    __func__                                 0x08068ed2   Data          23  lv_chart.o(.constdata)
+    __func__                                 0x08068ee9   Data          24  lv_chart.o(.constdata)
+    __func__                                 0x08068f01   Data          25  lv_chart.o(.constdata)
+    __func__                                 0x08068f1a   Data          25  lv_chart.o(.constdata)
+    __func__                                 0x08068f33   Data          26  lv_chart.o(.constdata)
+    __func__                                 0x08068f4d   Data          25  lv_chart.o(.constdata)
+    __func__                                 0x08068f66   Data          25  lv_chart.o(.constdata)
+    __func__                                 0x08068f7f   Data          21  lv_chart.o(.constdata)
+    __func__                                 0x08068f94   Data          21  lv_chart.o(.constdata)
+    __func__                                 0x08068fa9   Data          17  lv_chart.o(.constdata)
+    .constdata                               0x08068fbc   Section       28  lv_colorwheel.o(.constdata)
+    .constdata                               0x08068fd8   Section      914  lv_keyboard.o(.constdata)
+    default_kb_map_lc                        0x08068ff4   Data         176  lv_keyboard.o(.constdata)
+    default_kb_ctrl_lc_map                   0x080690a4   Data          80  lv_keyboard.o(.constdata)
+    default_kb_map_uc                        0x080690f4   Data         176  lv_keyboard.o(.constdata)
+    default_kb_ctrl_uc_map                   0x080691a4   Data          80  lv_keyboard.o(.constdata)
+    default_kb_map_spec                      0x080691f4   Data         176  lv_keyboard.o(.constdata)
+    default_kb_ctrl_spec_map                 0x080692a4   Data          80  lv_keyboard.o(.constdata)
+    default_kb_map_num                       0x080692f4   Data          84  lv_keyboard.o(.constdata)
+    default_kb_ctrl_num_map                  0x08069348   Data          34  lv_keyboard.o(.constdata)
+    .constdata                               0x0806936c   Section       28  lv_led.o(.constdata)
+    .constdata                               0x08069388   Section       84  lv_list.o(.constdata)
+    .constdata                               0x080693dc   Section      289  lv_menu.o(.constdata)
+    __func__                                 0x080694d8   Data          20  lv_menu.o(.constdata)
+    __func__                                 0x080694ec   Data          17  lv_menu.o(.constdata)
+    .constdata                               0x08069500   Section      138  lv_meter.o(.constdata)
+    __func__                                 0x0806951c   Data          19  lv_meter.o(.constdata)
+    __func__                                 0x0806952f   Data          25  lv_meter.o(.constdata)
+    __func__                                 0x08069548   Data          24  lv_meter.o(.constdata)
+    __func__                                 0x08069560   Data          17  lv_meter.o(.constdata)
+    __func__                                 0x08069571   Data          25  lv_meter.o(.constdata)
+    .constdata                               0x0806958c   Section      101  lv_msgbox.o(.constdata)
+    __func__                                 0x080695e0   Data          17  lv_msgbox.o(.constdata)
+    .constdata                               0x080695f4   Section       28  lv_spinbox.o(.constdata)
+    .constdata                               0x08069610   Section       28  lv_spinner.o(.constdata)
+    .constdata                               0x0806962c   Section       28  lv_tabview.o(.constdata)
+    .constdata                               0x08069648   Section       75  lv_tileview.o(.constdata)
+    __func__                                 0x08069680   Data          19  lv_tileview.o(.constdata)
+    .constdata                               0x08069694   Section       28  lv_win.o(.constdata)
+    .constdata                               0x080696b0   Section       71  lv_font.o(.constdata)
+    __func__                                 0x080696b0   Data          25  lv_font.o(.constdata)
+    __func__                                 0x080696c9   Data          22  lv_font.o(.constdata)
+    __func__                                 0x080696df   Data          24  lv_font.o(.constdata)
+    .constdata                               0x080696f7   Section       27  lv_font_fmt_txt.o(.constdata)
+    __func__                                 0x080696f7   Data          27  lv_font_fmt_txt.o(.constdata)
+    .constdata                               0x08069714   Section     4992  fixedsys.o(.constdata)
+    glyph_bitmap                             0x08069714   Data        4141  fixedsys.o(.constdata)
+    glyph_dsc                                0x0806a744   Data         776  fixedsys.o(.constdata)
+    cmaps                                    0x0806aa4c   Data          20  fixedsys.o(.constdata)
+    font_dsc                                 0x0806aa60   Data          24  fixedsys.o(.constdata)
+    .constdata                               0x0806aa94   Section    51860  awesomesyms.o(.constdata)
+    glyph_bitmap                             0x0806aa94   Data       48538  awesomesyms.o(.constdata)
+    glyph_dsc                                0x08076830   Data        2632  awesomesyms.o(.constdata)
+    glyph_id_ofs_list_0                      0x08077278   Data         178  awesomesyms.o(.constdata)
+    glyph_id_ofs_list_1                      0x0807732a   Data         165  awesomesyms.o(.constdata)
+    unicode_list_2                           0x080773d0   Data         232  awesomesyms.o(.constdata)
+    cmaps                                    0x080774b8   Data          60  awesomesyms.o(.constdata)
+    font_dsc                                 0x080774f4   Data          24  awesomesyms.o(.constdata)
+    .constdata                               0x08077528   Section       64  lv_hal_disp.o(.constdata)
+    __func__                                 0x08077528   Data          24  lv_hal_disp.o(.constdata)
+    __func__                                 0x08077540   Data          21  lv_hal_disp.o(.constdata)
+    __func__                                 0x08077555   Data          19  lv_hal_disp.o(.constdata)
+    .constdata                               0x08077568   Section       73  lv_hal_indev.o(.constdata)
+    __func__                                 0x08077568   Data          22  lv_hal_indev.o(.constdata)
+    __func__                                 0x0807757e   Data          20  lv_hal_indev.o(.constdata)
+    __func__                                 0x08077592   Data          16  lv_hal_indev.o(.constdata)
+    __func__                                 0x080775a2   Data          15  lv_hal_indev.o(.constdata)
+    .constdata                               0x080775b1   Section       14  lv_anim.o(.constdata)
+    __func__                                 0x080775b1   Data          14  lv_anim.o(.constdata)
+    .constdata                               0x080775c0   Section      434  lv_color.o(.constdata)
+    colors                                   0x080775c0   Data          38  lv_color.o(.constdata)
+    __func__                                 0x080775e6   Data          16  lv_color.o(.constdata)
+    colors                                   0x080775f6   Data         190  lv_color.o(.constdata)
+    __func__                                 0x080776b4   Data          19  lv_color.o(.constdata)
+    colors                                   0x080776c8   Data         152  lv_color.o(.constdata)
+    __func__                                 0x08077760   Data          18  lv_color.o(.constdata)
+    .constdata                               0x08077772   Section       48  lv_fs.o(.constdata)
+    __func__                                 0x08077772   Data          11  lv_fs.o(.constdata)
+    __func__                                 0x0807777d   Data          18  lv_fs.o(.constdata)
+    __func__                                 0x0807778f   Data          19  lv_fs.o(.constdata)
+    .constdata                               0x080777a2   Section      182  lv_math.o(.constdata)
+    sin0_90_table                            0x080777a2   Data         182  lv_math.o(.constdata)
+    .constdata                               0x08077858   Section       61  lv_mem.o(.constdata)
+    __func__                                 0x08077858   Data          15  lv_mem.o(.constdata)
+    __func__                                 0x08077867   Data          12  lv_mem.o(.constdata)
+    __func__                                 0x08077873   Data          15  lv_mem.o(.constdata)
+    __func__                                 0x08077882   Data          19  lv_mem.o(.constdata)
+    .constdata                               0x08077898   Section      238  lv_style.o(.constdata)
+    null_style_value                         0x0807790c   Data           4  lv_style.o(.constdata)
+    __func__                                 0x08077910   Data          14  lv_style.o(.constdata)
+    __func__                                 0x0807791e   Data          15  lv_style.o(.constdata)
+    __func__                                 0x0807792d   Data          23  lv_style.o(.constdata)
+    __func__                                 0x08077944   Data          21  lv_style.o(.constdata)
+    __func__                                 0x08077959   Data          18  lv_style.o(.constdata)
+    __func__                                 0x0807796b   Data          27  lv_style.o(.constdata)
+    .constdata                               0x08077986   Section       33  lv_timer.o(.constdata)
+    __func__                                 0x08077986   Data          17  lv_timer.o(.constdata)
+    __func__                                 0x08077997   Data          16  lv_timer.o(.constdata)
+    .constdata                               0x080779a7   Section       38  lv_txt.o(.constdata)
+    __func__                                 0x080779a7   Data          16  lv_txt.o(.constdata)
+    __func__                                 0x080779b7   Data          22  lv_txt.o(.constdata)
+    .constdata                               0x080779d0   Section       94  lv_arc.o(.constdata)
+    __func__                                 0x080779ec   Data          26  lv_arc.o(.constdata)
+    __func__                                 0x08077a06   Data          27  lv_arc.o(.constdata)
+    __func__                                 0x08077a21   Data          13  lv_arc.o(.constdata)
+    .constdata                               0x08077a30   Section       28  lv_bar.o(.constdata)
+    .constdata                               0x08077a4c   Section       28  lv_btn.o(.constdata)
+    .constdata                               0x08077a68   Section       60  lv_btnmatrix.o(.constdata)
+    __func__                                 0x08077a84   Data          32  lv_btnmatrix.o(.constdata)
+    .constdata                               0x08077aa4   Section       28  lv_checkbox.o(.constdata)
+    .constdata                               0x08077ac0   Section      163  lv_dropdown.o(.constdata)
+    __func__                                 0x08077af8   Data          24  lv_dropdown.o(.constdata)
+    __func__                                 0x08077b10   Data          31  lv_dropdown.o(.constdata)
+    __func__                                 0x08077b2f   Data          23  lv_dropdown.o(.constdata)
+    __func__                                 0x08077b46   Data          29  lv_dropdown.o(.constdata)
+    .constdata                               0x08077b64   Section       52  lv_img.o(.constdata)
+    __func__                                 0x08077b80   Data          15  lv_img.o(.constdata)
+    __func__                                 0x08077b8f   Data           9  lv_img.o(.constdata)
+    .constdata                               0x08077b98   Section      181  lv_label.o(.constdata)
+    __func__                                 0x08077bb4   Data          18  lv_label.o(.constdata)
+    __func__                                 0x08077bc6   Data          22  lv_label.o(.constdata)
+    __func__                                 0x08077bdc   Data          24  lv_label.o(.constdata)
+    __func__                                 0x08077bf4   Data          23  lv_label.o(.constdata)
+    __func__                                 0x08077c0b   Data          27  lv_label.o(.constdata)
+    __func__                                 0x08077c26   Data          18  lv_label.o(.constdata)
+    __func__                                 0x08077c38   Data          21  lv_label.o(.constdata)
+    .constdata                               0x08077c50   Section       28  lv_line.o(.constdata)
+    .constdata                               0x08077c6c   Section      105  lv_roller.o(.constdata)
+    __func__                                 0x08077ca4   Data          22  lv_roller.o(.constdata)
+    __func__                                 0x08077cba   Data          27  lv_roller.o(.constdata)
+    .constdata                               0x08077cd8   Section       28  lv_slider.o(.constdata)
+    .constdata                               0x08077cf4   Section       28  lv_switch.o(.constdata)
+    .constdata                               0x08077d10   Section      296  lv_table.o(.constdata)
+    __func__                                 0x08077d2c   Data          24  lv_table.o(.constdata)
+    __func__                                 0x08077d44   Data          28  lv_table.o(.constdata)
+    __func__                                 0x08077d60   Data          21  lv_table.o(.constdata)
+    __func__                                 0x08077d75   Data          21  lv_table.o(.constdata)
+    __func__                                 0x08077d8a   Data          23  lv_table.o(.constdata)
+    __func__                                 0x08077da1   Data          25  lv_table.o(.constdata)
+    __func__                                 0x08077dba   Data          28  lv_table.o(.constdata)
+    __func__                                 0x08077dd6   Data          24  lv_table.o(.constdata)
+    __func__                                 0x08077dee   Data          23  lv_table.o(.constdata)
+    __func__                                 0x08077e05   Data          23  lv_table.o(.constdata)
+    __func__                                 0x08077e1c   Data          28  lv_table.o(.constdata)
+    .constdata                               0x08077e38   Section      229  lv_textarea.o(.constdata)
+    __func__                                 0x08077e54   Data          21  lv_textarea.o(.constdata)
+    __func__                                 0x08077e69   Data          21  lv_textarea.o(.constdata)
+    __func__                                 0x08077e7e   Data          21  lv_textarea.o(.constdata)
+    __func__                                 0x08077e93   Data          21  lv_textarea.o(.constdata)
+    __func__                                 0x08077ea8   Data          33  lv_textarea.o(.constdata)
+    __func__                                 0x08077ec9   Data          30  lv_textarea.o(.constdata)
+    __func__                                 0x08077ee7   Data          32  lv_textarea.o(.constdata)
+    __func__                                 0x08077f07   Data          22  lv_textarea.o(.constdata)
+    .conststring                             0x08077f20   Section      525  screens.o(.conststring)
+    .conststring                             0x08078130   Section       67  menu.o(.conststring)
+    .conststring                             0x08078174   Section      158  lv_obj.o(.conststring)
+    .conststring                             0x08078214   Section       90  lv_refr.o(.conststring)
+    .conststring                             0x08078270   Section       65  lv_draw_label.o(.conststring)
+    .conststring                             0x080782b4   Section       94  lv_draw_sw_layer.o(.conststring)
+    .conststring                             0x08078314   Section       81  lv_draw_sw_letter.o(.conststring)
+    .conststring                             0x08078368   Section       27  lv_calendar.o(.conststring)
+    .conststring                             0x08078384   Section      105  lv_calendar_header_arrow.o(.conststring)
+    .conststring                             0x080783f0   Section      652  lv_calendar_header_dropdown.o(.conststring)
+    .conststring                             0x0807867c   Section      388  lv_keyboard.o(.conststring)
+    .conststring                             0x08078800   Section       80  lv_font_fmt_txt.o(.conststring)
+    .conststring                             0x08078850   Section       87  lv_hal_indev.o(.conststring)
+    .conststring                             0x080788a8   Section       38  lv_log.o(.conststring)
+    .conststring                             0x080788d0   Section       81  lv_mem.o(.conststring)
+    .conststring                             0x08078924   Section       37  lv_btnmatrix.o(.conststring)
     .data                                    0x20000000   Section        8  main.o(.data)
     .data                                    0x20000008   Section       20  system_stm32f4xx.o(.data)
     .data                                    0x2000001c   Section       16  stm32f4xx_rcc.o(.data)
@@ -15559,112 +15559,112 @@ Image Symbol Table
     pvPortRealloc                            0x08034429   Thumb Code  1266  heap_4.o(i.pvPortRealloc)
     pvTaskIncrementMutexHeldCount            0x08034925   Thumb Code    14  tasks.o(i.pvTaskIncrementMutexHeldCount)
     pxPortInitialiseStack                    0x080349d1   Thumb Code    38  port.o(i.pxPortInitialiseStack)
-    scrn_manager_inst                        0x08036fe5   Thumb Code    20  screens.o(i.scrn_manager_inst)
-    start_scrn_manager                       0x08037c55   Thumb Code    34  screens.o(i.start_scrn_manager)
-    uart_init                                0x0803b855   Thumb Code   156  usart.o(i.uart_init)
-    uxListRemove                             0x0803bb1f   Thumb Code    40  list.o(i.uxListRemove)
-    uxTaskGetNumberOfTasks                   0x0803bb49   Thumb Code     6  tasks.o(i.uxTaskGetNumberOfTasks)
-    vApplicationGetIdleTaskMemory            0x0803bb55   Thumb Code    14  port.o(i.vApplicationGetIdleTaskMemory)
-    vApplicationGetTimerTaskMemory           0x0803bb6d   Thumb Code    16  port.o(i.vApplicationGetTimerTaskMemory)
-    vApplicationMallocFailedHook             0x0803bb85   Thumb Code    28  port.o(i.vApplicationMallocFailedHook)
-    vApplicationStackOverflowHook            0x0803bbb1   Thumb Code    16  heap_4.o(i.vApplicationStackOverflowHook)
-    vListInitialise                          0x0803bbe1   Thumb Code    32  list.o(i.vListInitialise)
-    vListInitialiseItem                      0x0803bc01   Thumb Code     6  list.o(i.vListInitialiseItem)
-    vListInsert                              0x0803bc07   Thumb Code    52  list.o(i.vListInsert)
-    vPortEnterCritical                       0x0803bc3d   Thumb Code    68  port.o(i.vPortEnterCritical)
-    vPortExitCritical                        0x0803bcc5   Thumb Code    48  port.o(i.vPortExitCritical)
-    vPortFree                                0x0803bd35   Thumb Code   172  heap_4.o(i.vPortFree)
-    vPortSetupTimerInterrupt                 0x0803be29   Thumb Code    36  port.o(i.vPortSetupTimerInterrupt)
-    vQueueAddToRegistry                      0x0803be51   Thumb Code    84  queue.o(i.vQueueAddToRegistry)
-    vQueueWaitForMessageRestricted           0x0803becd   Thumb Code    74  queue.o(i.vQueueWaitForMessageRestricted)
-    vTaskDelay                               0x0803bf19   Thumb Code    72  tasks.o(i.vTaskDelay)
-    vTaskInternalSetTimeOutState             0x0803bf8d   Thumb Code    14  tasks.o(i.vTaskInternalSetTimeOutState)
-    vTaskMissedYield                         0x0803bfa5   Thumb Code     8  tasks.o(i.vTaskMissedYield)
-    vTaskPlaceOnEventList                    0x0803bfb1   Thumb Code    42  tasks.o(i.vTaskPlaceOnEventList)
-    vTaskPlaceOnEventListRestricted          0x0803c005   Thumb Code    88  tasks.o(i.vTaskPlaceOnEventListRestricted)
-    vTaskPriorityDisinheritAfterTimeout      0x0803c085   Thumb Code   236  tasks.o(i.vTaskPriorityDisinheritAfterTimeout)
-    vTaskStartScheduler                      0x0803c1a1   Thumb Code    96  tasks.o(i.vTaskStartScheduler)
-    vTaskSuspendAll                          0x0803c235   Thumb Code    12  tasks.o(i.vTaskSuspendAll)
-    vTaskSwitchContext                       0x0803c245   Thumb Code   188  tasks.o(i.vTaskSwitchContext)
-    xPortGetFreeHeapSize                     0x0803c5b9   Thumb Code     6  heap_4.o(i.xPortGetFreeHeapSize)
-    xPortStartScheduler                      0x0803c5c5   Thumb Code   290  port.o(i.xPortStartScheduler)
-    xPortSysTickHandler                      0x0803c741   Thumb Code    46  port.o(i.xPortSysTickHandler)
-    xQueueCreateMutexStatic                  0x0803c775   Thumb Code    42  queue.o(i.xQueueCreateMutexStatic)
-    xQueueGenericCreateStatic                0x0803c7a1   Thumb Code   124  queue.o(i.xQueueGenericCreateStatic)
-    xQueueGenericReset                       0x0803c841   Thumb Code   194  queue.o(i.xQueueGenericReset)
-    xQueueGenericSend                        0x0803c92d   Thumb Code   426  queue.o(i.xQueueGenericSend)
-    xQueueReceive                            0x0803cb01   Thumb Code   326  queue.o(i.xQueueReceive)
-    xQueueSemaphoreTake                      0x0803cc71   Thumb Code   368  queue.o(i.xQueueSemaphoreTake)
-    xTaskCheckForTimeOut                     0x0803ce09   Thumb Code   116  tasks.o(i.xTaskCheckForTimeOut)
-    xTaskCreate                              0x0803cea9   Thumb Code    56  tasks.o(i.xTaskCreate)
-    xTaskCreateStatic                        0x0803cee1   Thumb Code    64  tasks.o(i.xTaskCreateStatic)
-    xTaskGetSchedulerState                   0x0803cf21   Thumb Code    24  tasks.o(i.xTaskGetSchedulerState)
-    xTaskGetTickCount                        0x0803cf41   Thumb Code     6  tasks.o(i.xTaskGetTickCount)
-    xTaskIncrementTick                       0x0803cf4d   Thumb Code   406  tasks.o(i.xTaskIncrementTick)
-    xTaskPriorityDisinherit                  0x0803d135   Thumb Code   194  tasks.o(i.xTaskPriorityDisinherit)
-    xTaskPriorityInherit                     0x0803d229   Thumb Code   212  tasks.o(i.xTaskPriorityInherit)
-    xTaskRemoveFromEventList                 0x0803d309   Thumb Code   272  tasks.o(i.xTaskRemoveFromEventList)
-    xTaskResumeAll                           0x0803d455   Thumb Code   372  tasks.o(i.xTaskResumeAll)
-    xTimerCreateTimerTask                    0x0803d611   Thumb Code    92  timers.o(i.xTimerCreateTimerTask)
-    _fp_init                                 0x0803d727   Thumb Code    10  fpinit.o(x$fpl$fpinit)
-    __fplib_config_fpu_vfp                   0x0803d72f   Thumb Code     0  fpinit.o(x$fpl$fpinit)
-    __fplib_config_pureend_doubles           0x0803d72f   Thumb Code     0  fpinit.o(x$fpl$fpinit)
-    lv_obj_class                             0x0806872c   Data          28  lv_obj.o(.constdata)
-    _lv_bpp1_opa_table                       0x08068a9a   Data           2  lv_draw_sw_letter.o(.constdata)
-    _lv_bpp2_opa_table                       0x08068a9c   Data           4  lv_draw_sw_letter.o(.constdata)
-    _lv_bpp3_opa_table                       0x08068aa0   Data           8  lv_draw_sw_letter.o(.constdata)
-    _lv_bpp4_opa_table                       0x08068aa8   Data          16  lv_draw_sw_letter.o(.constdata)
-    _lv_bpp8_opa_table                       0x08068ab8   Data         256  lv_draw_sw_letter.o(.constdata)
-    lv_calendar_class                        0x08068c48   Data          28  lv_calendar.o(.constdata)
-    lv_calendar_header_arrow_class           0x08068c88   Data          28  lv_calendar_header_arrow.o(.constdata)
-    lv_calendar_header_dropdown_class        0x08068ca4   Data          28  lv_calendar_header_dropdown.o(.constdata)
-    lv_chart_class                           0x08068cc0   Data          28  lv_chart.o(.constdata)
-    lv_colorwheel_class                      0x08068ef8   Data          28  lv_colorwheel.o(.constdata)
-    lv_keyboard_class                        0x08068f14   Data          28  lv_keyboard.o(.constdata)
-    lv_led_class                             0x080692a8   Data          28  lv_led.o(.constdata)
-    lv_list_class                            0x080692c4   Data          28  lv_list.o(.constdata)
-    lv_list_btn_class                        0x080692e0   Data          28  lv_list.o(.constdata)
-    lv_list_text_class                       0x080692fc   Data          28  lv_list.o(.constdata)
-    lv_menu_class                            0x08069318   Data          28  lv_menu.o(.constdata)
-    lv_menu_page_class                       0x08069334   Data          28  lv_menu.o(.constdata)
-    lv_menu_cont_class                       0x08069350   Data          28  lv_menu.o(.constdata)
-    lv_menu_section_class                    0x0806936c   Data          28  lv_menu.o(.constdata)
-    lv_menu_separator_class                  0x08069388   Data          28  lv_menu.o(.constdata)
-    lv_menu_sidebar_cont_class               0x080693a4   Data          28  lv_menu.o(.constdata)
-    lv_menu_main_cont_class                  0x080693c0   Data          28  lv_menu.o(.constdata)
-    lv_menu_main_header_cont_class           0x080693dc   Data          28  lv_menu.o(.constdata)
-    lv_menu_sidebar_header_cont_class        0x080693f8   Data          28  lv_menu.o(.constdata)
-    lv_meter_class                           0x0806943c   Data          28  lv_meter.o(.constdata)
-    lv_msgbox_class                          0x080694c8   Data          28  lv_msgbox.o(.constdata)
-    lv_msgbox_content_class                  0x080694e4   Data          28  lv_msgbox.o(.constdata)
-    lv_msgbox_backdrop_class                 0x08069500   Data          28  lv_msgbox.o(.constdata)
-    lv_spinbox_class                         0x08069530   Data          28  lv_spinbox.o(.constdata)
-    lv_spinner_class                         0x0806954c   Data          28  lv_spinner.o(.constdata)
-    lv_tabview_class                         0x08069568   Data          28  lv_tabview.o(.constdata)
-    lv_tileview_class                        0x08069584   Data          28  lv_tileview.o(.constdata)
-    lv_tileview_tile_class                   0x080695a0   Data          28  lv_tileview.o(.constdata)
-    lv_win_class                             0x080695d0   Data          28  lv_win.o(.constdata)
-    fixedsys                                 0x0806a9b4   Data          28  fixedsys.o(.constdata)
-    awesomesyms                              0x08077448   Data          28  awesomesyms.o(.constdata)
-    _lv_style_builtin_prop_flag_lookup_table 0x080777d4   Data         113  lv_style.o(.constdata)
-    lv_arc_class                             0x0807790c   Data          28  lv_arc.o(.constdata)
-    lv_bar_class                             0x0807796c   Data          28  lv_bar.o(.constdata)
-    lv_btn_class                             0x08077988   Data          28  lv_btn.o(.constdata)
-    lv_btnmatrix_class                       0x080779a4   Data          28  lv_btnmatrix.o(.constdata)
-    lv_checkbox_class                        0x080779e0   Data          28  lv_checkbox.o(.constdata)
-    lv_dropdown_class                        0x080779fc   Data          28  lv_dropdown.o(.constdata)
-    lv_dropdownlist_class                    0x08077a18   Data          28  lv_dropdown.o(.constdata)
-    lv_img_class                             0x08077aa0   Data          28  lv_img.o(.constdata)
-    lv_label_class                           0x08077ad4   Data          28  lv_label.o(.constdata)
-    lv_line_class                            0x08077b8c   Data          28  lv_line.o(.constdata)
-    lv_roller_class                          0x08077ba8   Data          28  lv_roller.o(.constdata)
-    lv_roller_label_class                    0x08077bc4   Data          28  lv_roller.o(.constdata)
-    lv_slider_class                          0x08077c14   Data          28  lv_slider.o(.constdata)
-    lv_switch_class                          0x08077c30   Data          28  lv_switch.o(.constdata)
-    lv_table_class                           0x08077c4c   Data          28  lv_table.o(.constdata)
-    lv_textarea_class                        0x08077d74   Data          28  lv_textarea.o(.constdata)
-    Region$$Table$$Base                      0x08078888   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x080788a8   Number         0  anon$$obj.o(Region$$Table)
+    scrn_manager_inst                        0x080370a9   Thumb Code    20  screens.o(i.scrn_manager_inst)
+    start_scrn_manager                       0x08037d19   Thumb Code    34  screens.o(i.start_scrn_manager)
+    uart_init                                0x0803b919   Thumb Code   156  usart.o(i.uart_init)
+    uxListRemove                             0x0803bbe3   Thumb Code    40  list.o(i.uxListRemove)
+    uxTaskGetNumberOfTasks                   0x0803bc0d   Thumb Code     6  tasks.o(i.uxTaskGetNumberOfTasks)
+    vApplicationGetIdleTaskMemory            0x0803bc19   Thumb Code    14  port.o(i.vApplicationGetIdleTaskMemory)
+    vApplicationGetTimerTaskMemory           0x0803bc31   Thumb Code    16  port.o(i.vApplicationGetTimerTaskMemory)
+    vApplicationMallocFailedHook             0x0803bc49   Thumb Code    28  port.o(i.vApplicationMallocFailedHook)
+    vApplicationStackOverflowHook            0x0803bc75   Thumb Code    16  heap_4.o(i.vApplicationStackOverflowHook)
+    vListInitialise                          0x0803bca5   Thumb Code    32  list.o(i.vListInitialise)
+    vListInitialiseItem                      0x0803bcc5   Thumb Code     6  list.o(i.vListInitialiseItem)
+    vListInsert                              0x0803bccb   Thumb Code    52  list.o(i.vListInsert)
+    vPortEnterCritical                       0x0803bd01   Thumb Code    68  port.o(i.vPortEnterCritical)
+    vPortExitCritical                        0x0803bd89   Thumb Code    48  port.o(i.vPortExitCritical)
+    vPortFree                                0x0803bdf9   Thumb Code   172  heap_4.o(i.vPortFree)
+    vPortSetupTimerInterrupt                 0x0803beed   Thumb Code    36  port.o(i.vPortSetupTimerInterrupt)
+    vQueueAddToRegistry                      0x0803bf15   Thumb Code    84  queue.o(i.vQueueAddToRegistry)
+    vQueueWaitForMessageRestricted           0x0803bf91   Thumb Code    74  queue.o(i.vQueueWaitForMessageRestricted)
+    vTaskDelay                               0x0803bfdd   Thumb Code    72  tasks.o(i.vTaskDelay)
+    vTaskInternalSetTimeOutState             0x0803c051   Thumb Code    14  tasks.o(i.vTaskInternalSetTimeOutState)
+    vTaskMissedYield                         0x0803c069   Thumb Code     8  tasks.o(i.vTaskMissedYield)
+    vTaskPlaceOnEventList                    0x0803c075   Thumb Code    42  tasks.o(i.vTaskPlaceOnEventList)
+    vTaskPlaceOnEventListRestricted          0x0803c0c9   Thumb Code    88  tasks.o(i.vTaskPlaceOnEventListRestricted)
+    vTaskPriorityDisinheritAfterTimeout      0x0803c149   Thumb Code   236  tasks.o(i.vTaskPriorityDisinheritAfterTimeout)
+    vTaskStartScheduler                      0x0803c265   Thumb Code    96  tasks.o(i.vTaskStartScheduler)
+    vTaskSuspendAll                          0x0803c2f9   Thumb Code    12  tasks.o(i.vTaskSuspendAll)
+    vTaskSwitchContext                       0x0803c309   Thumb Code   188  tasks.o(i.vTaskSwitchContext)
+    xPortGetFreeHeapSize                     0x0803c67d   Thumb Code     6  heap_4.o(i.xPortGetFreeHeapSize)
+    xPortStartScheduler                      0x0803c689   Thumb Code   290  port.o(i.xPortStartScheduler)
+    xPortSysTickHandler                      0x0803c805   Thumb Code    46  port.o(i.xPortSysTickHandler)
+    xQueueCreateMutexStatic                  0x0803c839   Thumb Code    42  queue.o(i.xQueueCreateMutexStatic)
+    xQueueGenericCreateStatic                0x0803c865   Thumb Code   124  queue.o(i.xQueueGenericCreateStatic)
+    xQueueGenericReset                       0x0803c905   Thumb Code   194  queue.o(i.xQueueGenericReset)
+    xQueueGenericSend                        0x0803c9f1   Thumb Code   426  queue.o(i.xQueueGenericSend)
+    xQueueReceive                            0x0803cbc5   Thumb Code   326  queue.o(i.xQueueReceive)
+    xQueueSemaphoreTake                      0x0803cd35   Thumb Code   368  queue.o(i.xQueueSemaphoreTake)
+    xTaskCheckForTimeOut                     0x0803cecd   Thumb Code   116  tasks.o(i.xTaskCheckForTimeOut)
+    xTaskCreate                              0x0803cf6d   Thumb Code    56  tasks.o(i.xTaskCreate)
+    xTaskCreateStatic                        0x0803cfa5   Thumb Code    64  tasks.o(i.xTaskCreateStatic)
+    xTaskGetSchedulerState                   0x0803cfe5   Thumb Code    24  tasks.o(i.xTaskGetSchedulerState)
+    xTaskGetTickCount                        0x0803d005   Thumb Code     6  tasks.o(i.xTaskGetTickCount)
+    xTaskIncrementTick                       0x0803d011   Thumb Code   406  tasks.o(i.xTaskIncrementTick)
+    xTaskPriorityDisinherit                  0x0803d1f9   Thumb Code   194  tasks.o(i.xTaskPriorityDisinherit)
+    xTaskPriorityInherit                     0x0803d2ed   Thumb Code   212  tasks.o(i.xTaskPriorityInherit)
+    xTaskRemoveFromEventList                 0x0803d3cd   Thumb Code   272  tasks.o(i.xTaskRemoveFromEventList)
+    xTaskResumeAll                           0x0803d519   Thumb Code   372  tasks.o(i.xTaskResumeAll)
+    xTimerCreateTimerTask                    0x0803d6d5   Thumb Code    92  timers.o(i.xTimerCreateTimerTask)
+    _fp_init                                 0x0803d7eb   Thumb Code    10  fpinit.o(x$fpl$fpinit)
+    __fplib_config_fpu_vfp                   0x0803d7f3   Thumb Code     0  fpinit.o(x$fpl$fpinit)
+    __fplib_config_pureend_doubles           0x0803d7f3   Thumb Code     0  fpinit.o(x$fpl$fpinit)
+    lv_obj_class                             0x080687f0   Data          28  lv_obj.o(.constdata)
+    _lv_bpp1_opa_table                       0x08068b5e   Data           2  lv_draw_sw_letter.o(.constdata)
+    _lv_bpp2_opa_table                       0x08068b60   Data           4  lv_draw_sw_letter.o(.constdata)
+    _lv_bpp3_opa_table                       0x08068b64   Data           8  lv_draw_sw_letter.o(.constdata)
+    _lv_bpp4_opa_table                       0x08068b6c   Data          16  lv_draw_sw_letter.o(.constdata)
+    _lv_bpp8_opa_table                       0x08068b7c   Data         256  lv_draw_sw_letter.o(.constdata)
+    lv_calendar_class                        0x08068d0c   Data          28  lv_calendar.o(.constdata)
+    lv_calendar_header_arrow_class           0x08068d4c   Data          28  lv_calendar_header_arrow.o(.constdata)
+    lv_calendar_header_dropdown_class        0x08068d68   Data          28  lv_calendar_header_dropdown.o(.constdata)
+    lv_chart_class                           0x08068d84   Data          28  lv_chart.o(.constdata)
+    lv_colorwheel_class                      0x08068fbc   Data          28  lv_colorwheel.o(.constdata)
+    lv_keyboard_class                        0x08068fd8   Data          28  lv_keyboard.o(.constdata)
+    lv_led_class                             0x0806936c   Data          28  lv_led.o(.constdata)
+    lv_list_class                            0x08069388   Data          28  lv_list.o(.constdata)
+    lv_list_btn_class                        0x080693a4   Data          28  lv_list.o(.constdata)
+    lv_list_text_class                       0x080693c0   Data          28  lv_list.o(.constdata)
+    lv_menu_class                            0x080693dc   Data          28  lv_menu.o(.constdata)
+    lv_menu_page_class                       0x080693f8   Data          28  lv_menu.o(.constdata)
+    lv_menu_cont_class                       0x08069414   Data          28  lv_menu.o(.constdata)
+    lv_menu_section_class                    0x08069430   Data          28  lv_menu.o(.constdata)
+    lv_menu_separator_class                  0x0806944c   Data          28  lv_menu.o(.constdata)
+    lv_menu_sidebar_cont_class               0x08069468   Data          28  lv_menu.o(.constdata)
+    lv_menu_main_cont_class                  0x08069484   Data          28  lv_menu.o(.constdata)
+    lv_menu_main_header_cont_class           0x080694a0   Data          28  lv_menu.o(.constdata)
+    lv_menu_sidebar_header_cont_class        0x080694bc   Data          28  lv_menu.o(.constdata)
+    lv_meter_class                           0x08069500   Data          28  lv_meter.o(.constdata)
+    lv_msgbox_class                          0x0806958c   Data          28  lv_msgbox.o(.constdata)
+    lv_msgbox_content_class                  0x080695a8   Data          28  lv_msgbox.o(.constdata)
+    lv_msgbox_backdrop_class                 0x080695c4   Data          28  lv_msgbox.o(.constdata)
+    lv_spinbox_class                         0x080695f4   Data          28  lv_spinbox.o(.constdata)
+    lv_spinner_class                         0x08069610   Data          28  lv_spinner.o(.constdata)
+    lv_tabview_class                         0x0806962c   Data          28  lv_tabview.o(.constdata)
+    lv_tileview_class                        0x08069648   Data          28  lv_tileview.o(.constdata)
+    lv_tileview_tile_class                   0x08069664   Data          28  lv_tileview.o(.constdata)
+    lv_win_class                             0x08069694   Data          28  lv_win.o(.constdata)
+    fixedsys                                 0x0806aa78   Data          28  fixedsys.o(.constdata)
+    awesomesyms                              0x0807750c   Data          28  awesomesyms.o(.constdata)
+    _lv_style_builtin_prop_flag_lookup_table 0x08077898   Data         113  lv_style.o(.constdata)
+    lv_arc_class                             0x080779d0   Data          28  lv_arc.o(.constdata)
+    lv_bar_class                             0x08077a30   Data          28  lv_bar.o(.constdata)
+    lv_btn_class                             0x08077a4c   Data          28  lv_btn.o(.constdata)
+    lv_btnmatrix_class                       0x08077a68   Data          28  lv_btnmatrix.o(.constdata)
+    lv_checkbox_class                        0x08077aa4   Data          28  lv_checkbox.o(.constdata)
+    lv_dropdown_class                        0x08077ac0   Data          28  lv_dropdown.o(.constdata)
+    lv_dropdownlist_class                    0x08077adc   Data          28  lv_dropdown.o(.constdata)
+    lv_img_class                             0x08077b64   Data          28  lv_img.o(.constdata)
+    lv_label_class                           0x08077b98   Data          28  lv_label.o(.constdata)
+    lv_line_class                            0x08077c50   Data          28  lv_line.o(.constdata)
+    lv_roller_class                          0x08077c6c   Data          28  lv_roller.o(.constdata)
+    lv_roller_label_class                    0x08077c88   Data          28  lv_roller.o(.constdata)
+    lv_slider_class                          0x08077cd8   Data          28  lv_slider.o(.constdata)
+    lv_switch_class                          0x08077cf4   Data          28  lv_switch.o(.constdata)
+    lv_table_class                           0x08077d10   Data          28  lv_table.o(.constdata)
+    lv_textarea_class                        0x08077e38   Data          28  lv_textarea.o(.constdata)
+    Region$$Table$$Base                      0x0807894c   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x0807896c   Number         0  anon$$obj.o(Region$$Table)
     dispTaskHandle                           0x20000000   Data           4  main.o(.data)
     dummyTaskHandle                          0x20000004   Data           4  main.o(.data)
     SystemCoreClock                          0x20000008   Data           4  system_stm32f4xx.o(.data)
@@ -15756,9 +15756,9 @@ Memory Map of the image
 
   Image Entry point : 0x080001c5
 
-  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x00078c2c, Max: 0x00080000, ABSOLUTE, COMPRESSED[0x000789b4])
+  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x00078cf0, Max: 0x00080000, ABSOLUTE, COMPRESSED[0x00078a78])
 
-    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x000788a8, Max: 0x00080000, ABSOLUTE)
+    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x0007896c, Max: 0x00080000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -17356,241 +17356,241 @@ Memory Map of the image
     0x08035f52   0x08035f52   0x00000002   PAD
     0x08035f54   0x08035f54   0x00000228   Code   RO         9673    i.scrn_cali_t_enter  screens.o
     0x0803617c   0x0803617c   0x00000288   Code   RO         9674    i.scrn_load_t_enter  screens.o
-    0x08036404   0x08036404   0x00000be0   Code   RO         9675    i.scrn_main_t_enter  screens.o
-    0x08036fe4   0x08036fe4   0x00000018   Code   RO         9676    i.scrn_manager_inst  screens.o
-    0x08036ffc   0x08036ffc   0x00000020   Code   RO         9677    i.scrn_manager_switch  screens.o
-    0x0803701c   0x0803701c   0x00000034   Code   RO         9679    i.scrn_t_exit_t     screens.o
-    0x08037050   0x08037050   0x00000010   Code   RO        13362    i.scroll_anim_ready_cb  lv_obj_scroll.o
-    0x08037060   0x08037060   0x00000014   Code   RO        41567    i.scroll_anim_ready_cb  lv_roller.o
-    0x08037074   0x08037074   0x00000368   Code   RO        13363    i.scroll_area_into_view  lv_obj_scroll.o
-    0x080373dc   0x080373dc   0x00000078   Code   RO        11843    i.scroll_limit_diff  lv_indev_scroll.o
-    0x08037454   0x08037454   0x00000036   Code   RO        11844    i.scroll_throw_predict_x  lv_indev_scroll.o
-    0x0803748a   0x0803748a   0x00000036   Code   RO        11845    i.scroll_throw_predict_y  lv_indev_scroll.o
-    0x080374c0   0x080374c0   0x0000009c   Code   RO        42156    i.scroll_to_selected_cell  lv_table.o
-    0x0803755c   0x0803755c   0x0000001c   Code   RO        13364    i.scroll_x_anim     lv_obj_scroll.o
-    0x08037578   0x08037578   0x0000001c   Code   RO        13365    i.scroll_y_anim     lv_obj_scroll.o
-    0x08037594   0x08037594   0x00000158   Code   RO        12043    i.scrollbar_init_draw_dsc  lv_obj.o
-    0x080376ec   0x080376ec   0x00000016   Code   RO        41203    i.set_ofs_x_anim    lv_label.o
-    0x08037702   0x08037702   0x00000016   Code   RO        41204    i.set_ofs_y_anim    lv_label.o
-    0x08037718   0x08037718   0x00000046   Code   RO        17178    i.set_px_argb       lv_draw_sw_blend.o
-    0x0803775e   0x0803775e   0x00000002   PAD
-    0x08037760   0x08037760   0x00000094   Code   RO        17179    i.set_px_argb_blend  lv_draw_sw_blend.o
-    0x080377f4   0x080377f4   0x00000010   Code   RO        10666    i.set_x_anim        lv_disp.o
-    0x08037804   0x08037804   0x00000010   Code   RO        10667    i.set_y_anim        lv_disp.o
-    0x08037814   0x08037814   0x00000010   Code   RO        41568    i.set_y_anim        lv_roller.o
-    0x08037824   0x08037824   0x0000017c   Code   RO        18050    i.shadow_blur_corner  lv_draw_sw_rect.o
-    0x080379a0   0x080379a0   0x000001c6   Code   RO        18051    i.shadow_draw_corner_buf  lv_draw_sw_rect.o
-    0x08037b66   0x08037b66   0x00000052   Code   RO        15640    i.show_error        lv_draw_img.o
-    0x08037bb8   0x08037bb8   0x00000010   Code   RO         8594    i.st_clust          ff.o
-    0x08037bc8   0x08037bc8   0x0000008c   Code   RO        42471    i.start_cursor_blink  lv_textarea.o
-    0x08037c54   0x08037c54   0x0000004c   Code   RO         9680    i.start_scrn_manager  screens.o
-    0x08037ca0   0x08037ca0   0x00001dcc   Code   RO        25252    i.style_init        lv_theme_default.o
-    0x08039a6c   0x08039a6c   0x00000020   Code   RO        25253    i.style_init_reset  lv_theme_default.o
-    0x08039a8c   0x08039a8c   0x00000020   Code   RO         8595    i.sum_sfn           ff.o
-    0x08039aac   0x08039aac   0x000000c8   Code   RO         8596    i.sync_fs           ff.o
-    0x08039b74   0x08039b74   0x00000052   Code   RO         8597    i.sync_window       ff.o
-    0x08039bc6   0x08039bc6   0x0000003e   Code   RO        10477    i.tab_changed_cb    tab.o
-    0x08039c04   0x08039c04   0x0000003c   Code   RO        10478    i.tab_draw_event_cb  tab.o
-    0x08039c40   0x08039c40   0x00000044   Code   RO        10479    i.tab_line_draw_event_cb  tab.o
-    0x08039c84   0x08039c84   0x0000123c   Code   RO        25254    i.theme_apply       lv_theme_default.o
-    0x0803aec0   0x0803aec0   0x000000ee   Code   RO        33800    i.tileview_event_cb  lv_tileview.o
-    0x0803afae   0x0803afae   0x00000002   PAD
-    0x0803afb0   0x0803afb0   0x0000004c   Code   RO         9681    i.touch_cb          screens.o
-    0x0803affc   0x0803affc   0x000001bc   Code   RO        10587    i.touchpad_get_xy   lv_port_indev_template.o
-    0x0803b1b8   0x0803b1b8   0x000000a8   Code   RO        10589    i.touchpad_is_pressed  lv_port_indev_template.o
-    0x0803b260   0x0803b260   0x00000034   Code   RO        10590    i.touchpad_read     lv_port_indev_template.o
-    0x0803b294   0x0803b294   0x000001d8   Code   RO        13695    i.trans_anim_cb     lv_obj_style.o
-    0x0803b46c   0x0803b46c   0x000000d0   Code   RO        13696    i.trans_anim_ready_cb  lv_obj_style.o
-    0x0803b53c   0x0803b53c   0x00000048   Code   RO        13697    i.trans_anim_start_cb  lv_obj_style.o
-    0x0803b584   0x0803b584   0x000000b8   Code   RO        13698    i.trans_del         lv_obj_style.o
-    0x0803b63c   0x0803b63c   0x0000017a   Code   RO        12925    i.transform_point   lv_obj_pos.o
-    0x0803b7b6   0x0803b7b6   0x0000009e   Code   RO        18199    i.transform_point_upscaled  lv_draw_sw_transform.o
-    0x0803b854   0x0803b854   0x000000a4   Code   RO         7360    i.uart_init         usart.o
-    0x0803b8f8   0x0803b8f8   0x0000000a   Code   RO        34942    i.unicode_list_compare  lv_font_fmt_txt.o
-    0x0803b902   0x0803b902   0x00000020   Code   RO         8598    i.unlock_fs         ff.o
-    0x0803b922   0x0803b922   0x000001fc   Code   RO        42472    i.update_cursor_position_on_click  lv_textarea.o
-    0x0803bb1e   0x0803bb1e   0x00000028   Code   RO        42870    i.uxListRemove      list.o
-    0x0803bb46   0x0803bb46   0x00000002   PAD
-    0x0803bb48   0x0803bb48   0x0000000c   Code   RO        43250    i.uxTaskGetNumberOfTasks  tasks.o
-    0x0803bb54   0x0803bb54   0x00000018   Code   RO        44293    i.vApplicationGetIdleTaskMemory  port.o
-    0x0803bb6c   0x0803bb6c   0x00000018   Code   RO        44294    i.vApplicationGetTimerTaskMemory  port.o
-    0x0803bb84   0x0803bb84   0x0000002c   Code   RO        44295    i.vApplicationMallocFailedHook  port.o
-    0x0803bbb0   0x0803bbb0   0x00000030   Code   RO        44204    i.vApplicationStackOverflowHook  heap_4.o
-    0x0803bbe0   0x0803bbe0   0x00000020   Code   RO        42871    i.vListInitialise   list.o
-    0x0803bc00   0x0803bc00   0x00000006   Code   RO        42872    i.vListInitialiseItem  list.o
-    0x0803bc06   0x0803bc06   0x00000034   Code   RO        42873    i.vListInsert       list.o
-    0x0803bc3a   0x0803bc3a   0x00000002   PAD
-    0x0803bc3c   0x0803bc3c   0x00000088   Code   RO        44297    i.vPortEnterCritical  port.o
-    0x0803bcc4   0x0803bcc4   0x00000070   Code   RO        44298    i.vPortExitCritical  port.o
-    0x0803bd34   0x0803bd34   0x000000f4   Code   RO        44205    i.vPortFree         heap_4.o
-    0x0803be28   0x0803be28   0x00000028   Code   RO        44299    i.vPortSetupTimerInterrupt  port.o
-    0x0803be50   0x0803be50   0x0000007c   Code   RO        42935    i.vQueueAddToRegistry  queue.o
-    0x0803becc   0x0803becc   0x0000004a   Code   RO        42939    i.vQueueWaitForMessageRestricted  queue.o
-    0x0803bf16   0x0803bf16   0x00000002   PAD
-    0x0803bf18   0x0803bf18   0x00000074   Code   RO        43258    i.vTaskDelay        tasks.o
-    0x0803bf8c   0x0803bf8c   0x00000018   Code   RO        43263    i.vTaskInternalSetTimeOutState  tasks.o
-    0x0803bfa4   0x0803bfa4   0x0000000c   Code   RO        43265    i.vTaskMissedYield  tasks.o
-    0x0803bfb0   0x0803bfb0   0x00000054   Code   RO        43266    i.vTaskPlaceOnEventList  tasks.o
-    0x0803c004   0x0803c004   0x00000080   Code   RO        43267    i.vTaskPlaceOnEventListRestricted  tasks.o
-    0x0803c084   0x0803c084   0x0000011c   Code   RO        43269    i.vTaskPriorityDisinheritAfterTimeout  tasks.o
-    0x0803c1a0   0x0803c1a0   0x00000094   Code   RO        43276    i.vTaskStartScheduler  tasks.o
-    0x0803c234   0x0803c234   0x00000010   Code   RO        43278    i.vTaskSuspendAll   tasks.o
-    0x0803c244   0x0803c244   0x000000f4   Code   RO        43279    i.vTaskSwitchContext  tasks.o
-    0x0803c338   0x0803c338   0x00000042   Code   RO         8599    i.validate          ff.o
-    0x0803c37a   0x0803c37a   0x00000002   PAD
-    0x0803c37c   0x0803c37c   0x00000050   Code   RO        27209    i.value_changed_event_cb  lv_calendar_header_arrow.o
-    0x0803c3cc   0x0803c3cc   0x00000086   Code   RO        27417    i.value_changed_event_cb  lv_calendar_header_dropdown.o
-    0x0803c452   0x0803c452   0x00000002   PAD
-    0x0803c454   0x0803c454   0x00000164   Code   RO        39262    i.value_update      lv_arc.o
-    0x0803c5b8   0x0803c5b8   0x0000000c   Code   RO        44209    i.xPortGetFreeHeapSize  heap_4.o
-    0x0803c5c4   0x0803c5c4   0x0000017c   Code   RO        44301    i.xPortStartScheduler  port.o
-    0x0803c740   0x0803c740   0x00000034   Code   RO        44302    i.xPortSysTickHandler  port.o
-    0x0803c774   0x0803c774   0x0000002a   Code   RO        42944    i.xQueueCreateMutexStatic  queue.o
-    0x0803c79e   0x0803c79e   0x00000002   PAD
-    0x0803c7a0   0x0803c7a0   0x000000a0   Code   RO        42947    i.xQueueGenericCreateStatic  queue.o
-    0x0803c840   0x0803c840   0x000000ec   Code   RO        42949    i.xQueueGenericReset  queue.o
-    0x0803c92c   0x0803c92c   0x000001d4   Code   RO        42950    i.xQueueGenericSend  queue.o
-    0x0803cb00   0x0803cb00   0x00000170   Code   RO        42958    i.xQueueReceive     queue.o
-    0x0803cc70   0x0803cc70   0x00000198   Code   RO        42963    i.xQueueSemaphoreTake  queue.o
-    0x0803ce08   0x0803ce08   0x000000a0   Code   RO        43281    i.xTaskCheckForTimeOut  tasks.o
-    0x0803cea8   0x0803cea8   0x00000038   Code   RO        43282    i.xTaskCreate       tasks.o
-    0x0803cee0   0x0803cee0   0x00000040   Code   RO        43283    i.xTaskCreateStatic  tasks.o
-    0x0803cf20   0x0803cf20   0x00000020   Code   RO        43291    i.xTaskGetSchedulerState  tasks.o
-    0x0803cf40   0x0803cf40   0x0000000c   Code   RO        43293    i.xTaskGetTickCount  tasks.o
-    0x0803cf4c   0x0803cf4c   0x000001e8   Code   RO        43295    i.xTaskIncrementTick  tasks.o
-    0x0803d134   0x0803d134   0x000000f4   Code   RO        43296    i.xTaskPriorityDisinherit  tasks.o
-    0x0803d228   0x0803d228   0x000000e0   Code   RO        43297    i.xTaskPriorityInherit  tasks.o
-    0x0803d308   0x0803d308   0x0000014c   Code   RO        43298    i.xTaskRemoveFromEventList  tasks.o
-    0x0803d454   0x0803d454   0x000001bc   Code   RO        43299    i.xTaskResumeAll    tasks.o
-    0x0803d610   0x0803d610   0x00000098   Code   RO        44027    i.xTimerCreateTimerTask  timers.o
-    0x0803d6a8   0x0803d6a8   0x0000007e   Code   RO        27418    i.year_event_cb     lv_calendar_header_dropdown.o
-    0x0803d726   0x0803d726   0x0000000a   Code   RO        44656    x$fpl$fpinit        fz_wm.l(fpinit.o)
-    0x0803d730   0x0803d730   0x0000003a   Data   RO         8600    .constdata          ff.o
-    0x0803d76a   0x0803d76a   0x0002acc8   Data   RO         9241    .constdata          cc936.o
-    0x08068432   0x08068432   0x00000002   PAD
-    0x08068434   0x08068434   0x00000008   Data   RO        10480    .constdata          tab.o
-    0x0806843c   0x0806843c   0x00000123   Data   RO        10668    .constdata          lv_disp.o
-    0x0806855f   0x0806855f   0x0000016e   Data   RO        11003    .constdata          lv_event.o
-    0x080686cd   0x080686cd   0x00000021   Data   RO        11315    .constdata          lv_group.o
-    0x080686ee   0x080686ee   0x0000003d   Data   RO        11637    .constdata          lv_indev.o
-    0x0806872b   0x0806872b   0x00000001   PAD
-    0x0806872c   0x0806872c   0x0000003e   Data   RO        12044    .constdata          lv_obj.o
-    0x0806876a   0x0806876a   0x00000018   Data   RO        12544    .constdata          lv_obj_class.o
-    0x08068782   0x08068782   0x00000002   PAD
-    0x08068784   0x08068784   0x0000001c   Data   RO        12926    .constdata          lv_obj_pos.o
-    0x080687a0   0x080687a0   0x00000030   Data   RO        13699    .constdata          lv_obj_style.o
-    0x080687d0   0x080687d0   0x0000002d   Data   RO        14540    .constdata          lv_obj_tree.o
-    0x080687fd   0x080687fd   0x00000064   Data   RO        14726    .constdata          lv_refr.o
-    0x08068861   0x08068861   0x00000030   Data   RO        15641    .constdata          lv_draw_img.o
-    0x08068891   0x08068891   0x0000000e   Data   RO        15820    .constdata          lv_draw_label.o
-    0x0806889f   0x0806889f   0x00000015   Data   RO        15945    .constdata          lv_draw_layer.o
-    0x080688b4   0x080688b4   0x00000050   Data   RO        16211    .constdata          lv_draw_mask.o
-    0x08068904   0x08068904   0x00000012   Data   RO        16496    .constdata          lv_draw_transform.o
-    0x08068916   0x08068916   0x00000029   Data   RO        16647    .constdata          lv_img_cache.o
-    0x0806893f   0x0806893f   0x000000c3   Data   RO        16724    .constdata          lv_img_decoder.o
-    0x08068a02   0x08068a02   0x00000031   Data   RO        17180    .constdata          lv_draw_sw_blend.o
-    0x08068a33   0x08068a33   0x0000004f   Data   RO        17413    .constdata          lv_draw_sw_gradient.o
-    0x08068a82   0x08068a82   0x00000018   Data   RO        17655    .constdata          lv_draw_sw_layer.o
-    0x08068a9a   0x08068a9a   0x00000143   Data   RO        17762    .constdata          lv_draw_sw_letter.o
-    0x08068bdd   0x08068bdd   0x00000021   Data   RO        17866    .constdata          lv_draw_sw_line.o
-    0x08068bfe   0x08068bfe   0x00000002   PAD
-    0x08068c00   0x08068c00   0x00000008   Data   RO        17974    .constdata          lv_draw_sw_polygon.o
-    0x08068c08   0x08068c08   0x0000000c   Data   RO        18052    .constdata          lv_draw_sw_rect.o
-    0x08068c14   0x08068c14   0x0000001e   Data   RO        18337    .constdata          lv_flex.o
-    0x08068c32   0x08068c32   0x00000016   Data   RO        25256    .constdata          lv_theme_default.o
-    0x08068c48   0x08068c48   0x0000003e   Data   RO        26710    .constdata          lv_calendar.o
-    0x08068c86   0x08068c86   0x00000002   PAD
-    0x08068c88   0x08068c88   0x0000001c   Data   RO        27210    .constdata          lv_calendar_header_arrow.o
-    0x08068ca4   0x08068ca4   0x0000001c   Data   RO        27419    .constdata          lv_calendar_header_dropdown.o
-    0x08068cc0   0x08068cc0   0x00000236   Data   RO        27611    .constdata          lv_chart.o
-    0x08068ef6   0x08068ef6   0x00000002   PAD
-    0x08068ef8   0x08068ef8   0x0000001c   Data   RO        28326    .constdata          lv_colorwheel.o
-    0x08068f14   0x08068f14   0x00000392   Data   RO        29353    .constdata          lv_keyboard.o
-    0x080692a6   0x080692a6   0x00000002   PAD
-    0x080692a8   0x080692a8   0x0000001c   Data   RO        29600    .constdata          lv_led.o
-    0x080692c4   0x080692c4   0x00000054   Data   RO        30074    .constdata          lv_list.o
-    0x08069318   0x08069318   0x00000121   Data   RO        30311    .constdata          lv_menu.o
-    0x08069439   0x08069439   0x00000003   PAD
-    0x0806943c   0x0806943c   0x0000008a   Data   RO        30657    .constdata          lv_meter.o
-    0x080694c6   0x080694c6   0x00000002   PAD
-    0x080694c8   0x080694c8   0x00000065   Data   RO        31193    .constdata          lv_msgbox.o
-    0x0806952d   0x0806952d   0x00000003   PAD
-    0x08069530   0x08069530   0x0000001c   Data   RO        32351    .constdata          lv_spinbox.o
-    0x0806954c   0x0806954c   0x0000001c   Data   RO        32859    .constdata          lv_spinner.o
-    0x08069568   0x08069568   0x0000001c   Data   RO        33314    .constdata          lv_tabview.o
-    0x08069584   0x08069584   0x0000004b   Data   RO        33801    .constdata          lv_tileview.o
-    0x080695cf   0x080695cf   0x00000001   PAD
-    0x080695d0   0x080695d0   0x0000001c   Data   RO        34012    .constdata          lv_win.o
-    0x080695ec   0x080695ec   0x00000047   Data   RO        34879    .constdata          lv_font.o
-    0x08069633   0x08069633   0x0000001b   Data   RO        34943    .constdata          lv_font_fmt_txt.o
-    0x0806964e   0x0806964e   0x00000002   PAD
-    0x08069650   0x08069650   0x00001380   Data   RO        35498    .constdata          fixedsys.o
-    0x0806a9d0   0x0806a9d0   0x0000ca94   Data   RO        35704    .constdata          awesomesyms.o
-    0x08077464   0x08077464   0x00000040   Data   RO        36208    .constdata          lv_hal_disp.o
-    0x080774a4   0x080774a4   0x00000049   Data   RO        36565    .constdata          lv_hal_indev.o
-    0x080774ed   0x080774ed   0x0000000e   Data   RO        36822    .constdata          lv_anim.o
-    0x080774fb   0x080774fb   0x00000001   PAD
-    0x080774fc   0x080774fc   0x000001b2   Data   RO        37269    .constdata          lv_color.o
-    0x080776ae   0x080776ae   0x00000030   Data   RO        37361    .constdata          lv_fs.o
-    0x080776de   0x080776de   0x000000b6   Data   RO        37722    .constdata          lv_math.o
-    0x08077794   0x08077794   0x0000003d   Data   RO        37783    .constdata          lv_mem.o
-    0x080777d1   0x080777d1   0x00000003   PAD
-    0x080777d4   0x080777d4   0x000000ee   Data   RO        38216    .constdata          lv_style.o
-    0x080778c2   0x080778c2   0x00000021   Data   RO        38914    .constdata          lv_timer.o
-    0x080778e3   0x080778e3   0x00000026   Data   RO        39030    .constdata          lv_txt.o
-    0x08077909   0x08077909   0x00000003   PAD
-    0x0807790c   0x0807790c   0x0000005e   Data   RO        39263    .constdata          lv_arc.o
-    0x0807796a   0x0807796a   0x00000002   PAD
-    0x0807796c   0x0807796c   0x0000001c   Data   RO        39637    .constdata          lv_bar.o
-    0x08077988   0x08077988   0x0000001c   Data   RO        39845    .constdata          lv_btn.o
-    0x080779a4   0x080779a4   0x0000003c   Data   RO        39915    .constdata          lv_btnmatrix.o
-    0x080779e0   0x080779e0   0x0000001c   Data   RO        40433    .constdata          lv_checkbox.o
-    0x080779fc   0x080779fc   0x000000a3   Data   RO        40631    .constdata          lv_dropdown.o
-    0x08077a9f   0x08077a9f   0x00000001   PAD
-    0x08077aa0   0x08077aa0   0x00000034   Data   RO        40954    .constdata          lv_img.o
-    0x08077ad4   0x08077ad4   0x000000b5   Data   RO        41205    .constdata          lv_label.o
-    0x08077b89   0x08077b89   0x00000003   PAD
-    0x08077b8c   0x08077b8c   0x0000001c   Data   RO        41493    .constdata          lv_line.o
-    0x08077ba8   0x08077ba8   0x00000069   Data   RO        41569    .constdata          lv_roller.o
-    0x08077c11   0x08077c11   0x00000003   PAD
-    0x08077c14   0x08077c14   0x0000001c   Data   RO        41773    .constdata          lv_slider.o
-    0x08077c30   0x08077c30   0x0000001c   Data   RO        41974    .constdata          lv_switch.o
-    0x08077c4c   0x08077c4c   0x00000128   Data   RO        42157    .constdata          lv_table.o
-    0x08077d74   0x08077d74   0x000000e5   Data   RO        42473    .constdata          lv_textarea.o
-    0x08077e59   0x08077e59   0x00000003   PAD
-    0x08077e5c   0x08077e5c   0x0000020d   Data   RO         9683    .conststring        screens.o
-    0x08078069   0x08078069   0x00000003   PAD
-    0x0807806c   0x0807806c   0x00000043   Data   RO        10394    .conststring        menu.o
-    0x080780af   0x080780af   0x00000001   PAD
-    0x080780b0   0x080780b0   0x0000009e   Data   RO        12045    .conststring        lv_obj.o
-    0x0807814e   0x0807814e   0x00000002   PAD
-    0x08078150   0x08078150   0x0000005a   Data   RO        14727    .conststring        lv_refr.o
-    0x080781aa   0x080781aa   0x00000002   PAD
-    0x080781ac   0x080781ac   0x00000041   Data   RO        15821    .conststring        lv_draw_label.o
-    0x080781ed   0x080781ed   0x00000003   PAD
-    0x080781f0   0x080781f0   0x0000005e   Data   RO        17656    .conststring        lv_draw_sw_layer.o
-    0x0807824e   0x0807824e   0x00000002   PAD
-    0x08078250   0x08078250   0x00000051   Data   RO        17763    .conststring        lv_draw_sw_letter.o
-    0x080782a1   0x080782a1   0x00000003   PAD
-    0x080782a4   0x080782a4   0x0000001b   Data   RO        26711    .conststring        lv_calendar.o
-    0x080782bf   0x080782bf   0x00000001   PAD
-    0x080782c0   0x080782c0   0x00000069   Data   RO        27211    .conststring        lv_calendar_header_arrow.o
-    0x08078329   0x08078329   0x00000003   PAD
-    0x0807832c   0x0807832c   0x0000028c   Data   RO        27420    .conststring        lv_calendar_header_dropdown.o
-    0x080785b8   0x080785b8   0x00000184   Data   RO        29354    .conststring        lv_keyboard.o
-    0x0807873c   0x0807873c   0x00000050   Data   RO        34944    .conststring        lv_font_fmt_txt.o
-    0x0807878c   0x0807878c   0x00000057   Data   RO        36566    .conststring        lv_hal_indev.o
-    0x080787e3   0x080787e3   0x00000001   PAD
-    0x080787e4   0x080787e4   0x00000026   Data   RO        37622    .conststring        lv_log.o
-    0x0807880a   0x0807880a   0x00000002   PAD
-    0x0807880c   0x0807880c   0x00000051   Data   RO        37784    .conststring        lv_mem.o
-    0x0807885d   0x0807885d   0x00000003   PAD
-    0x08078860   0x08078860   0x00000025   Data   RO        39916    .conststring        lv_btnmatrix.o
-    0x08078885   0x08078885   0x00000003   PAD
-    0x08078888   0x08078888   0x00000020   Data   RO        44712    Region$$Table       anon$$obj.o
+    0x08036404   0x08036404   0x00000ca4   Code   RO         9675    i.scrn_main_t_enter  screens.o
+    0x080370a8   0x080370a8   0x00000018   Code   RO         9676    i.scrn_manager_inst  screens.o
+    0x080370c0   0x080370c0   0x00000020   Code   RO         9677    i.scrn_manager_switch  screens.o
+    0x080370e0   0x080370e0   0x00000034   Code   RO         9679    i.scrn_t_exit_t     screens.o
+    0x08037114   0x08037114   0x00000010   Code   RO        13362    i.scroll_anim_ready_cb  lv_obj_scroll.o
+    0x08037124   0x08037124   0x00000014   Code   RO        41567    i.scroll_anim_ready_cb  lv_roller.o
+    0x08037138   0x08037138   0x00000368   Code   RO        13363    i.scroll_area_into_view  lv_obj_scroll.o
+    0x080374a0   0x080374a0   0x00000078   Code   RO        11843    i.scroll_limit_diff  lv_indev_scroll.o
+    0x08037518   0x08037518   0x00000036   Code   RO        11844    i.scroll_throw_predict_x  lv_indev_scroll.o
+    0x0803754e   0x0803754e   0x00000036   Code   RO        11845    i.scroll_throw_predict_y  lv_indev_scroll.o
+    0x08037584   0x08037584   0x0000009c   Code   RO        42156    i.scroll_to_selected_cell  lv_table.o
+    0x08037620   0x08037620   0x0000001c   Code   RO        13364    i.scroll_x_anim     lv_obj_scroll.o
+    0x0803763c   0x0803763c   0x0000001c   Code   RO        13365    i.scroll_y_anim     lv_obj_scroll.o
+    0x08037658   0x08037658   0x00000158   Code   RO        12043    i.scrollbar_init_draw_dsc  lv_obj.o
+    0x080377b0   0x080377b0   0x00000016   Code   RO        41203    i.set_ofs_x_anim    lv_label.o
+    0x080377c6   0x080377c6   0x00000016   Code   RO        41204    i.set_ofs_y_anim    lv_label.o
+    0x080377dc   0x080377dc   0x00000046   Code   RO        17178    i.set_px_argb       lv_draw_sw_blend.o
+    0x08037822   0x08037822   0x00000002   PAD
+    0x08037824   0x08037824   0x00000094   Code   RO        17179    i.set_px_argb_blend  lv_draw_sw_blend.o
+    0x080378b8   0x080378b8   0x00000010   Code   RO        10666    i.set_x_anim        lv_disp.o
+    0x080378c8   0x080378c8   0x00000010   Code   RO        10667    i.set_y_anim        lv_disp.o
+    0x080378d8   0x080378d8   0x00000010   Code   RO        41568    i.set_y_anim        lv_roller.o
+    0x080378e8   0x080378e8   0x0000017c   Code   RO        18050    i.shadow_blur_corner  lv_draw_sw_rect.o
+    0x08037a64   0x08037a64   0x000001c6   Code   RO        18051    i.shadow_draw_corner_buf  lv_draw_sw_rect.o
+    0x08037c2a   0x08037c2a   0x00000052   Code   RO        15640    i.show_error        lv_draw_img.o
+    0x08037c7c   0x08037c7c   0x00000010   Code   RO         8594    i.st_clust          ff.o
+    0x08037c8c   0x08037c8c   0x0000008c   Code   RO        42471    i.start_cursor_blink  lv_textarea.o
+    0x08037d18   0x08037d18   0x0000004c   Code   RO         9680    i.start_scrn_manager  screens.o
+    0x08037d64   0x08037d64   0x00001dcc   Code   RO        25252    i.style_init        lv_theme_default.o
+    0x08039b30   0x08039b30   0x00000020   Code   RO        25253    i.style_init_reset  lv_theme_default.o
+    0x08039b50   0x08039b50   0x00000020   Code   RO         8595    i.sum_sfn           ff.o
+    0x08039b70   0x08039b70   0x000000c8   Code   RO         8596    i.sync_fs           ff.o
+    0x08039c38   0x08039c38   0x00000052   Code   RO         8597    i.sync_window       ff.o
+    0x08039c8a   0x08039c8a   0x0000003e   Code   RO        10477    i.tab_changed_cb    tab.o
+    0x08039cc8   0x08039cc8   0x0000003c   Code   RO        10478    i.tab_draw_event_cb  tab.o
+    0x08039d04   0x08039d04   0x00000044   Code   RO        10479    i.tab_line_draw_event_cb  tab.o
+    0x08039d48   0x08039d48   0x0000123c   Code   RO        25254    i.theme_apply       lv_theme_default.o
+    0x0803af84   0x0803af84   0x000000ee   Code   RO        33800    i.tileview_event_cb  lv_tileview.o
+    0x0803b072   0x0803b072   0x00000002   PAD
+    0x0803b074   0x0803b074   0x0000004c   Code   RO         9681    i.touch_cb          screens.o
+    0x0803b0c0   0x0803b0c0   0x000001bc   Code   RO        10587    i.touchpad_get_xy   lv_port_indev_template.o
+    0x0803b27c   0x0803b27c   0x000000a8   Code   RO        10589    i.touchpad_is_pressed  lv_port_indev_template.o
+    0x0803b324   0x0803b324   0x00000034   Code   RO        10590    i.touchpad_read     lv_port_indev_template.o
+    0x0803b358   0x0803b358   0x000001d8   Code   RO        13695    i.trans_anim_cb     lv_obj_style.o
+    0x0803b530   0x0803b530   0x000000d0   Code   RO        13696    i.trans_anim_ready_cb  lv_obj_style.o
+    0x0803b600   0x0803b600   0x00000048   Code   RO        13697    i.trans_anim_start_cb  lv_obj_style.o
+    0x0803b648   0x0803b648   0x000000b8   Code   RO        13698    i.trans_del         lv_obj_style.o
+    0x0803b700   0x0803b700   0x0000017a   Code   RO        12925    i.transform_point   lv_obj_pos.o
+    0x0803b87a   0x0803b87a   0x0000009e   Code   RO        18199    i.transform_point_upscaled  lv_draw_sw_transform.o
+    0x0803b918   0x0803b918   0x000000a4   Code   RO         7360    i.uart_init         usart.o
+    0x0803b9bc   0x0803b9bc   0x0000000a   Code   RO        34942    i.unicode_list_compare  lv_font_fmt_txt.o
+    0x0803b9c6   0x0803b9c6   0x00000020   Code   RO         8598    i.unlock_fs         ff.o
+    0x0803b9e6   0x0803b9e6   0x000001fc   Code   RO        42472    i.update_cursor_position_on_click  lv_textarea.o
+    0x0803bbe2   0x0803bbe2   0x00000028   Code   RO        42870    i.uxListRemove      list.o
+    0x0803bc0a   0x0803bc0a   0x00000002   PAD
+    0x0803bc0c   0x0803bc0c   0x0000000c   Code   RO        43250    i.uxTaskGetNumberOfTasks  tasks.o
+    0x0803bc18   0x0803bc18   0x00000018   Code   RO        44293    i.vApplicationGetIdleTaskMemory  port.o
+    0x0803bc30   0x0803bc30   0x00000018   Code   RO        44294    i.vApplicationGetTimerTaskMemory  port.o
+    0x0803bc48   0x0803bc48   0x0000002c   Code   RO        44295    i.vApplicationMallocFailedHook  port.o
+    0x0803bc74   0x0803bc74   0x00000030   Code   RO        44204    i.vApplicationStackOverflowHook  heap_4.o
+    0x0803bca4   0x0803bca4   0x00000020   Code   RO        42871    i.vListInitialise   list.o
+    0x0803bcc4   0x0803bcc4   0x00000006   Code   RO        42872    i.vListInitialiseItem  list.o
+    0x0803bcca   0x0803bcca   0x00000034   Code   RO        42873    i.vListInsert       list.o
+    0x0803bcfe   0x0803bcfe   0x00000002   PAD
+    0x0803bd00   0x0803bd00   0x00000088   Code   RO        44297    i.vPortEnterCritical  port.o
+    0x0803bd88   0x0803bd88   0x00000070   Code   RO        44298    i.vPortExitCritical  port.o
+    0x0803bdf8   0x0803bdf8   0x000000f4   Code   RO        44205    i.vPortFree         heap_4.o
+    0x0803beec   0x0803beec   0x00000028   Code   RO        44299    i.vPortSetupTimerInterrupt  port.o
+    0x0803bf14   0x0803bf14   0x0000007c   Code   RO        42935    i.vQueueAddToRegistry  queue.o
+    0x0803bf90   0x0803bf90   0x0000004a   Code   RO        42939    i.vQueueWaitForMessageRestricted  queue.o
+    0x0803bfda   0x0803bfda   0x00000002   PAD
+    0x0803bfdc   0x0803bfdc   0x00000074   Code   RO        43258    i.vTaskDelay        tasks.o
+    0x0803c050   0x0803c050   0x00000018   Code   RO        43263    i.vTaskInternalSetTimeOutState  tasks.o
+    0x0803c068   0x0803c068   0x0000000c   Code   RO        43265    i.vTaskMissedYield  tasks.o
+    0x0803c074   0x0803c074   0x00000054   Code   RO        43266    i.vTaskPlaceOnEventList  tasks.o
+    0x0803c0c8   0x0803c0c8   0x00000080   Code   RO        43267    i.vTaskPlaceOnEventListRestricted  tasks.o
+    0x0803c148   0x0803c148   0x0000011c   Code   RO        43269    i.vTaskPriorityDisinheritAfterTimeout  tasks.o
+    0x0803c264   0x0803c264   0x00000094   Code   RO        43276    i.vTaskStartScheduler  tasks.o
+    0x0803c2f8   0x0803c2f8   0x00000010   Code   RO        43278    i.vTaskSuspendAll   tasks.o
+    0x0803c308   0x0803c308   0x000000f4   Code   RO        43279    i.vTaskSwitchContext  tasks.o
+    0x0803c3fc   0x0803c3fc   0x00000042   Code   RO         8599    i.validate          ff.o
+    0x0803c43e   0x0803c43e   0x00000002   PAD
+    0x0803c440   0x0803c440   0x00000050   Code   RO        27209    i.value_changed_event_cb  lv_calendar_header_arrow.o
+    0x0803c490   0x0803c490   0x00000086   Code   RO        27417    i.value_changed_event_cb  lv_calendar_header_dropdown.o
+    0x0803c516   0x0803c516   0x00000002   PAD
+    0x0803c518   0x0803c518   0x00000164   Code   RO        39262    i.value_update      lv_arc.o
+    0x0803c67c   0x0803c67c   0x0000000c   Code   RO        44209    i.xPortGetFreeHeapSize  heap_4.o
+    0x0803c688   0x0803c688   0x0000017c   Code   RO        44301    i.xPortStartScheduler  port.o
+    0x0803c804   0x0803c804   0x00000034   Code   RO        44302    i.xPortSysTickHandler  port.o
+    0x0803c838   0x0803c838   0x0000002a   Code   RO        42944    i.xQueueCreateMutexStatic  queue.o
+    0x0803c862   0x0803c862   0x00000002   PAD
+    0x0803c864   0x0803c864   0x000000a0   Code   RO        42947    i.xQueueGenericCreateStatic  queue.o
+    0x0803c904   0x0803c904   0x000000ec   Code   RO        42949    i.xQueueGenericReset  queue.o
+    0x0803c9f0   0x0803c9f0   0x000001d4   Code   RO        42950    i.xQueueGenericSend  queue.o
+    0x0803cbc4   0x0803cbc4   0x00000170   Code   RO        42958    i.xQueueReceive     queue.o
+    0x0803cd34   0x0803cd34   0x00000198   Code   RO        42963    i.xQueueSemaphoreTake  queue.o
+    0x0803cecc   0x0803cecc   0x000000a0   Code   RO        43281    i.xTaskCheckForTimeOut  tasks.o
+    0x0803cf6c   0x0803cf6c   0x00000038   Code   RO        43282    i.xTaskCreate       tasks.o
+    0x0803cfa4   0x0803cfa4   0x00000040   Code   RO        43283    i.xTaskCreateStatic  tasks.o
+    0x0803cfe4   0x0803cfe4   0x00000020   Code   RO        43291    i.xTaskGetSchedulerState  tasks.o
+    0x0803d004   0x0803d004   0x0000000c   Code   RO        43293    i.xTaskGetTickCount  tasks.o
+    0x0803d010   0x0803d010   0x000001e8   Code   RO        43295    i.xTaskIncrementTick  tasks.o
+    0x0803d1f8   0x0803d1f8   0x000000f4   Code   RO        43296    i.xTaskPriorityDisinherit  tasks.o
+    0x0803d2ec   0x0803d2ec   0x000000e0   Code   RO        43297    i.xTaskPriorityInherit  tasks.o
+    0x0803d3cc   0x0803d3cc   0x0000014c   Code   RO        43298    i.xTaskRemoveFromEventList  tasks.o
+    0x0803d518   0x0803d518   0x000001bc   Code   RO        43299    i.xTaskResumeAll    tasks.o
+    0x0803d6d4   0x0803d6d4   0x00000098   Code   RO        44027    i.xTimerCreateTimerTask  timers.o
+    0x0803d76c   0x0803d76c   0x0000007e   Code   RO        27418    i.year_event_cb     lv_calendar_header_dropdown.o
+    0x0803d7ea   0x0803d7ea   0x0000000a   Code   RO        44656    x$fpl$fpinit        fz_wm.l(fpinit.o)
+    0x0803d7f4   0x0803d7f4   0x0000003a   Data   RO         8600    .constdata          ff.o
+    0x0803d82e   0x0803d82e   0x0002acc8   Data   RO         9241    .constdata          cc936.o
+    0x080684f6   0x080684f6   0x00000002   PAD
+    0x080684f8   0x080684f8   0x00000008   Data   RO        10480    .constdata          tab.o
+    0x08068500   0x08068500   0x00000123   Data   RO        10668    .constdata          lv_disp.o
+    0x08068623   0x08068623   0x0000016e   Data   RO        11003    .constdata          lv_event.o
+    0x08068791   0x08068791   0x00000021   Data   RO        11315    .constdata          lv_group.o
+    0x080687b2   0x080687b2   0x0000003d   Data   RO        11637    .constdata          lv_indev.o
+    0x080687ef   0x080687ef   0x00000001   PAD
+    0x080687f0   0x080687f0   0x0000003e   Data   RO        12044    .constdata          lv_obj.o
+    0x0806882e   0x0806882e   0x00000018   Data   RO        12544    .constdata          lv_obj_class.o
+    0x08068846   0x08068846   0x00000002   PAD
+    0x08068848   0x08068848   0x0000001c   Data   RO        12926    .constdata          lv_obj_pos.o
+    0x08068864   0x08068864   0x00000030   Data   RO        13699    .constdata          lv_obj_style.o
+    0x08068894   0x08068894   0x0000002d   Data   RO        14540    .constdata          lv_obj_tree.o
+    0x080688c1   0x080688c1   0x00000064   Data   RO        14726    .constdata          lv_refr.o
+    0x08068925   0x08068925   0x00000030   Data   RO        15641    .constdata          lv_draw_img.o
+    0x08068955   0x08068955   0x0000000e   Data   RO        15820    .constdata          lv_draw_label.o
+    0x08068963   0x08068963   0x00000015   Data   RO        15945    .constdata          lv_draw_layer.o
+    0x08068978   0x08068978   0x00000050   Data   RO        16211    .constdata          lv_draw_mask.o
+    0x080689c8   0x080689c8   0x00000012   Data   RO        16496    .constdata          lv_draw_transform.o
+    0x080689da   0x080689da   0x00000029   Data   RO        16647    .constdata          lv_img_cache.o
+    0x08068a03   0x08068a03   0x000000c3   Data   RO        16724    .constdata          lv_img_decoder.o
+    0x08068ac6   0x08068ac6   0x00000031   Data   RO        17180    .constdata          lv_draw_sw_blend.o
+    0x08068af7   0x08068af7   0x0000004f   Data   RO        17413    .constdata          lv_draw_sw_gradient.o
+    0x08068b46   0x08068b46   0x00000018   Data   RO        17655    .constdata          lv_draw_sw_layer.o
+    0x08068b5e   0x08068b5e   0x00000143   Data   RO        17762    .constdata          lv_draw_sw_letter.o
+    0x08068ca1   0x08068ca1   0x00000021   Data   RO        17866    .constdata          lv_draw_sw_line.o
+    0x08068cc2   0x08068cc2   0x00000002   PAD
+    0x08068cc4   0x08068cc4   0x00000008   Data   RO        17974    .constdata          lv_draw_sw_polygon.o
+    0x08068ccc   0x08068ccc   0x0000000c   Data   RO        18052    .constdata          lv_draw_sw_rect.o
+    0x08068cd8   0x08068cd8   0x0000001e   Data   RO        18337    .constdata          lv_flex.o
+    0x08068cf6   0x08068cf6   0x00000016   Data   RO        25256    .constdata          lv_theme_default.o
+    0x08068d0c   0x08068d0c   0x0000003e   Data   RO        26710    .constdata          lv_calendar.o
+    0x08068d4a   0x08068d4a   0x00000002   PAD
+    0x08068d4c   0x08068d4c   0x0000001c   Data   RO        27210    .constdata          lv_calendar_header_arrow.o
+    0x08068d68   0x08068d68   0x0000001c   Data   RO        27419    .constdata          lv_calendar_header_dropdown.o
+    0x08068d84   0x08068d84   0x00000236   Data   RO        27611    .constdata          lv_chart.o
+    0x08068fba   0x08068fba   0x00000002   PAD
+    0x08068fbc   0x08068fbc   0x0000001c   Data   RO        28326    .constdata          lv_colorwheel.o
+    0x08068fd8   0x08068fd8   0x00000392   Data   RO        29353    .constdata          lv_keyboard.o
+    0x0806936a   0x0806936a   0x00000002   PAD
+    0x0806936c   0x0806936c   0x0000001c   Data   RO        29600    .constdata          lv_led.o
+    0x08069388   0x08069388   0x00000054   Data   RO        30074    .constdata          lv_list.o
+    0x080693dc   0x080693dc   0x00000121   Data   RO        30311    .constdata          lv_menu.o
+    0x080694fd   0x080694fd   0x00000003   PAD
+    0x08069500   0x08069500   0x0000008a   Data   RO        30657    .constdata          lv_meter.o
+    0x0806958a   0x0806958a   0x00000002   PAD
+    0x0806958c   0x0806958c   0x00000065   Data   RO        31193    .constdata          lv_msgbox.o
+    0x080695f1   0x080695f1   0x00000003   PAD
+    0x080695f4   0x080695f4   0x0000001c   Data   RO        32351    .constdata          lv_spinbox.o
+    0x08069610   0x08069610   0x0000001c   Data   RO        32859    .constdata          lv_spinner.o
+    0x0806962c   0x0806962c   0x0000001c   Data   RO        33314    .constdata          lv_tabview.o
+    0x08069648   0x08069648   0x0000004b   Data   RO        33801    .constdata          lv_tileview.o
+    0x08069693   0x08069693   0x00000001   PAD
+    0x08069694   0x08069694   0x0000001c   Data   RO        34012    .constdata          lv_win.o
+    0x080696b0   0x080696b0   0x00000047   Data   RO        34879    .constdata          lv_font.o
+    0x080696f7   0x080696f7   0x0000001b   Data   RO        34943    .constdata          lv_font_fmt_txt.o
+    0x08069712   0x08069712   0x00000002   PAD
+    0x08069714   0x08069714   0x00001380   Data   RO        35498    .constdata          fixedsys.o
+    0x0806aa94   0x0806aa94   0x0000ca94   Data   RO        35704    .constdata          awesomesyms.o
+    0x08077528   0x08077528   0x00000040   Data   RO        36208    .constdata          lv_hal_disp.o
+    0x08077568   0x08077568   0x00000049   Data   RO        36565    .constdata          lv_hal_indev.o
+    0x080775b1   0x080775b1   0x0000000e   Data   RO        36822    .constdata          lv_anim.o
+    0x080775bf   0x080775bf   0x00000001   PAD
+    0x080775c0   0x080775c0   0x000001b2   Data   RO        37269    .constdata          lv_color.o
+    0x08077772   0x08077772   0x00000030   Data   RO        37361    .constdata          lv_fs.o
+    0x080777a2   0x080777a2   0x000000b6   Data   RO        37722    .constdata          lv_math.o
+    0x08077858   0x08077858   0x0000003d   Data   RO        37783    .constdata          lv_mem.o
+    0x08077895   0x08077895   0x00000003   PAD
+    0x08077898   0x08077898   0x000000ee   Data   RO        38216    .constdata          lv_style.o
+    0x08077986   0x08077986   0x00000021   Data   RO        38914    .constdata          lv_timer.o
+    0x080779a7   0x080779a7   0x00000026   Data   RO        39030    .constdata          lv_txt.o
+    0x080779cd   0x080779cd   0x00000003   PAD
+    0x080779d0   0x080779d0   0x0000005e   Data   RO        39263    .constdata          lv_arc.o
+    0x08077a2e   0x08077a2e   0x00000002   PAD
+    0x08077a30   0x08077a30   0x0000001c   Data   RO        39637    .constdata          lv_bar.o
+    0x08077a4c   0x08077a4c   0x0000001c   Data   RO        39845    .constdata          lv_btn.o
+    0x08077a68   0x08077a68   0x0000003c   Data   RO        39915    .constdata          lv_btnmatrix.o
+    0x08077aa4   0x08077aa4   0x0000001c   Data   RO        40433    .constdata          lv_checkbox.o
+    0x08077ac0   0x08077ac0   0x000000a3   Data   RO        40631    .constdata          lv_dropdown.o
+    0x08077b63   0x08077b63   0x00000001   PAD
+    0x08077b64   0x08077b64   0x00000034   Data   RO        40954    .constdata          lv_img.o
+    0x08077b98   0x08077b98   0x000000b5   Data   RO        41205    .constdata          lv_label.o
+    0x08077c4d   0x08077c4d   0x00000003   PAD
+    0x08077c50   0x08077c50   0x0000001c   Data   RO        41493    .constdata          lv_line.o
+    0x08077c6c   0x08077c6c   0x00000069   Data   RO        41569    .constdata          lv_roller.o
+    0x08077cd5   0x08077cd5   0x00000003   PAD
+    0x08077cd8   0x08077cd8   0x0000001c   Data   RO        41773    .constdata          lv_slider.o
+    0x08077cf4   0x08077cf4   0x0000001c   Data   RO        41974    .constdata          lv_switch.o
+    0x08077d10   0x08077d10   0x00000128   Data   RO        42157    .constdata          lv_table.o
+    0x08077e38   0x08077e38   0x000000e5   Data   RO        42473    .constdata          lv_textarea.o
+    0x08077f1d   0x08077f1d   0x00000003   PAD
+    0x08077f20   0x08077f20   0x0000020d   Data   RO         9683    .conststring        screens.o
+    0x0807812d   0x0807812d   0x00000003   PAD
+    0x08078130   0x08078130   0x00000043   Data   RO        10394    .conststring        menu.o
+    0x08078173   0x08078173   0x00000001   PAD
+    0x08078174   0x08078174   0x0000009e   Data   RO        12045    .conststring        lv_obj.o
+    0x08078212   0x08078212   0x00000002   PAD
+    0x08078214   0x08078214   0x0000005a   Data   RO        14727    .conststring        lv_refr.o
+    0x0807826e   0x0807826e   0x00000002   PAD
+    0x08078270   0x08078270   0x00000041   Data   RO        15821    .conststring        lv_draw_label.o
+    0x080782b1   0x080782b1   0x00000003   PAD
+    0x080782b4   0x080782b4   0x0000005e   Data   RO        17656    .conststring        lv_draw_sw_layer.o
+    0x08078312   0x08078312   0x00000002   PAD
+    0x08078314   0x08078314   0x00000051   Data   RO        17763    .conststring        lv_draw_sw_letter.o
+    0x08078365   0x08078365   0x00000003   PAD
+    0x08078368   0x08078368   0x0000001b   Data   RO        26711    .conststring        lv_calendar.o
+    0x08078383   0x08078383   0x00000001   PAD
+    0x08078384   0x08078384   0x00000069   Data   RO        27211    .conststring        lv_calendar_header_arrow.o
+    0x080783ed   0x080783ed   0x00000003   PAD
+    0x080783f0   0x080783f0   0x0000028c   Data   RO        27420    .conststring        lv_calendar_header_dropdown.o
+    0x0807867c   0x0807867c   0x00000184   Data   RO        29354    .conststring        lv_keyboard.o
+    0x08078800   0x08078800   0x00000050   Data   RO        34944    .conststring        lv_font_fmt_txt.o
+    0x08078850   0x08078850   0x00000057   Data   RO        36566    .conststring        lv_hal_indev.o
+    0x080788a7   0x080788a7   0x00000001   PAD
+    0x080788a8   0x080788a8   0x00000026   Data   RO        37622    .conststring        lv_log.o
+    0x080788ce   0x080788ce   0x00000002   PAD
+    0x080788d0   0x080788d0   0x00000051   Data   RO        37784    .conststring        lv_mem.o
+    0x08078921   0x08078921   0x00000003   PAD
+    0x08078924   0x08078924   0x00000025   Data   RO        39916    .conststring        lv_btnmatrix.o
+    0x08078949   0x08078949   0x00000003   PAD
+    0x0807894c   0x0807894c   0x00000020   Data   RO        44712    Region$$Table       anon$$obj.o
 
 
-    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x080788a8, Size: 0x0001ed70, Max: 0x00020000, ABSOLUTE, COMPRESSED[0x0000010c])
+    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x0807896c, Size: 0x0001ed70, Max: 0x00020000, ABSOLUTE, COMPRESSED[0x0000010c])
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -17800,7 +17800,7 @@ Image component sizes
       1158        352          0         12       1720      43456   port.o
       2536        278          0          0         64      62413   queue.o
         56         20          0          8        452      40452   rtosmanager.o
-      6136        852        525         73          0      51104   screens.o
+      6332        860        525         73          0      51272   screens.o
       1056         26          0          1          0       8453   sd.o
        124         10          0          0          0       1237   spi.o
         64         26        452          0       8192        824   startup_stm32f446xx.o
@@ -17821,7 +17821,7 @@ Image component sizes
        352         32          0          6        200       4852   usart.o
 
     ----------------------------------------------------------------------
-    249074      20492     242492        900     125324    4739671   Object Totals
+    249270      20500     242492        900     125324    4739839   Object Totals
          0          0         32          0          0          0   (incl. Generated)
        224          0         72         30          0          0   (incl. Padding)
 
@@ -17896,15 +17896,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-    251244      20534     242492        900     125420    4590791   Grand Totals
-    251244      20534     242492        268     125420    4590791   ELF Image Totals (compressed)
-    251244      20534     242492        268          0          0   ROM Totals
+    251440      20542     242492        900     125420    4590959   Grand Totals
+    251440      20542     242492        268     125420    4590959   ELF Image Totals (compressed)
+    251440      20542     242492        268          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)               493736 ( 482.16kB)
+    Total RO  Size (Code + RO Data)               493932 ( 482.36kB)
     Total RW  Size (RW Data + ZI Data)            126320 ( 123.36kB)
-    Total ROM Size (Code + RO Data + RW Data)     494004 ( 482.43kB)
+    Total ROM Size (Code + RO Data + RW Data)     494200 ( 482.62kB)
 
 ==============================================================================
 
