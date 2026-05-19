@@ -464,8 +464,11 @@ static void scrn_main_t_enter(scrn_t* self){
 	
 	// header tab
 	main->app_tab_obj = create_tabview(main->scrn_base.screen, 0, 0, HOR_RESOLUTION, VER_RESOLUTION-20, 30);
-	create_tab(main->app_tab_obj, "Demo1");
-	create_tab(main->app_tab_obj, "Demo2");
+	tab_t* tab1 = create_tab(main->app_tab_obj, "Demo1");
+	tab_t* tab2 = create_tab(main->app_tab_obj, "Demo2");
+	tab_t* tab3 = create_tab(main->app_tab_obj, "Demo3");
+	hide_tab(main->app_tab_obj, tab2);
+	hide_tab(main->app_tab_obj, tab3);
 	
 	// for default tab, add app icons btnm
 	lv_obj_t * btnm1 = lv_btnmatrix_create(main->app_tab_obj->tab_head->tab);

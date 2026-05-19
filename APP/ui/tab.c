@@ -38,31 +38,31 @@ tab_t* create_tab(tabview_t* my_tabview, const char* tab_name){
     return my_tab;
 }
 
-void delete_tab(tabview_t* my_tabview, tab_t* my_tab){
+void hide_tab(tabview_t* my_tabview, tab_t* my_tab){    // you cant really delete tab
     // check for valid args
     if (my_tabview == NULL || my_tab == NULL) {
-        printf("Invalid args in create_tab!\r\n");
+        printf("Invalid args in hide_tab!\r\n");
         return NULL;
     }
 
-    // detach from single linked list
-    if (my_tabview->tab_head == my_tab) {
-        my_tabview->tab_head = my_tab->next_tab;
-    } else {
-        tab_t *prev = my_tabview->tab_head;
-        while(prev != NULL && prev->next_tab != my_tab) {
-            prev = prev->next_tab;
-        }
-        if (prev != NULL) {
-            prev->next_tab = my_tab->next_tab;
-        }
+    // hide tab obj
+    lv_obj_t *tab_btns = lv_tabview_get_tab_btns(my_tabview->tabview);
+    lv_btnmatrix_set_btn_ctrl(tab_btns, my_tab->id, LV_BTNMATRIX_CTRL_HIDDEN | LV_BTNMATRIX_CTRL_DISABLED);
+    // lv_btnmatrix_set_btn_width(tab_btns, 0, (++(my_tabview->tab_cnt)-1));   // counter intuitive but works
+
+}
+
+void show_tab(tabview_t* my_tabview, tab_t* my_tab){
+    // check for valid args
+    if (my_tabview == NULL || my_tab == NULL) {
+        printf("Invalid args in show_tab!\r\n");
+        return NULL;
     }
 
-    // delete tab obj
-    lv_obj_del(my_tab->tab);
-
-    // free struct
-    lv_mem_free(my_tab);
+    // hide tab obj
+    lv_obj_t *tab_btns = lv_tabview_get_tab_btns(my_tabview->tabview);
+    lv_btnmatrix_set_btn_ctrl(tab_btns, my_tab->id, LV_BTNMATRIX_CTRL_HIDDEN | LV_BTNMATRIX_CTRL_DISABLED);
+    // lv_btnmatrix_set_btn_width(tab_btns, 0, (--(my_tabview->tab_cnt)-1));   // counter intuitive but works
 }
 
 static void tab_draw_event_cb(lv_event_t * e)

@@ -1,17 +1,3 @@
-*** Using Compiler 'V5.06 update 7 (build 960)', folder: 'F:\Keil\Core\ARM\ARMCC\Bin'
-Build target 'Target_1'
-Note: source file '..\LVGL\lvgl\src\extra\libs\sjpg\tjpgd.c' - object file renamed from '..\OBJ\tjpgd.o' to '..\OBJ\tjpgd_1.o'.compiling screens.c...
-..\APP\ui\tab.h(30): warning:  #1-D: last line of file ends without a newline
-  #endif /* __TAB_H */
-..\APP\ui\screens.c(77): warning:  #177-D: function "create_scrn_t"  was declared but never referenced
-  static void create_scrn_t(scrn_t* self){
-..\APP\ui\screens.c(192): warning:  #177-D: function "cali_exit_cb"  was declared but never referenced
-  static void cali_exit_cb(lv_event_t * e) {
-..\APP\ui\screens.c(429): warning:  #177-D: function "event_handler"  was declared but never referenced
-  static void event_handler(lv_event_t * e)
-..\APP\ui\screens.c: 4 warnings, 0 errors
-linking...
-Program Size: Code=251440 RO-data=242492 RW-data=900 ZI-data=125420  
-FromELF: creating hex file...
-"..\OBJ\F446LCD.axf" - 0 Error(s), 4 Warning(s).
-Build Time Elapsed:  00:00:04
+Load "..\\OBJ\\F446LCD.axf" 
+Erase Done.Programming Done.Verify OK.Application running ...
+Flash Load finished at 16:43:00
