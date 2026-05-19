@@ -175,7 +175,7 @@
           <Type>0</Type>
           <LineNumber>75</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134441302</Address>
+          <Address>134443052</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -185,6 +185,38 @@
           <Filename>..\APP\ui\screens.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\F446LCD\../APP/ui/screens.c\75</Expression>
+        </Bp>
+        <Bp>
+          <Number>2</Number>
+          <Type>0</Type>
+          <LineNumber>458</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134440118</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\APP\ui\screens.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\F446LCD\../APP/ui/screens.c\458</Expression>
+        </Bp>
+        <Bp>
+          <Number>3</Number>
+          <Type>0</Type>
+          <LineNumber>101</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134324424</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\LVGL\lvgl\src\widgets\lv_btnmatrix.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\F446LCD\../LVGL/lvgl/src/widgets/lv_btnmatrix.c\101</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>

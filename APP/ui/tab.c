@@ -37,6 +37,33 @@ tab_t* create_tab(tabview_t* my_tabview, const char* tab_name){
     return my_tab;
 }
 
+void delete_tab(tabview_t* my_tabview, tab_t* my_tab){
+    // check for valid args
+    if (my_tabview == NULL || my_tab == NULL) {
+        printf("Invalid args in create_tab!\r\n");
+        return NULL;
+    }
+
+    // detach from single linked list
+    if (my_tabview->tab_head == my_tab) {
+        my_tabview->tab_head = my_tab->next_tab;
+    } else {
+        tab_t *prev = my_tabview->tab_head;
+        while(prev != NULL && prev->next_tab != my_tab) {
+            prev = prev->next_tab;
+        }
+        if (prev != NULL) {
+            prev->next_tab = my_tab->next_tab;
+        }
+    }
+
+    // delete tab obj
+    lv_obj_del(my_tab->tab);
+
+    // free struct
+    lv_mem_free(my_tab);
+}
+
 static void tab_draw_event_cb(lv_event_t * e)
 {
     lv_event_code_t code = lv_event_get_code(e);
@@ -51,8 +78,6 @@ static void tab_draw_event_cb(lv_event_t * e)
 		}
 	}
 }
-
-
 
 static void tab_changed_cb(lv_event_t *e) {
     if (lv_event_get_code(e) != LV_EVENT_VALUE_CHANGED) return;
@@ -104,6 +129,8 @@ tabview_t* create_tabview(lv_obj_t *parent, uint16_t tabview_x, uint16_t tabview
     // tabs array
     my_tabview->tab_cnt = 0;
     my_tabview->tab_head = create_tab(my_tabview, "     "); // create first tab as head
+
+    lv_obj_clear_flag(lv_tabview_get_content(my_tabview->tabview), LV_OBJ_FLAG_SCROLLABLE);
 
     lv_obj_t *tab_btns = lv_tabview_get_tab_btns(my_tabview->tabview);
 	lv_obj_add_style(tab_btns,&lv_app_styles.color_combo1,LV_PART_ITEMS | LV_STATE_DEFAULT);
