@@ -438,8 +438,20 @@ static void event_handler(lv_event_t * e)
     }
 }
 
-static const char * btnm_map[] = {"A", "B", "C", "D", ""};
+static const char * btnm_map[] = {" ", " ", " ", " ", "\n",
+								" ", " ", " ", " ", ""};
 
+static void btnm_draw_event_cb(lv_event_t * e)
+{
+    lv_event_code_t code = lv_event_get_code(e);
+	if(code == LV_EVENT_DRAW_PART_BEGIN) {
+        lv_obj_draw_part_dsc_t * dsc = lv_event_get_draw_part_dsc(e);
+		if(dsc->class_p == &lv_btnmatrix_class && dsc->type == LV_BTNMATRIX_DRAW_PART_BTN) {
+            /*Change the draw descriptor of the 2nd button*/
+            dsc->rect_dsc->bg_opa = LV_OPA_30;
+		}
+	}
+}
 
 static void scrn_main_t_enter(scrn_t* self){
 	scrn_main_t *main = (scrn_main_t *)self;
@@ -457,10 +469,14 @@ static void scrn_main_t_enter(scrn_t* self){
 	lv_obj_t * btnm1 = lv_btnmatrix_create(main->app_tab_obj->tab_head->tab);
 	lv_btnmatrix_set_map(btnm1, btnm_map);
 	lv_obj_set_size(btnm1, HOR_RESOLUTION, VER_RESOLUTION-50);
-    lv_obj_align(btnm1, LV_ALIGN_CENTER, 0, 0);
-    lv_obj_add_event_cb(btnm1, event_handler, LV_EVENT_ALL, NULL);
+    lv_obj_add_style(btnm1,&lv_app_styles.color_combo1,LV_PART_ITEMS | LV_STATE_DEFAULT);
+	lv_obj_align(btnm1, LV_ALIGN_CENTER, 0, 0);
+	lv_obj_set_style_bg_opa(btnm1, LV_OPA_TRANSP, LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_set_style_border_width(btnm1, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+	// lv_obj_add_event_cb(btnm1, event_handler, LV_EVENT_ALL, NULL);
 	lv_obj_clear_flag(btnm1, LV_OBJ_FLAG_SCROLLABLE);
 	lv_obj_add_flag(btnm1, LV_OBJ_FLAG_EVENT_BUBBLE);
+	lv_obj_add_event_cb(btnm1, btnm_draw_event_cb, LV_EVENT_ALL, NULL);
 
 	// header bar ----------------------------------------------------------------
 	main->header_obj = lv_obj_create(main->scrn_base.screen);

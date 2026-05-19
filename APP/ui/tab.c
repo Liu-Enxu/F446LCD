@@ -130,8 +130,9 @@ tabview_t* create_tabview(lv_obj_t *parent, uint16_t tabview_x, uint16_t tabview
     my_tabview->tab_cnt = 0;
     my_tabview->tab_head = create_tab(my_tabview, "     "); // create first tab as head
 
+    // tab array content
     lv_obj_clear_flag(lv_tabview_get_content(my_tabview->tabview), LV_OBJ_FLAG_SCROLLABLE);
-
+    // tab btns style
     lv_obj_t *tab_btns = lv_tabview_get_tab_btns(my_tabview->tabview);
 	lv_obj_add_style(tab_btns,&lv_app_styles.color_combo1,LV_PART_ITEMS | LV_STATE_DEFAULT);
 	lv_obj_set_style_bg_opa(tab_btns, LV_OPA_10, LV_PART_ITEMS | LV_STATE_DEFAULT);
@@ -145,7 +146,7 @@ tabview_t* create_tabview(lv_obj_t *parent, uint16_t tabview_x, uint16_t tabview
     lv_obj_add_event_cb(tab_btns, tab_draw_event_cb, LV_EVENT_ALL, NULL);
 	lv_obj_set_style_bg_opa(tab_btns, LV_OPA_TRANSP, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-
+    // event cb for tab change and tab line redraw
     lv_obj_add_event_cb(my_tabview->tabview, tab_changed_cb, LV_EVENT_ALL, my_tabview);
     lv_obj_add_event_cb(parent, tab_line_draw_event_cb, LV_EVENT_DRAW_POST, my_tabview);
 
