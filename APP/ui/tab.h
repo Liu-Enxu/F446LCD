@@ -18,13 +18,15 @@ struct tabview_t {
 
 struct tab_t{
     u8 id;
+    u8 is_occupied;
     lv_obj_t *tab;
     tab_t *next_tab;
 };
 
 tabview_t* create_tabview(lv_obj_t *parent, uint16_t tabview_x, uint16_t tabview_y, uint16_t tabview_w, uint16_t tabview_h, uint8_t head_h);
 tab_t* create_tab(tabview_t* my_tabview, const char* tab_name);
-void delete_tab(tabview_t* my_tabview, tab_t* my_tab);
-
+void hide_tab(tabview_t* my_tabview, tab_t* my_tab);
+void show_tab(tabview_t* my_tabview, tab_t* my_tab);
 
 #endif /* __TAB_H */
+

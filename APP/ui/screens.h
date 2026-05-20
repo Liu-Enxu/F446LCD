@@ -5,6 +5,7 @@
 #include "sys.h"
 #include "menu.h"
 #include "tab.h"
+#include "icons.h"
 
 // forward declarations
 typedef struct scrn_t scrn_t;

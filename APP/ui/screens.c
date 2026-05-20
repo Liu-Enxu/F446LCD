@@ -426,17 +426,7 @@ static void menu_to_settings_cb(lv_event_t* e) {
 	(void)e; // not yet implemented
 }
 
-static void event_handler(lv_event_t * e)
-{
-    lv_event_code_t code = lv_event_get_code(e);
-    lv_obj_t * obj = lv_event_get_target(e);
-    if(code == LV_EVENT_VALUE_CHANGED) {
-        uint32_t id = lv_btnmatrix_get_selected_btn(obj);
-        const char * txt = lv_btnmatrix_get_btn_text(obj, id);
 
-        LV_LOG_USER("%s was pressed\n", txt);
-    }
-}
 
 static const char * btnm_map[] = {" ", " ", " ", " ", "\n",
 								" ", " ", " ", " ", ""};
@@ -464,46 +454,49 @@ static void scrn_main_t_enter(scrn_t* self){
 	
 	// header tab
 	main->app_tab_obj = create_tabview(main->scrn_base.screen, 0, 0, HOR_RESOLUTION, VER_RESOLUTION-20, 30);
-	tab_t* tab1 = create_tab(main->app_tab_obj, "Demo1");
-	tab_t* tab2 = create_tab(main->app_tab_obj, "Demo2");
-	tab_t* tab3 = create_tab(main->app_tab_obj, "Demo3");
-	hide_tab(main->app_tab_obj, tab2);
-	hide_tab(main->app_tab_obj, tab3);
+	tab_t* tmp = create_tab(main->app_tab_obj, "App1");
+	create_tab(main->app_tab_obj, "App2");
+	create_tab(main->app_tab_obj, "App3");
+	while (NULL != tmp)
+	{
+		hide_tab(main->app_tab_obj, tmp);
+		tmp = tmp->next_tab;
+	}
 	
-	// for default tab, add app icons btnm
-	lv_obj_t * btnm1 = lv_btnmatrix_create(main->app_tab_obj->tab_head->tab);
-	lv_btnmatrix_set_map(btnm1, btnm_map);
-	lv_obj_set_size(btnm1, HOR_RESOLUTION-80, VER_RESOLUTION-50);
-    lv_obj_add_style(btnm1,&lv_app_styles.color_combo1,LV_PART_ITEMS | LV_STATE_DEFAULT);
-	lv_obj_align(btnm1, LV_ALIGN_CENTER, 0, 0);
-	lv_obj_set_style_bg_opa(btnm1, LV_OPA_TRANSP, LV_PART_MAIN | LV_STATE_DEFAULT);
-	lv_obj_set_style_border_width(btnm1, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-	// lv_obj_add_event_cb(btnm1, event_handler, LV_EVENT_ALL, NULL);
-	lv_obj_clear_flag(btnm1, LV_OBJ_FLAG_SCROLLABLE);
-	lv_obj_add_flag(btnm1, LV_OBJ_FLAG_EVENT_BUBBLE);
-	lv_obj_add_event_cb(btnm1, btnm_draw_event_cb, LV_EVENT_ALL, NULL);
+	// // for default tab, add app icons btnm
+	// lv_obj_t * btnm1 = lv_btnmatrix_create(main->app_tab_obj->tab_head->tab);
+	// lv_btnmatrix_set_map(btnm1, btnm_map);
+	// lv_obj_set_size(btnm1, HOR_RESOLUTION-80, VER_RESOLUTION-50);
+    // lv_obj_add_style(btnm1,&lv_app_styles.color_combo1,LV_PART_ITEMS | LV_STATE_DEFAULT);
+	// lv_obj_align(btnm1, LV_ALIGN_CENTER, 0, 0);
+	// lv_obj_set_style_bg_opa(btnm1, LV_OPA_TRANSP, LV_PART_MAIN | LV_STATE_DEFAULT);
+	// lv_obj_set_style_border_width(btnm1, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+	// // lv_obj_add_event_cb(btnm1, event_handler, LV_EVENT_ALL, NULL);
+	// lv_obj_clear_flag(btnm1, LV_OBJ_FLAG_SCROLLABLE);
+	// lv_obj_add_flag(btnm1, LV_OBJ_FLAG_EVENT_BUBBLE);
+	// lv_obj_add_event_cb(btnm1, btnm_draw_event_cb, LV_EVENT_ALL, NULL);
 	
-	// left and right button to change page
-	lv_obj_t * btn_l = lv_btn_create(main->app_tab_obj->tab_head->tab);
-	lv_obj_set_size(btn_l,30,VER_RESOLUTION-250);
-	lv_obj_align(btn_l, LV_ALIGN_LEFT_MID, 0, 0);
-	lv_obj_add_style(btn_l,&lv_app_styles.color_combo1,LV_PART_MAIN | LV_STATE_DEFAULT);
-	lv_obj_add_flag(btn_l,LV_OBJ_FLAG_EVENT_BUBBLE);
-	lv_obj_t * btn_l_lbl = lv_label_create(btn_l);
-	lv_label_set_text(btn_l_lbl,"<");
-	lv_obj_align(btn_l_lbl, LV_ALIGN_CENTER, 0, 0);
-	lv_obj_add_flag(btn_l_lbl,LV_OBJ_FLAG_EVENT_BUBBLE);
+	// // left and right button to change page
+	// lv_obj_t * btn_l = lv_btn_create(main->app_tab_obj->tab_head->tab);
+	// lv_obj_set_size(btn_l,30,VER_RESOLUTION-250);
+	// lv_obj_align(btn_l, LV_ALIGN_LEFT_MID, 0, 0);
+	// lv_obj_add_style(btn_l,&lv_app_styles.color_combo1,LV_PART_MAIN | LV_STATE_DEFAULT);
+	// lv_obj_add_flag(btn_l,LV_OBJ_FLAG_EVENT_BUBBLE);
+	// lv_obj_t * btn_l_lbl = lv_label_create(btn_l);
+	// lv_label_set_text(btn_l_lbl,"<");
+	// lv_obj_align(btn_l_lbl, LV_ALIGN_CENTER, 0, 0);
+	// lv_obj_add_flag(btn_l_lbl,LV_OBJ_FLAG_EVENT_BUBBLE);
 
-	lv_obj_t * btn_r = lv_btn_create(main->app_tab_obj->tab_head->tab);
-	lv_obj_set_size(btn_r,30,VER_RESOLUTION-250);
-	lv_obj_align(btn_r, LV_ALIGN_RIGHT_MID, 0, 0);
-	lv_obj_add_style(btn_r,&lv_app_styles.color_combo1,LV_PART_MAIN | LV_STATE_DEFAULT);
-	lv_obj_add_flag(btn_r,LV_OBJ_FLAG_EVENT_BUBBLE);
-	lv_obj_t * btn_r_lbl = lv_label_create(btn_r);
-	lv_label_set_text(btn_r_lbl,">");
-	lv_obj_align(btn_r_lbl, LV_ALIGN_CENTER, 0, 0);
-	lv_obj_add_flag(btn_r_lbl,LV_OBJ_FLAG_EVENT_BUBBLE);
-
+	// lv_obj_t * btn_r = lv_btn_create(main->app_tab_obj->tab_head->tab);
+	// lv_obj_set_size(btn_r,30,VER_RESOLUTION-250);
+	// lv_obj_align(btn_r, LV_ALIGN_RIGHT_MID, 0, 0);
+	// lv_obj_add_style(btn_r,&lv_app_styles.color_combo1,LV_PART_MAIN | LV_STATE_DEFAULT);
+	// lv_obj_add_flag(btn_r,LV_OBJ_FLAG_EVENT_BUBBLE);
+	// lv_obj_t * btn_r_lbl = lv_label_create(btn_r);
+	// lv_label_set_text(btn_r_lbl,">");
+	// lv_obj_align(btn_r_lbl, LV_ALIGN_CENTER, 0, 0);
+	// lv_obj_add_flag(btn_r_lbl,LV_OBJ_FLAG_EVENT_BUBBLE);
+	create_icons(main->app_tab_obj->tab_head->tab);
 	
 	// header bar ----------------------------------------------------------------
 	main->header_obj = lv_obj_create(main->scrn_base.screen);

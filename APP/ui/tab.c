@@ -18,6 +18,8 @@ tab_t* create_tab(tabview_t* my_tabview, const char* tab_name){
 
     // tab id
     my_tab->id = my_tabview->tab_cnt++;
+    // tab is_occupied
+    my_tab->is_occupied = 0;
     // tab obj
     my_tab->tab = lv_tabview_add_tab(my_tabview->tabview, tab_name);
     lv_obj_clear_flag(my_tab->tab, LV_OBJ_FLAG_SCROLLABLE);
@@ -42,7 +44,7 @@ void hide_tab(tabview_t* my_tabview, tab_t* my_tab){    // you cant really delet
     // check for valid args
     if (my_tabview == NULL || my_tab == NULL) {
         printf("Invalid args in hide_tab!\r\n");
-        return NULL;
+        return;
     }
 
     // hide tab obj
@@ -56,12 +58,12 @@ void show_tab(tabview_t* my_tabview, tab_t* my_tab){
     // check for valid args
     if (my_tabview == NULL || my_tab == NULL) {
         printf("Invalid args in show_tab!\r\n");
-        return NULL;
+        return;
     }
 
     // hide tab obj
     lv_obj_t *tab_btns = lv_tabview_get_tab_btns(my_tabview->tabview);
-    lv_btnmatrix_set_btn_ctrl(tab_btns, my_tab->id, LV_BTNMATRIX_CTRL_HIDDEN | LV_BTNMATRIX_CTRL_DISABLED);
+    lv_btnmatrix_clear_btn_ctrl(tab_btns, my_tab->id, LV_BTNMATRIX_CTRL_HIDDEN | LV_BTNMATRIX_CTRL_DISABLED);
     // lv_btnmatrix_set_btn_width(tab_btns, 0, (--(my_tabview->tab_cnt)-1));   // counter intuitive but works
 }
 
@@ -71,7 +73,7 @@ static void tab_draw_event_cb(lv_event_t * e)
 	if(code == LV_EVENT_DRAW_PART_BEGIN) {
         lv_obj_draw_part_dsc_t * dsc = lv_event_get_draw_part_dsc(e);
 		if(dsc->class_p == &lv_btnmatrix_class && dsc->type == LV_BTNMATRIX_DRAW_PART_BTN) {
-            /*Change the draw descriptor of the 2nd button*/
+            /*Change the draw descriptor of the 1st button*/
             if(dsc->id == 0) {
 				dsc->rect_dsc->bg_opa = LV_OPA_0;
 				dsc->rect_dsc->border_opa = LV_OPA_0;
