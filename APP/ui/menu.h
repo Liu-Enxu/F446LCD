@@ -19,20 +19,21 @@ struct cont_t {
 struct section_t {
 	lv_obj_t  *section_obj;
  
-	uint8_t    cont_len;		// number of contents
+	u8   	 cont_len;		// number of contents
 	cont_t   **section_conts;	// array of contents
 };
  
 struct page_t {
 	lv_obj_t   *page_obj;		// page
  
-	uint8_t     section_len;	// number of sections
+	u8     		section_len;	// number of sections
 	section_t **menu_sections;	// array of ptrs of sections
 };
  
 struct menu_t {
 	lv_obj_t *menu_obj;
 	page_t   *root_page_obj;
+	u8 			ratio;
 };
 
 
@@ -52,7 +53,8 @@ struct menu_t {
  */
 menu_t* create_menu(lv_obj_t *parent,
                     uint16_t menu_x, uint16_t menu_y,
-                    uint16_t menu_w, uint16_t menu_h);
+                    uint16_t menu_w, uint16_t menu_h,
+					uint8_t ratio);
  
 /**
  * Allocate and initialise a page, bound to @p my_menu.
@@ -114,6 +116,9 @@ void free_page(page_t *page);
  
 /** Free the entire menu tree. */
 void free_menu(menu_t *my_menu);
- 
+
+// helpers
+void page_add_border(page_t* my_page);
+
 #endif /* __MENU_H */
  

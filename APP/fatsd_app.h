@@ -31,4 +31,6 @@ void fatsd_stringAppend(char* chars1,char* chars2);
 void sd_info(void);
 
 u16 test_file(void);
+
 #endif
+

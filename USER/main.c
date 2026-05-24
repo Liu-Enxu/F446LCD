@@ -79,10 +79,10 @@ int main(void)
 //		u8 frame_idx = 0;
 	
 	// must haves ------------------------
-	delay_init();	    	 //��ʱ������ʼ��	  
-	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);	 //����NVIC�жϷ���2:2λ��ռ���ȼ���2λ��Ӧ���ȼ�
-	uart_init(115200);	 	//���ڳ�ʼ��Ϊ115200
-//	TIM2_Int_Init(999,89); // 90M/(89+1)=1Mhz --> 1us, 9999+1-->10ms	//��ʹ��RTOS����ҪTIMx��
+	delay_init();	    	 //
+	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);	 //
+	uart_init(115200);	 	//Ϊ115200
+//	TIM2_Int_Init(999,89); // 90M/(89+1)=1Mhz --> 1us, 9999+1-->10ms
 	printf("begin!\n");	
 	
 	RTOS_init();
@@ -140,7 +140,7 @@ int main(void)
 //		if(times%10==0)get_touchXY();
 //		
 //		if(USART_RX_STA&0x8000){					   
-//			len=USART_RX_STA&0x3fff;//�õ��˴ν��յ������ݳ���
+//			len=USART_RX_STA&0x3fff;
 //			LCD_ShowString(30,200,300,16,16,USART_RX_BUF);
 //			for(t=0;t<len;t++)
 //			{

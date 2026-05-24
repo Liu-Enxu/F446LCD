@@ -78,6 +78,7 @@ struct scrn_main_t {	// inherit from scrn_t
 	lv_obj_t *terminal_l_obj;
 
 	tabview_t *app_tab_obj;
+	icons_t *icons_obj;
 
 	// footer/status bar
 	lv_obj_t *bar_obj;

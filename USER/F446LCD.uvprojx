@@ -796,6 +796,11 @@
               <FileType>1</FileType>
               <FilePath>..\APP\ui\icons.c</FilePath>
             </File>
+            <File>
+              <FileName>app.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\APP\ui\app.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

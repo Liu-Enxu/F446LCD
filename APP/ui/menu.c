@@ -22,10 +22,11 @@ static int find_free_slot(void **arr, uint8_t len)
 
 menu_t* create_menu(lv_obj_t *parent, 
                     uint16_t menu_x, uint16_t menu_y, 
-                    uint16_t menu_w, uint16_t menu_h)
+                    uint16_t menu_w, uint16_t menu_h,
+                    u8 ratio)
 {
     //  check for valid params
-    if(parent==NULL || menu_w == 0 || menu_h == 0){
+    if(parent==NULL || menu_w == 0 || menu_h == 0 || ratio == 0 || ratio > 100){
         printf("Invalid args in create_menu!\r\n");
         return NULL;
     }
@@ -39,17 +40,21 @@ menu_t* create_menu(lv_obj_t *parent,
     my_menu->menu_obj = lv_menu_create(parent);
     lv_obj_set_pos(my_menu->menu_obj, menu_x, menu_y);
     lv_obj_set_size(my_menu->menu_obj, menu_w, menu_h);
-    lv_obj_set_style_bg_opa(my_menu->menu_obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+    // lv_obj_set_height(((lv_menu_t*)(my_menu->menu_obj))->sidebar, menu_h);
+    // lv_obj_set_height(((lv_menu_t*)(my_menu->menu_obj))->main, menu_h);
+
+    lv_obj_set_style_bg_opa(my_menu->menu_obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT); // by default
     lv_obj_add_flag(my_menu->menu_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
     //  root_page_obj
     my_menu->root_page_obj = NULL;
+    // page ratio
+    my_menu->ratio = ratio;
     
     //  config menu properties
-//    lv_obj_set_width(((lv_menu_t*)(my_menu->menu_obj))->sidebar, LV_PCT(50));
     // lv_obj_add_flag(lv_menu_get_sidebar_header(my_menu->menu_obj), LV_OBJ_FLAG_HIDDEN);
     lv_obj_add_flag(lv_menu_get_main_header(my_menu->menu_obj), LV_OBJ_FLAG_HIDDEN);
     //  hide menu by default
-    lv_obj_add_flag(my_menu->menu_obj, LV_OBJ_FLAG_HIDDEN);
+    // lv_obj_add_flag(my_menu->menu_obj, LV_OBJ_FLAG_HIDDEN);  // deprecate since different setting, default show it 
     
     return my_menu;
 }
@@ -77,16 +82,16 @@ page_t* create_page(menu_t *parent_menu, cont_t *parent_cont, uint8_t section_le
         return NULL;
     }
 
-    /* page_obj — created as a child of the menu widget */
+    /* page_obj  created as a child of the menu widget */
     my_page->page_obj = lv_menu_page_create(parent_menu->menu_obj, NULL);
-    // lv_obj_set_style_pad_hor(my_page->page_obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);    //  ?
+    
     lv_obj_set_style_bg_opa(my_page->page_obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_clear_flag(my_page->page_obj, LV_OBJ_FLAG_SCROLLABLE);
     lv_obj_add_flag(my_page->page_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
     /* section_len */
     my_page->section_len = section_len;
  
-    /* menu_sections — array of section_t pointers, all NULL initially */
+    /* menu_sections  array of section_t pointers, all NULL initially */
     my_page->menu_sections = lv_mem_alloc(section_len * sizeof(section_t *));
     if (my_page->menu_sections == NULL) {
         lv_obj_del(my_page->page_obj);
@@ -106,7 +111,7 @@ page_t* create_page(menu_t *parent_menu, cont_t *parent_cont, uint8_t section_le
         // sidebar setting
         lv_menu_set_sidebar_page(parent_menu->menu_obj, my_page->page_obj);
 		lv_menu_set_page(parent_menu->menu_obj, NULL);
-		lv_obj_set_width(((lv_menu_t*)(parent_menu->menu_obj))->sidebar, LV_PCT(50));
+		lv_obj_set_width(((lv_menu_t*)(parent_menu->menu_obj))->sidebar, LV_PCT(parent_menu->ratio));
         lv_obj_add_flag(lv_menu_get_sidebar_header(parent_menu->menu_obj), LV_OBJ_FLAG_HIDDEN);
     } else if (parent_cont != NULL && parent_cont->cont_subpage == NULL) {
         parent_cont->cont_subpage = my_page;
@@ -295,8 +300,6 @@ lv_obj_t* create_cont_btn(cont_t* parent_cont, const char* cont_bl, void(*lv_cal
 
 }
 
-
-
 /* ================================================================== */
 /*  Cleanup                                                             */
 /* ================================================================== */
@@ -338,5 +341,14 @@ void free_menu(menu_t *my_menu)
     lv_obj_del(my_menu->menu_obj);
     free_page(my_menu->root_page_obj);
     lv_mem_free(my_menu);
+}
+
+/* ================================================================== */
+/*  Helpers                                                             */
+/* ================================================================== */
+void page_add_border(page_t* my_page){
+	lv_obj_set_style_radius(my_page->page_obj, 5, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_width(my_page->page_obj, 5, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_color(my_page->page_obj, lv_app_styles.color1, LV_PART_MAIN | LV_STATE_DEFAULT);    // page border by default
 }
 

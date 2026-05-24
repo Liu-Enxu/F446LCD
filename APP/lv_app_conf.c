@@ -45,6 +45,3 @@ void lv_app_init(void){
 	
 }
 	
-	
-	
-	

@@ -18,10 +18,11 @@ tab_t* create_tab(tabview_t* my_tabview, const char* tab_name){
 
     // tab id
     my_tab->id = my_tabview->tab_cnt++;
-    // tab is_occupied
-    my_tab->is_occupied = 0;
+    // tab app_ptr
+    my_tab->app_ptr = NULL;
     // tab obj
     my_tab->tab = lv_tabview_add_tab(my_tabview->tabview, tab_name);
+    lv_obj_set_style_pad_all(my_tab->tab, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_clear_flag(my_tab->tab, LV_OBJ_FLAG_SCROLLABLE);
     lv_obj_add_flag(my_tab->tab, LV_OBJ_FLAG_EVENT_BUBBLE);
     // next tab
@@ -99,8 +100,22 @@ static void tab_line_draw_event_cb(lv_event_t *e) {
     lv_draw_rect(draw_ctx, &my_tabview->tab_line, &area);
 }
 
+static tabview_t *app_tabview = NULL;
+tabview_t* get_app_tv_inst(void){
+    if(NULL == app_tabview) printf("NULL app tabview!");
+    return app_tabview;
+}
+
+void set_app_tv_inst(tabview_t* my_tv){    // could have set in create_, but potentially other tabviews
+    if(my_tv == NULL){
+        printf("tabview is NULL!\r\n");
+        return;
+    }
+    app_tabview = my_tv;
+}
+
 tabview_t* create_tabview(lv_obj_t *parent, uint16_t tabview_x, uint16_t tabview_y, uint16_t tabview_w, uint16_t tabview_h, uint8_t head_h){
-    
+
     // check for valid args
     if (parent == NULL || tabview_w == 0 || tabview_h == 0 || head_h >= tabview_h) {
         printf("Invalid args in create_tabview!\r\n");
@@ -120,7 +135,7 @@ tabview_t* create_tabview(lv_obj_t *parent, uint16_t tabview_x, uint16_t tabview
 	lv_obj_set_size(my_tabview->tabview, tabview_w, tabview_h);
 	lv_obj_clear_flag(my_tabview->tabview, LV_OBJ_FLAG_SCROLLABLE);
 	lv_obj_add_flag(my_tabview->tabview, LV_OBJ_FLAG_EVENT_BUBBLE);
-    
+
     // tab_line
     my_tabview->tab_line_hidden = 1; // initially hidden since first tab is active
     lv_draw_rect_dsc_init(&my_tabview->tab_line);
@@ -158,3 +173,21 @@ tabview_t* create_tabview(lv_obj_t *parent, uint16_t tabview_x, uint16_t tabview
 }
 
 
+void free_tab(tab_t *tab)
+{
+    if (tab == NULL) return;
+    // don't lv_obj_del tab->tab here — tabview owns and destroys it
+    // just walk and free the linked list nodes
+    free_tab(tab->next_tab);  // recurse to end of list
+    lv_mem_free(tab);
+}
+
+void free_tabview(tabview_t *tabview)
+{
+    if (tabview == NULL) return;
+    // deleting the tabview LVGL obj cascades to all tab lv_obj children
+    lv_obj_del(tabview->tabview);
+    // then free our linked list of tab_t structs
+    free_tab(tabview->tab_head);
+    lv_mem_free(tabview);
+}

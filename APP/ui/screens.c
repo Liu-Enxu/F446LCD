@@ -40,7 +40,6 @@ static void scrn_manager_switch(scrn_t *next) {	// use this in all exiting callb
 scrn_manager_t* scrn_manager_inst(void){
 	static scrn_manager_t scrn_manager;
 	if (!scrn_manager.scrn_manager_inited){
-		// scrn_manager.curr_scrn_type = SCREEN_LOAD;
 		scrn_manager.curr_scrn_ptr = NULL;
 		scrn_manager.scrn_manager_inited = 1;
 	}
@@ -410,14 +409,12 @@ static void menu_toggle_cb(lv_event_t* e) {
 
 static void menu_to_splash_cb(lv_event_t* e) {
 	if (lv_event_get_code(e) == LV_EVENT_RELEASED) {
-		free_menu(((scrn_main_t *)lv_event_get_user_data(e))->menu);
 		scrn_manager_switch((scrn_t*)create_screen_load());
 	}
 }
 
 static void menu_to_cali_cb(lv_event_t* e) {
 	if (lv_event_get_code(e) == LV_EVENT_RELEASED) {
-		free_menu(((scrn_main_t *)lv_event_get_user_data(e))->menu);
 		scrn_manager_switch((scrn_t*)create_screen_cali());
 	}
 }
@@ -425,11 +422,6 @@ static void menu_to_cali_cb(lv_event_t* e) {
 static void menu_to_settings_cb(lv_event_t* e) {
 	(void)e; // not yet implemented
 }
-
-
-
-static const char * btnm_map[] = {" ", " ", " ", " ", "\n",
-								" ", " ", " ", " ", ""};
 
 static void btnm_draw_event_cb(lv_event_t * e)
 {
@@ -452,8 +444,13 @@ static void scrn_main_t_enter(scrn_t* self){
 	lv_obj_clear_flag(main->scrn_base.screen, LV_OBJ_FLAG_SCROLLABLE);
 	lv_obj_add_event_cb(main->scrn_base.screen, touch_cb, LV_EVENT_ALL, main);
 	
-	// header tab
+
+	// apps mgr
+	app_mgr_register((app_t*)create_settings_app());
+
+	// tab
 	main->app_tab_obj = create_tabview(main->scrn_base.screen, 0, 0, HOR_RESOLUTION, VER_RESOLUTION-20, 30);
+	set_app_tv_inst(main->app_tab_obj);
 	tab_t* tmp = create_tab(main->app_tab_obj, "App1");
 	create_tab(main->app_tab_obj, "App2");
 	create_tab(main->app_tab_obj, "App3");
@@ -463,41 +460,10 @@ static void scrn_main_t_enter(scrn_t* self){
 		tmp = tmp->next_tab;
 	}
 	
-	// // for default tab, add app icons btnm
-	// lv_obj_t * btnm1 = lv_btnmatrix_create(main->app_tab_obj->tab_head->tab);
-	// lv_btnmatrix_set_map(btnm1, btnm_map);
-	// lv_obj_set_size(btnm1, HOR_RESOLUTION-80, VER_RESOLUTION-50);
-    // lv_obj_add_style(btnm1,&lv_app_styles.color_combo1,LV_PART_ITEMS | LV_STATE_DEFAULT);
-	// lv_obj_align(btnm1, LV_ALIGN_CENTER, 0, 0);
-	// lv_obj_set_style_bg_opa(btnm1, LV_OPA_TRANSP, LV_PART_MAIN | LV_STATE_DEFAULT);
-	// lv_obj_set_style_border_width(btnm1, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-	// // lv_obj_add_event_cb(btnm1, event_handler, LV_EVENT_ALL, NULL);
-	// lv_obj_clear_flag(btnm1, LV_OBJ_FLAG_SCROLLABLE);
-	// lv_obj_add_flag(btnm1, LV_OBJ_FLAG_EVENT_BUBBLE);
-	// lv_obj_add_event_cb(btnm1, btnm_draw_event_cb, LV_EVENT_ALL, NULL);
-	
-	// // left and right button to change page
-	// lv_obj_t * btn_l = lv_btn_create(main->app_tab_obj->tab_head->tab);
-	// lv_obj_set_size(btn_l,30,VER_RESOLUTION-250);
-	// lv_obj_align(btn_l, LV_ALIGN_LEFT_MID, 0, 0);
-	// lv_obj_add_style(btn_l,&lv_app_styles.color_combo1,LV_PART_MAIN | LV_STATE_DEFAULT);
-	// lv_obj_add_flag(btn_l,LV_OBJ_FLAG_EVENT_BUBBLE);
-	// lv_obj_t * btn_l_lbl = lv_label_create(btn_l);
-	// lv_label_set_text(btn_l_lbl,"<");
-	// lv_obj_align(btn_l_lbl, LV_ALIGN_CENTER, 0, 0);
-	// lv_obj_add_flag(btn_l_lbl,LV_OBJ_FLAG_EVENT_BUBBLE);
+	// app icons, btnm
+	main->icons_obj = create_icons(main->app_tab_obj->tab_head->tab);
+		
 
-	// lv_obj_t * btn_r = lv_btn_create(main->app_tab_obj->tab_head->tab);
-	// lv_obj_set_size(btn_r,30,VER_RESOLUTION-250);
-	// lv_obj_align(btn_r, LV_ALIGN_RIGHT_MID, 0, 0);
-	// lv_obj_add_style(btn_r,&lv_app_styles.color_combo1,LV_PART_MAIN | LV_STATE_DEFAULT);
-	// lv_obj_add_flag(btn_r,LV_OBJ_FLAG_EVENT_BUBBLE);
-	// lv_obj_t * btn_r_lbl = lv_label_create(btn_r);
-	// lv_label_set_text(btn_r_lbl,">");
-	// lv_obj_align(btn_r_lbl, LV_ALIGN_CENTER, 0, 0);
-	// lv_obj_add_flag(btn_r_lbl,LV_OBJ_FLAG_EVENT_BUBBLE);
-	create_icons(main->app_tab_obj->tab_head->tab);
-	
 	// header bar ----------------------------------------------------------------
 	main->header_obj = lv_obj_create(main->scrn_base.screen);
 	lv_obj_set_pos(main->header_obj, 0, 0);
@@ -533,18 +499,19 @@ static void scrn_main_t_enter(scrn_t* self){
 	lv_obj_add_flag(main->menu_l_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
 	
 	// menu (using menu lib)
-	main->menu = create_menu(main->scrn_base.screen, 0, 30, 300, 100);
+	main->menu = create_menu(main->scrn_base.screen, 0, 30, 300, 100+6/*+6 for border*/, 50);
+	lv_obj_add_flag(main->menu->menu_obj, LV_OBJ_FLAG_HIDDEN);
 
 		// root page: 1 section with 3 contents (splash, calibrate, settings)
-		page_t    *root_page     = create_page(main->menu, NULL, 1);
+		page_t    *root_page     = create_page(main->menu, NULL, 1);page_add_border(root_page);
 		section_t *main_section  = create_section(root_page, 3);
-
+		
 			// splash
 			cont_t *splash_cont = create_content(main_section, 30);
 			create_cont_lbl(splash_cont, "splash");
 
 				// splash subpage
-				page_t    *splash_page    = create_page(main->menu, splash_cont, 1);
+				page_t    *splash_page    = create_page(main->menu, splash_cont, 1);page_add_border(splash_page);
 				section_t *splash_section = create_section(splash_page, 2);
 				cont_t    *splash_item    = create_content(splash_section, 30);
 				create_cont_lbl(splash_item, "go to splash screen");
@@ -557,7 +524,7 @@ static void scrn_main_t_enter(scrn_t* self){
 			// lv_obj_add_event_cb(calibrate_cont->cont_obj, menu_to_cali_cb, LV_EVENT_ALL, main);
 
 				// calibrate subpage
-				page_t    *calibrate_page    = create_page(main->menu, calibrate_cont, 1);
+				page_t    *calibrate_page    = create_page(main->menu, calibrate_cont, 1);page_add_border(calibrate_page);
 				section_t *calibrate_section = create_section(calibrate_page, 2);
 				cont_t    *calibrate_item    = create_content(calibrate_section, 30);
 				create_cont_lbl(calibrate_item, "go to calibration screen");
@@ -570,7 +537,7 @@ static void scrn_main_t_enter(scrn_t* self){
 			// lv_obj_add_event_cb(settings_cont->cont_obj, menu_to_settings_cb, LV_EVENT_ALL, main);
 
 				// settings subpage
-				page_t    *settings_page    = create_page(main->menu, settings_cont, 1);
+				page_t    *settings_page    = create_page(main->menu, settings_cont, 1);page_add_border(settings_page);
 				section_t *settings_section = create_section(settings_page, 2);
 				cont_t    *settings_item    = create_content(settings_section, 30);
 				create_cont_lbl(settings_item, "go to settings app");
@@ -760,6 +727,16 @@ static void scrn_main_t_enter(scrn_t* self){
 	lv_disp_load_scr(main->scrn_base.screen);
 }
 
+static void scrn_main_t_exit(scrn_t* self)
+{
+    scrn_main_t *main = (scrn_main_t *)self;    
+    // free owned resources before LVGL tree is destroyed
+    free_menu(main->menu);
+	free_icons(main->icons_obj);
+    free_tabview(main->app_tab_obj);set_app_tv_inst(NULL);
+    scrn_t_exit_t(self);
+}
+
 static scrn_main_t* create_screen_main(void){
 	scrn_main_t *main = lv_mem_alloc(sizeof(scrn_main_t));
 	if(main == NULL){
@@ -768,6 +745,6 @@ static scrn_main_t* create_screen_main(void){
 	}
 	lv_memset_00(main, sizeof(scrn_main_t));
 	main->scrn_base.scrn_t_enter = scrn_main_t_enter;
-	main->scrn_base.scrn_t_exit = scrn_t_exit_t;
+	main->scrn_base.scrn_t_exit = scrn_main_t_exit;
 	return main;
 }
