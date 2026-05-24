@@ -81,7 +81,10 @@ static void app_t_exit_t(app_t* self){
 static void settings_app_load(app_t* self, lv_obj_t* parent){
 	settings_app_t* settings = (settings_app_t*)self;
 
-	strcpy(settings->app_base.app_name, "Settings");
+	// strcpy(settings->app_base.app_name, "Settings");
+	// strncpy(self->app_name, "Settings", sizeof(self->app_name) - 1);
+	// self->app_name[sizeof(self->app_name) - 1] = '\0'; 
+	
 	// settings->app_base.app_icon = "S"; // Set the icon for the settings app
 	// test settings app
 	settings->settings_menu = create_menu(parent, 0, 0, hor_res, ver_res-50, 30);

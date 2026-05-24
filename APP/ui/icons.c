@@ -46,10 +46,10 @@ static void btnm_press_event_cb(lv_event_t * e)
             tmp_app_id++;
         }
         // 4. create_app on tab ptr
-        // tmp_app->app_t_load(tmp_app,tmp->tab);
+        tmp_app->app_t_load(tmp_app,tmp->tab);
         tmp->app_ptr = tmp_app; 
         // 5. change tab button name to app name
-        rename_tab(get_app_tv_inst(), tmp, tmp_app->app_name);
+        // rename_tab(get_app_tv_inst(), tmp, tmp_app->app_name);
     }
 }
 
