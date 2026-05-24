@@ -25,30 +25,31 @@ static void btnm_press_event_cb(lv_event_t * e)
 
         // 1. look for free tab (resource)
         tab_t* tmp = get_app_tv_inst()->tab_head->next_tab;
-        u8 tmp_tab_id = 1;
         while(NULL != tmp->app_ptr){
             if(NULL == tmp->next_tab){
                 // 1.1 no free tab, return
                 printf("Exceed max running app available!\r\n");
                 return;
             } else {
-                tmp_tab_id++;
                 tmp = tmp->next_tab;
             }
         }
         // 1.2 free tab, clear hidden flag
         show_tab(get_app_tv_inst(), tmp);
-        // 2. find app
+        // 2. select the tab 
+        lv_tabview_set_act(get_app_tv_inst()->tabview, tmp->id, LV_ANIM_OFF);
+        // 3. find app
         u8 tmp_app_id = 0;
         app_t* tmp_app = app_mgr_inst()->app_head;
         while(id != tmp_app_id){    // no need to check id out of bound since checked
             tmp_app = tmp_app->next_app;
             tmp_app_id++;
         }
-        // 3. create_app on tab ptr
-        tmp_app->app_t_load(tmp_app,tmp->tab);
-        // 4. select the tab
-        lv_tabview_set_act(get_app_tv_inst()->tabview, tmp_tab_id, LV_ANIM_OFF);
+        // 4. create_app on tab ptr
+        // tmp_app->app_t_load(tmp_app,tmp->tab);
+        tmp->app_ptr = tmp_app; 
+        // 5. change tab button name to app name
+        rename_tab(get_app_tv_inst(), tmp, tmp_app->app_name);
     }
 }
 
@@ -181,7 +182,7 @@ icons_t* create_icons(lv_obj_t * parent){
 void free_icons(icons_t *icons)
 {
     if (icons == NULL) return;
-    // lv_obj_del not needed â€” parent tabview owns and destroys all lv_obj children
+    // lv_obj_del not needed â€? parent tabview owns and destroys all lv_obj children
     lv_mem_free(icons);
 }
 

@@ -5,6 +5,8 @@
 #include "sys.h"
 #include "app.h"
 
+#define MAX_NAME_LEN 5
+#define MAX_CHAR_LEN 8
 typedef struct tabview_t    tabview_t;
 typedef struct tab_t        tab_t;
 struct tabview_t {
@@ -20,6 +22,7 @@ struct tabview_t {
 
 struct tab_t{
     u8 id;
+    char tab_name[MAX_CHAR_LEN];
     lv_obj_t *tab;
     app_t* app_ptr;
     tab_t *next_tab;
@@ -31,6 +34,7 @@ tabview_t* create_tabview(lv_obj_t *parent, uint16_t tabview_x, uint16_t tabview
 tab_t* create_tab(tabview_t* my_tabview, const char* tab_name);
 void hide_tab(tabview_t* my_tabview, tab_t* my_tab);
 void show_tab(tabview_t* my_tabview, tab_t* my_tab);
+void rename_tab(tabview_t* my_tabview, tab_t* my_tab, const char* new_name);
 
 void free_tab(tab_t *tab);
 void free_tabview(tabview_t *tabview);

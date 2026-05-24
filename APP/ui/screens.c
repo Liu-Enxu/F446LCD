@@ -446,7 +446,7 @@ static void scrn_main_t_enter(scrn_t* self){
 	
 
 	// apps mgr
-	app_mgr_register((app_t*)create_settings_app());
+	start_app_mgr();
 
 	// tab
 	main->app_tab_obj = create_tabview(main->scrn_base.screen, 0, 0, HOR_RESOLUTION, VER_RESOLUTION-20, 30);
@@ -631,7 +631,7 @@ static void scrn_main_t_enter(scrn_t* self){
 	lv_label_set_text(main->ucHeap_l_obj, "][RAM: __%");
 	lv_obj_add_style(main->ucHeap_l_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
 	lv_obj_add_flag(main->ucHeap_l_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
-	lv_timer_create(heap_label_cb, 1000, main->ucHeap_l_obj);
+	main->ucHeap_timer = lv_timer_create(heap_label_cb, 1000, main->ucHeap_l_obj);
 
 	//	tray obj
 	main->tray_obj = lv_obj_create(main->bar_obj);
@@ -729,8 +729,10 @@ static void scrn_main_t_enter(scrn_t* self){
 
 static void scrn_main_t_exit(scrn_t* self)
 {
-    scrn_main_t *main = (scrn_main_t *)self;    
+    scrn_main_t *main = (scrn_main_t *)self;
     // free owned resources before LVGL tree is destroyed
+	lv_timer_del(main->ucHeap_timer);    // ADD - kill timer before objects are deleted
+    main->ucHeap_timer = NULL;    
     free_menu(main->menu);
 	free_icons(main->icons_obj);
     free_tabview(main->app_tab_obj);set_app_tv_inst(NULL);

@@ -68,6 +68,28 @@ void show_tab(tabview_t* my_tabview, tab_t* my_tab){
     // lv_btnmatrix_set_btn_width(tab_btns, 0, (--(my_tabview->tab_cnt)-1));   // counter intuitive but works
 }
 
+void rename_tab(tabview_t* my_tabview, tab_t* my_tab, const char* new_name){
+    // check for valid args
+    if (my_tabview == NULL || my_tab == NULL || new_name == NULL) {
+        printf("Invalid args in rename_tab!\r\n");
+        return;
+    }
+
+    // rename tab obj
+    if(strlen(new_name) < MAX_NAME_LEN){
+        strcpy(my_tab->tab_name, new_name);
+    } else{
+        memcpy(my_tab->tab_name, new_name, MAX_NAME_LEN);
+        my_tab->tab_name[MAX_CHAR_LEN-3] = '.';
+        my_tab->tab_name[MAX_CHAR_LEN-2] = '.';
+        my_tab->tab_name[MAX_CHAR_LEN-1] = '\0';
+    }
+
+    // update the btnmatrix map entry directly
+    lv_tabview_rename_tab(get_app_tv_inst()->tabview, my_tab->id, my_tab->tab_name);
+    // lv_obj_invalidate(tab_btns);
+}
+
 static void tab_draw_event_cb(lv_event_t * e)
 {
     lv_event_code_t code = lv_event_get_code(e);
@@ -81,6 +103,38 @@ static void tab_draw_event_cb(lv_event_t * e)
 			}
 		}
 	}
+}
+
+static void tab_btn_long_press_cb(lv_event_t *e){
+    if(lv_event_get_code(e) != LV_EVENT_LONG_PRESSED) return;
+    tabview_t *my_tabview = (tabview_t *)lv_event_get_user_data(e);
+    lv_obj_t *tab_btns = lv_event_get_target(e);
+    uint16_t pressed_id = lv_btnmatrix_get_selected_btn(tab_btns);
+
+    // ignore tab_head (id 0, the home/icons tab)
+    if(pressed_id == 0) return;
+
+    // find the tab_t with this id
+    tab_t *tmp = my_tabview->tab_head->next_tab;
+    while(tmp != NULL){
+        if(tmp->id == pressed_id){
+            // destroy app if loaded
+            if(tmp->app_ptr != NULL){
+                tmp->app_ptr->app_t_exit(tmp->app_ptr);
+                tmp->app_ptr = NULL;
+            }
+            // clean tab content
+            lv_obj_clean(tmp->tab);
+            // reset tab name
+            rename_tab(get_app_tv_inst(), tmp, " ");
+            // hide tab and switch
+            hide_tab(my_tabview, tmp);
+            // switch to home to safe delet obj?
+            lv_tabview_set_act(my_tabview->tabview, 0, LV_ANIM_OFF);
+            return;
+        }
+        tmp = tmp->next_tab;
+    }
 }
 
 static void tab_changed_cb(lv_event_t *e) {
@@ -163,6 +217,7 @@ tabview_t* create_tabview(lv_obj_t *parent, uint16_t tabview_x, uint16_t tabview
 
     lv_btnmatrix_set_btn_width(tab_btns, 0, 1);
     lv_obj_add_event_cb(tab_btns, tab_draw_event_cb, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(tab_btns, tab_btn_long_press_cb, LV_EVENT_LONG_PRESSED, my_tabview);
 	lv_obj_set_style_bg_opa(tab_btns, LV_OPA_TRANSP, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     // event cb for tab change and tab line redraw
@@ -176,7 +231,7 @@ tabview_t* create_tabview(lv_obj_t *parent, uint16_t tabview_x, uint16_t tabview
 void free_tab(tab_t *tab)
 {
     if (tab == NULL) return;
-    // don't lv_obj_del tab->tab here â€” tabview owns and destroys it
+    // don't lv_obj_del tab->tab here â€? tabview owns and destroys it
     // just walk and free the linked list nodes
     free_tab(tab->next_tab);  // recurse to end of list
     lv_mem_free(tab);
@@ -191,3 +246,4 @@ void free_tabview(tabview_t *tabview)
     free_tab(tabview->tab_head);
     lv_mem_free(tabview);
 }
+

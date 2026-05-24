@@ -85,6 +85,7 @@ struct scrn_main_t {	// inherit from scrn_t
 	lv_obj_t *ret_obj;
 	lv_obj_t *ret_val_obj;
 	lv_obj_t *ucHeap_l_obj;
+	lv_timer_t *ucHeap_timer;
 	lv_obj_t *tray_obj;
 	lv_obj_t *end_obj;
 	lv_obj_t *wifi_obj;
