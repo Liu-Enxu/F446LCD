@@ -22,7 +22,7 @@ void app_mgr_unreg(app_t* my_app);
 
 struct app_t{
 	char app_name[10];
-	char app_icon[10];
+	char app_icon[4];
 	u8 is_registered;
 	app_t* next_app;
 	void (*app_t_load)(app_t* self, lv_obj_t* parent);

@@ -34,10 +34,12 @@ void app_mgr_register(app_t* my_app){
 	}
 	my_app->is_registered = 1;
 	(app_mgr_inst()->app_registered)++;
-	if(app_mgr_inst()->app_head == NULL){
-        app_mgr_inst()->app_head = my_app;
-    }
+
 	app_t* tmp = app_mgr_inst()->app_head;
+	if(NULL == tmp) {
+		app_mgr_inst()->app_head = my_app;
+		return;
+	}
 	while(NULL != tmp->next_app){
 		tmp = tmp->next_app;
 	}
@@ -109,7 +111,7 @@ static void settings_app_load(app_t* self, lv_obj_t* parent){
 
 static void settings_app_exit(app_t* self){
 	free_menu(((settings_app_t*)self)->settings_menu);
-	// lv_mem_free((settings_app_t*)self);	// DON'T free self here, app manager handles that
+	// lv_mem_free((settings_app_t*)self);	// DON'T free self here, it's registered in app manager!!!
 }
 
 settings_app_t* create_settings_app(void){
@@ -120,11 +122,10 @@ settings_app_t* create_settings_app(void){
 	}
 	lv_memset_00(settings, sizeof(settings_app_t));
 
-	assert_param(strlen(settings->app_base.app_name) < sizeof(settings->app_base.app_name)-1);	// ensure name fits in buffer
-	assert_param(strlen(settings->app_base.app_icon) < sizeof(settings->app_base.app_icon)-1);	// ensure icon fits in buffer
-
+	assert_param(strlen("Settings") < sizeof(settings->app_base.app_name)-1);	// ensure name fits in buffer
+	assert_param(strlen("\xEF\x80\x93") < sizeof(settings->app_base.app_icon)-1);	// ensure icon fits in buffer
 	strcpy(settings->app_base.app_name, "Settings");
-	// strcpy(settings->app_base.app_icon, "/");
+	memcpy(settings->app_base.app_icon, "\xEF\x80\x93", sizeof("\xEF\x80\x93"));
 
 	settings->app_base.app_t_load = settings_app_load;
 	settings->app_base.app_t_exit = settings_app_exit;
