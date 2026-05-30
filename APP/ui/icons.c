@@ -49,7 +49,7 @@ static void btnm_press_event_cb(lv_event_t * e)
         tmp_app->app_t_load(tmp_app,tmp->tab);
         tmp->app_ptr = tmp_app; 
         // 5. change tab button name to app name
-        // rename_tab(get_app_tv_inst(), tmp, tmp_app->app_name);
+        rename_tab(get_app_tv_inst(), tmp, tmp_app->app_name);
     }
 }
 
@@ -135,7 +135,7 @@ icons_t* create_icons(lv_obj_t * parent){
 	lv_obj_align( my_icons->icons_btnm, LV_ALIGN_CENTER, 0, 0);
 	lv_obj_set_style_bg_opa( my_icons->icons_btnm, LV_OPA_TRANSP, LV_PART_MAIN | LV_STATE_DEFAULT);
 	lv_obj_set_style_border_width( my_icons->icons_btnm, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-	lv_obj_add_event_cb( my_icons->icons_btnm, btnm_press_event_cb, LV_EVENT_ALL, my_icons);
+	lv_obj_add_event_cb( my_icons->icons_btnm, btnm_press_event_cb, LV_EVENT_VALUE_CHANGED, my_icons);
 	lv_obj_clear_flag( my_icons->icons_btnm, LV_OBJ_FLAG_SCROLLABLE);
 	lv_obj_add_flag( my_icons->icons_btnm, LV_OBJ_FLAG_EVENT_BUBBLE);
 	lv_obj_add_event_cb( my_icons->icons_btnm, btnm_draw_event_cb, LV_EVENT_ALL, NULL);
@@ -182,7 +182,7 @@ icons_t* create_icons(lv_obj_t * parent){
 void free_icons(icons_t *icons)
 {
     if (icons == NULL) return;
-    // lv_obj_del not needed â€? parent tabview owns and destroys all lv_obj children
+    // lv_obj_del not needed, parent tabview owns and destroys all lv_obj children
     lv_mem_free(icons);
 }
 

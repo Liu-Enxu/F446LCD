@@ -78,14 +78,10 @@ static void app_t_exit_t(app_t* self){
 
 }
 
+
 static void settings_app_load(app_t* self, lv_obj_t* parent){
 	settings_app_t* settings = (settings_app_t*)self;
 
-	// strcpy(settings->app_base.app_name, "Settings");
-	// strncpy(self->app_name, "Settings", sizeof(self->app_name) - 1);
-	// self->app_name[sizeof(self->app_name) - 1] = '\0'; 
-	
-	// settings->app_base.app_icon = "S"; // Set the icon for the settings app
 	// test settings app
 	settings->settings_menu = create_menu(parent, 0, 0, hor_res, ver_res-50, 30);
 	lv_obj_set_style_bg_opa(settings->settings_menu->menu_obj, LV_OPA_COVER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -113,7 +109,7 @@ static void settings_app_load(app_t* self, lv_obj_t* parent){
 
 static void settings_app_exit(app_t* self){
 	free_menu(((settings_app_t*)self)->settings_menu);
-	lv_mem_free((settings_app_t*)self);
+	// lv_mem_free((settings_app_t*)self);	// DON'T free self here, app manager handles that
 }
 
 settings_app_t* create_settings_app(void){
@@ -123,6 +119,13 @@ settings_app_t* create_settings_app(void){
 		return NULL;
 	}
 	lv_memset_00(settings, sizeof(settings_app_t));
+
+	assert_param(strlen(settings->app_base.app_name) < sizeof(settings->app_base.app_name)-1);	// ensure name fits in buffer
+	assert_param(strlen(settings->app_base.app_icon) < sizeof(settings->app_base.app_icon)-1);	// ensure icon fits in buffer
+
+	strcpy(settings->app_base.app_name, "Settings");
+	// strcpy(settings->app_base.app_icon, "/");
+
 	settings->app_base.app_t_load = settings_app_load;
 	settings->app_base.app_t_exit = settings_app_exit;
 

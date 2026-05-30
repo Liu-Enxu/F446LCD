@@ -231,7 +231,7 @@ tabview_t* create_tabview(lv_obj_t *parent, uint16_t tabview_x, uint16_t tabview
 void free_tab(tab_t *tab)
 {
     if (tab == NULL) return;
-    // don't lv_obj_del tab->tab here â€? tabview owns and destroys it
+    // don't lv_obj_del tab->tab here; tabview owns and destroys it
     // just walk and free the linked list nodes
     free_tab(tab->next_tab);  // recurse to end of list
     lv_mem_free(tab);

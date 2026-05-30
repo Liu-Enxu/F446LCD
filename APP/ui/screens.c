@@ -451,6 +451,7 @@ static void scrn_main_t_enter(scrn_t* self){
 	// tab
 	main->app_tab_obj = create_tabview(main->scrn_base.screen, 0, 0, HOR_RESOLUTION, VER_RESOLUTION-20, 30);
 	set_app_tv_inst(main->app_tab_obj);
+	/* Consider wrapping this part into create_tabview */
 	tab_t* tmp = create_tab(main->app_tab_obj, "App1");
 	create_tab(main->app_tab_obj, "App2");
 	create_tab(main->app_tab_obj, "App3");
@@ -459,6 +460,7 @@ static void scrn_main_t_enter(scrn_t* self){
 		hide_tab(main->app_tab_obj, tmp);
 		tmp = tmp->next_tab;
 	}
+	/* Consider wrapping this part into create_tabview */
 	
 	// app icons, btnm
 	main->icons_obj = create_icons(main->app_tab_obj->tab_head->tab);
