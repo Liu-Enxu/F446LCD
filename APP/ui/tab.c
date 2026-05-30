@@ -131,6 +131,9 @@ static void tab_btn_long_press_cb(lv_event_t *e){
             hide_tab(my_tabview, tmp);
             // switch to home to safe delet obj?
             lv_tabview_set_act(my_tabview->tabview, 0, LV_ANIM_OFF);
+            // hide the tabline
+            my_tabview->tab_line_hidden = 1;
+            lv_obj_invalidate(lv_event_get_target(e));  // trigger redraw only
             return;
         }
         tmp = tmp->next_tab;
@@ -234,6 +237,9 @@ void free_tab(tab_t *tab)
     // don't lv_obj_del tab->tab here; tabview owns and destroys it
     // just walk and free the linked list nodes
     free_tab(tab->next_tab);  // recurse to end of list
+    if (tab->app_ptr != NULL) {
+        tab->app_ptr->app_t_exit(tab->app_ptr);  // cleanup app if still loaded
+    }
     lv_mem_free(tab);
 }
 
