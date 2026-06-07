@@ -222,10 +222,11 @@ static void scrn_cali_t_enter(scrn_t* self){
 	lv_obj_set_layout(cali->scrn_base.pos_obj, LV_LAYOUT_FLEX);
 	lv_obj_set_flex_flow(cali->scrn_base.pos_obj, LV_FLEX_FLOW_ROW);
 	lv_obj_set_style_pad_column(cali->scrn_base.pos_obj, 4, LV_PART_MAIN);
-	lv_obj_set_style_pad_all(cali->scrn_base.pos_obj, 0, LV_PART_MAIN);
-	lv_obj_set_style_radius(cali->scrn_base.pos_obj, 0, LV_PART_MAIN);
-	lv_obj_set_style_bg_opa(cali->scrn_base.pos_obj, LV_OPA_TRANSP, LV_PART_MAIN);
-	lv_obj_set_style_border_width(cali->scrn_base.pos_obj, 0, LV_PART_MAIN);
+	// lv_obj_set_style_pad_all(cali->scrn_base.pos_obj, 0, LV_PART_MAIN);
+	// lv_obj_set_style_radius(cali->scrn_base.pos_obj, 0, LV_PART_MAIN);
+	// lv_obj_set_style_bg_opa(cali->scrn_base.pos_obj, LV_OPA_TRANSP, LV_PART_MAIN);
+	// lv_obj_set_style_border_width(cali->scrn_base.pos_obj, 0, LV_PART_MAIN);
+	lv_obj_add_style(cali->scrn_base.pos_obj, &lv_app_styles.no_deco, LV_PART_MAIN);
 	lv_obj_set_flex_align(cali->scrn_base.pos_obj, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
 	lv_obj_add_flag(cali->scrn_base.pos_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
 
@@ -326,7 +327,7 @@ static void scrn_load_t_enter(scrn_t* self){
 	load->l_obj = lv_label_create(load->b_obj);
 	lv_obj_set_pos(load->l_obj, 0, 0);
 	lv_obj_set_size(load->l_obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-	lv_obj_set_style_align(load->l_obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_style(load->l_obj, &lv_app_styles.btn_lbl, LV_PART_MAIN | LV_STATE_DEFAULT);
 	lv_label_set_text(load->l_obj, "MAIN\nMENU");
 	lv_obj_add_flag(load->l_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
 	
@@ -470,17 +471,19 @@ static void scrn_main_t_enter(scrn_t* self){
 	main->header_obj = lv_obj_create(main->scrn_base.screen);
 	lv_obj_set_pos(main->header_obj, 0, 0);
 	lv_obj_set_size(main->header_obj, LV_SIZE_CONTENT, 30);
-	lv_obj_clear_flag(main->header_obj, LV_OBJ_FLAG_SCROLLABLE);
-
+	
 	lv_obj_set_layout(main->header_obj, LV_LAYOUT_FLEX);
 	lv_obj_set_flex_flow(main->header_obj, LV_FLEX_FLOW_ROW);
 	lv_obj_set_style_pad_column(main->header_obj, 3, 0); // spacing between items
-	lv_obj_set_style_pad_all(main->header_obj, 0, 0);	//	MUST SET 0!! Inner margin of the container. on all 4 sides to children
-	lv_obj_set_style_radius(main->header_obj, 0, 0);
-	lv_obj_set_style_bg_opa(main->header_obj, LV_OPA_TRANSP, 0);
-	lv_obj_set_style_border_width(main->header_obj, 0, 0);
+	// lv_obj_set_style_pad_all(main->header_obj, 0, 0);	//	MUST SET 0!! Inner margin of the container. on all 4 sides to children
+	// lv_obj_set_style_radius(main->header_obj, 0, 0);
+	// lv_obj_set_style_bg_opa(main->header_obj, LV_OPA_TRANSP, 0);
+	// lv_obj_set_style_border_width(main->header_obj, 0, 0);
+	lv_obj_add_style(main->header_obj, &lv_app_styles.no_deco, 0);
 	lv_obj_add_flag(main->header_obj, LV_OBJ_FLAG_FLOATING);
 	lv_obj_move_foreground(main->header_obj);
+
+	lv_obj_clear_flag(main->header_obj, LV_OBJ_FLAG_SCROLLABLE);
 	lv_obj_add_flag(main->header_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
 	
 	
@@ -496,7 +499,7 @@ static void scrn_main_t_enter(scrn_t* self){
 	lv_label_set_text(main->menu_l_obj,"\xEF\x83\x89"); // f0c9
 	lv_obj_set_pos(main->menu_l_obj, 0, 0);
 	lv_obj_set_size(main->menu_l_obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-	lv_obj_set_style_align(main->menu_l_obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_style(main->menu_l_obj, &lv_app_styles.btn_lbl, LV_PART_MAIN | LV_STATE_DEFAULT);
 	lv_obj_add_style(main->menu_l_obj, &lv_app_styles.sym_font, LV_PART_MAIN | LV_STATE_DEFAULT);	// explicit, otherwise overwritten
 	lv_obj_add_flag(main->menu_l_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
 	
@@ -558,7 +561,7 @@ static void scrn_main_t_enter(scrn_t* self){
 	lv_label_set_text(main->folder_l_obj,"\xEF\x81\xBC");
 	lv_obj_set_pos(main->folder_l_obj, 0, 0);
 	lv_obj_set_size(main->folder_l_obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-	lv_obj_set_style_align(main->folder_l_obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_style(main->folder_l_obj, &lv_app_styles.btn_lbl, LV_PART_MAIN | LV_STATE_DEFAULT);
 	lv_obj_add_style(main->folder_l_obj, &lv_app_styles.sym_font, LV_PART_MAIN | LV_STATE_DEFAULT);	// explicit, otherwise overwritten
 	lv_obj_add_flag(main->folder_l_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
 	
@@ -574,7 +577,7 @@ static void scrn_main_t_enter(scrn_t* self){
 	lv_label_set_text(main->terminal_l_obj,">_");
 	lv_obj_set_pos(main->terminal_l_obj, 0, 0);
 	lv_obj_set_size(main->terminal_l_obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-	lv_obj_set_style_align(main->terminal_l_obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_style(main->terminal_l_obj, &lv_app_styles.btn_lbl, LV_PART_MAIN | LV_STATE_DEFAULT);
 	// lv_obj_add_style(main->terminal_l_obj, &lv_app_styles.sym_font, LV_PART_MAIN | LV_STATE_DEFAULT);	// explicit, otherwise overwritten
 	lv_obj_add_style(main->terminal_l_obj, &lv_app_styles.char_color1, LV_PART_MAIN | LV_STATE_DEFAULT);	// explicit, otherwise overwritten
 	lv_obj_add_flag(main->terminal_l_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
@@ -583,15 +586,17 @@ static void scrn_main_t_enter(scrn_t* self){
 	main->bar_obj = lv_obj_create(main->scrn_base.screen);
 	lv_obj_set_pos(main->bar_obj, 0, 300);
 	lv_obj_set_size(main->bar_obj, HOR_RESOLUTION, 20);
-	lv_obj_clear_flag(main->bar_obj, LV_OBJ_FLAG_SCROLLABLE);
 	
 	lv_obj_set_layout(main->bar_obj, LV_LAYOUT_FLEX);
 	lv_obj_set_flex_flow(main->bar_obj, LV_FLEX_FLOW_ROW);
 	lv_obj_set_style_pad_column(main->bar_obj, 1, 0); // spacing between items
-	lv_obj_set_style_pad_all(main->bar_obj, 0, 0);	//	MUST SET 0!! Inner margin of the container. on all 4 sides to children
-	lv_obj_set_style_radius(main->bar_obj, 0, 0);
-	lv_obj_set_style_bg_opa(main->bar_obj, LV_OPA_TRANSP, 0);
-	lv_obj_set_style_border_width(main->bar_obj, 0, 0);
+	// lv_obj_set_style_pad_all(main->bar_obj, 0, 0);	//	MUST SET 0!! Inner margin of the container. on all 4 sides to children
+	// lv_obj_set_style_radius(main->bar_obj, 0, 0);
+	// lv_obj_set_style_bg_opa(main->bar_obj, LV_OPA_TRANSP, 0);
+	// lv_obj_set_style_border_width(main->bar_obj, 0, 0);
+	lv_obj_add_style(main->bar_obj, &lv_app_styles.no_deco, 0);
+
+	lv_obj_clear_flag(main->bar_obj, LV_OBJ_FLAG_SCROLLABLE);
 	lv_obj_add_flag(main->bar_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
 
 	//	return status label obj
@@ -638,23 +643,23 @@ static void scrn_main_t_enter(scrn_t* self){
 	//	tray obj
 	main->tray_obj = lv_obj_create(main->bar_obj);
 	lv_obj_set_flex_grow(main->tray_obj, 1);	//	MUST HAVE: expand to the end!!!
-//		lv_obj_set_pos(tray_obj, 0, 300);
 	lv_obj_set_size(main->tray_obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);	//	MUST HAVE
-	lv_obj_clear_flag(main->tray_obj, LV_OBJ_FLAG_SCROLLABLE);
 	
 	lv_obj_set_layout(main->tray_obj, LV_LAYOUT_FLEX);
 	lv_obj_set_flex_flow(main->tray_obj, LV_FLEX_FLOW_ROW_REVERSE);
 	lv_obj_set_style_pad_column(main->tray_obj, 5, 0); // spacing between items
-	lv_obj_set_style_pad_all(main->tray_obj, 0, 0);
-	lv_obj_set_style_radius(main->tray_obj, 0, 0);
-	lv_obj_set_style_border_width(main->tray_obj, 0, 0);
-	lv_obj_set_style_bg_opa(main->tray_obj, LV_OPA_TRANSP, 0);
+	// lv_obj_set_style_pad_all(main->tray_obj, 0, 0);
+	// lv_obj_set_style_radius(main->tray_obj, 0, 0);
+	// lv_obj_set_style_border_width(main->tray_obj, 0, 0);
+	// lv_obj_set_style_bg_opa(main->tray_obj, LV_OPA_TRANSP, 0);
+	lv_obj_add_style(main->tray_obj, &lv_app_styles.no_deco, 0);
 
 	lv_obj_set_flex_align(main->tray_obj,	//	MUST HAVE
 					LV_FLEX_ALIGN_END,
 					LV_FLEX_ALIGN_CENTER,
 					LV_FLEX_ALIGN_CENTER);
 										
+	lv_obj_clear_flag(main->tray_obj, LV_OBJ_FLAG_SCROLLABLE);
 	lv_obj_add_flag(main->tray_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
 	
 	// ]

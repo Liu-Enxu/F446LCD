@@ -213,13 +213,11 @@ tabview_t* create_tabview(lv_obj_t *parent, uint16_t tabview_x, uint16_t tabview
     lv_obj_add_flag(lv_tabview_get_content(my_tabview->tabview), LV_OBJ_FLAG_EVENT_BUBBLE);
     // tab btns style
     lv_obj_t *tab_btns = lv_tabview_get_tab_btns(my_tabview->tabview);
-	lv_obj_add_style(tab_btns,&lv_app_styles.color_combo1,LV_PART_ITEMS | LV_STATE_DEFAULT);
-	lv_obj_set_style_bg_opa(tab_btns, LV_OPA_10, LV_PART_ITEMS | LV_STATE_DEFAULT);
-	lv_obj_set_style_border_opa(tab_btns, LV_OPA_TRANSP, LV_PART_ITEMS | LV_STATE_DEFAULT);
-	
-	lv_obj_add_style(tab_btns,&lv_app_styles.color_combo1,LV_PART_ITEMS | LV_STATE_CHECKED);
-	lv_obj_set_style_border_opa(tab_btns, LV_OPA_COVER, LV_PART_ITEMS | LV_STATE_CHECKED);
-	lv_obj_set_style_border_color(tab_btns, lv_app_styles.color1, LV_PART_ITEMS | LV_STATE_CHECKED);
+	lv_obj_add_style(tab_btns, &lv_app_styles.color_combo1,     LV_PART_ITEMS | LV_STATE_DEFAULT);
+	lv_obj_add_style(tab_btns, &lv_app_styles.tab_item_default, LV_PART_ITEMS | LV_STATE_DEFAULT);
+
+	lv_obj_add_style(tab_btns, &lv_app_styles.color_combo1,     LV_PART_ITEMS | LV_STATE_CHECKED);
+	lv_obj_add_style(tab_btns, &lv_app_styles.tab_item_checked, LV_PART_ITEMS | LV_STATE_CHECKED);
 
     lv_btnmatrix_set_btn_width(tab_btns, 0, 1);
     lv_obj_add_event_cb(tab_btns, tab_draw_event_cb, LV_EVENT_ALL, NULL);

@@ -197,8 +197,7 @@ icons_t* create_icons(lv_obj_t * parent){
 	lv_obj_set_size(my_icons->icons_btnm, HOR_RES-80, VER_RES-50);
 	lv_obj_align( my_icons->icons_btnm, LV_ALIGN_CENTER, 0, 0);
 
-	lv_obj_set_style_bg_opa( my_icons->icons_btnm, LV_OPA_TRANSP, LV_PART_MAIN | LV_STATE_DEFAULT);
-	lv_obj_set_style_border_width( my_icons->icons_btnm, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_style(my_icons->icons_btnm, &lv_app_styles.btnm_main, LV_PART_MAIN);
 	lv_obj_add_event_cb( my_icons->icons_btnm, btnm_press_event_cb, LV_EVENT_VALUE_CHANGED, my_icons);
 	lv_obj_clear_flag( my_icons->icons_btnm, LV_OBJ_FLAG_SCROLLABLE);
 	lv_obj_add_flag( my_icons->icons_btnm, LV_OBJ_FLAG_EVENT_BUBBLE);
@@ -209,7 +208,7 @@ icons_t* create_icons(lv_obj_t * parent){
 	lv_obj_set_size(my_icons->btn_l,30,VER_RES-250);
 	lv_obj_align(my_icons->btn_l, LV_ALIGN_LEFT_MID, 0, 0);
 	lv_obj_add_style(my_icons->btn_l,&lv_app_styles.color_combo1,LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_opa(my_icons->btn_l, LV_OPA_30, LV_PART_MAIN | LV_STATE_DISABLED);
+    lv_obj_add_style(my_icons->btn_l, &lv_app_styles.btn_disabled, LV_PART_MAIN | LV_STATE_DISABLED);
 	lv_obj_add_flag(my_icons->btn_l,LV_OBJ_FLAG_EVENT_BUBBLE);
     lv_obj_add_event_cb(my_icons->btn_l, turn_page_left, LV_EVENT_PRESSED, my_icons);
 	my_icons->btn_l_lbl = lv_label_create(my_icons->btn_l);
@@ -224,7 +223,7 @@ icons_t* create_icons(lv_obj_t * parent){
 	lv_obj_set_size(my_icons->btn_r,30,VER_RES-250);
 	lv_obj_align(my_icons->btn_r, LV_ALIGN_RIGHT_MID, 0, 0);
 	lv_obj_add_style(my_icons->btn_r,&lv_app_styles.color_combo1,LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_opa(my_icons->btn_r, LV_OPA_30, LV_PART_MAIN | LV_STATE_DISABLED);
+    lv_obj_add_style(my_icons->btn_r, &lv_app_styles.btn_disabled, LV_PART_MAIN | LV_STATE_DISABLED);
 	lv_obj_add_flag(my_icons->btn_r,LV_OBJ_FLAG_EVENT_BUBBLE);
     lv_obj_add_event_cb(my_icons->btn_r, turn_page_right, LV_EVENT_PRESSED, my_icons);
 	my_icons->btn_r_lbl = lv_label_create(my_icons->btn_r);

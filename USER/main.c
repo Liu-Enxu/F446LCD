@@ -46,22 +46,6 @@ void disp_task(void *pvParameters){
 	}
 }
 
-#define DUMMY_STACK 1024
-TaskHandle_t dummyTaskHandle;
-void dummy_task(void *pvParameters){
-	pvParameters = pvParameters;
-	const noti_t dummy_noti = {
-		.notiSource = "DUMMY",
-		.notiContent = "Let's all love lain"
-	};
-	while(1){
-		if(xQueueSendToBack(notifyQueue,&dummy_noti,portMAX_DELAY)==pdPASS){	// wait indefinitely?
-//			lv_event_send(noti_box, LV_NOTI_NEW, NULL);
-		}
-		vTaskDelay(pdMS_TO_TICKS(1000));
-	}
-}
-
 int main(void)
 {	  
 //		u16 t; //vu8 pressed;
