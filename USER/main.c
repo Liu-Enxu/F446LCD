@@ -33,7 +33,7 @@
 //#include "myfatsd.h"
 
 
-#define DISP_STACK 4*1024	// LOWER MIGHT CAUSE SCREEN NOT FOUND
+#define DISP_STACK 6*1024	// LOWER MIGHT CAUSE SCREEN NOT FOUND
 //static StackType_t demoTaskStackBuffer[DEMO_STACK];
 //static StaticTask_t demoTaskBuffer;
 TaskHandle_t dispTaskHandle;

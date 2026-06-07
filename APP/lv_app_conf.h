@@ -6,6 +6,7 @@
 
 // system wide
 typedef struct {
+	// colors
 	lv_color_t color1;
 	lv_color_t color2;
 
@@ -14,8 +15,18 @@ typedef struct {
 	lv_style_t color_combo1;
 	lv_style_t color_combo2;
 
+	// fonts
 	lv_style_t sym_font;	
 	lv_style_t txt_font;
+
+	// common styles
+	lv_style_t no_deco;
+	lv_style_t btnm_main;
+	lv_style_t btn_lbl;
+	lv_style_t tab_item_default;
+	lv_style_t tab_item_checked;
+	lv_style_t btn_disabled;
+
 }lv_app_styles_t;
 extern lv_app_styles_t lv_app_styles;
 

@@ -1,13 +1,16 @@
 #ifndef __APP_H
 #define __APP_H
 
+#include <math.h>
 #include <lvgl/lvgl.h>
+#include "lv_snapshot.h"
 #include "sys.h"
 #include "menu.h"
 
 typedef struct app_mgr_t app_mgr_t;
 typedef struct app_t app_t;
 typedef struct settings_app_t settings_app_t;
+typedef struct calc_app_t calc_app_t;
 
 struct app_mgr_t{
 	u8 app_registered;
@@ -35,6 +38,12 @@ struct settings_app_t{
 };
 settings_app_t* create_settings_app(void);
 
+struct calc_app_t{
+	app_t app_base;
+	// char last_expr_char[100];	
+	// char curr_expr_char[100];	
+};
+calc_app_t* create_calc_app(void);
 
 #endif // __APP_H
 

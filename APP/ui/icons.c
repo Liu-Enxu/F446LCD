@@ -21,28 +21,34 @@ static void btnm_press_event_cb(lv_event_t * e)
             return;
         }
 
-        // 1. look for free tab (resource)
-        tab_t* tmp = get_app_tv_inst()->tab_head->next_tab;
-        while(NULL != tmp->app_ptr){
-            if(NULL == tmp->next_tab){
-                // 1.1 no free tab, return
-                printf("Exceed max running app available!\r\n");
-                return;
-            } else {
-                tmp = tmp->next_tab;
-            }
-        }
-        // 1.2 free tab, clear hidden flag
-        show_tab(get_app_tv_inst(), tmp);
-        // 2. select the tab 
-        lv_tabview_set_act(get_app_tv_inst()->tabview, tmp->id, LV_ANIM_OFF);
-        // 3. find app
+        // 1. find app
         u8 tmp_app_id = 0;
         app_t* tmp_app = app_mgr_inst()->app_head;
         while(id != tmp_app_id){    // no need to check id out of bound since checked
             tmp_app = tmp_app->next_app;
             tmp_app_id++;
         }
+
+        // 2. look up in tab (resource)
+        tab_t* tmp = get_app_tv_inst()->tab_head->next_tab;
+        while(NULL != tmp->app_ptr){
+            if(NULL == tmp->next_tab){
+                // 2.1 no free tab, return
+                printf("Exceed max running app available!\r\n");
+                return;
+            } else if (tmp->app_ptr==tmp_app){
+                // 2.2 app already running, switch to it
+                printf("App already running, switch to it!\r\n");
+                lv_tabview_set_act(get_app_tv_inst()->tabview, tmp->id, LV_ANIM_OFF);
+                return;
+            } else {
+                tmp = tmp->next_tab;
+            }
+        }
+        // 2.3 free tab, clear hidden flag
+        show_tab(get_app_tv_inst(), tmp);
+        // 3. select the tab 
+        lv_tabview_set_act(get_app_tv_inst()->tabview, tmp->id, LV_ANIM_OFF);
         // 4. create_app on tab ptr
         tmp_app->app_t_load(tmp_app,tmp->tab);
         tmp->app_ptr = tmp_app; 

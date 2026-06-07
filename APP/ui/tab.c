@@ -100,6 +100,8 @@ static void tab_draw_event_cb(lv_event_t * e)
             if(dsc->id == 0) {
 				dsc->rect_dsc->bg_opa = LV_OPA_0;
 				dsc->rect_dsc->border_opa = LV_OPA_0;
+                dsc->label_dsc->ofs_x = 80;
+                dsc->label_dsc->font = &awesomesyms;
 			}
 		}
 	}
@@ -159,7 +161,7 @@ static void tab_line_draw_event_cb(lv_event_t *e) {
 
 static tabview_t *app_tabview = NULL;
 tabview_t* get_app_tv_inst(void){
-    if(NULL == app_tabview) printf("NULL app tabview!");
+    if(NULL == app_tabview) printf("NULL app tabview!\r\n");
     return app_tabview;
 }
 
@@ -203,7 +205,8 @@ tabview_t* create_tabview(lv_obj_t *parent, uint16_t tabview_x, uint16_t tabview
 
     // tabs array
     my_tabview->tab_cnt = 0;
-    my_tabview->tab_head = create_tab(my_tabview, "     "); // create first tab as head
+    my_tabview->tab_head = create_tab(my_tabview, "\xEF\x80\x95"); // create first tab as head
+    // lv_tabview_rename_tab(my_tabview->tabview, 0, "\xEF\x80\x95");
 
     // tab array content
     lv_obj_clear_flag(lv_tabview_get_content(my_tabview->tabview), LV_OBJ_FLAG_SCROLLABLE);
