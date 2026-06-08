@@ -53,9 +53,14 @@ extern uint32_t SystemCoreClock;
 #define configUSE_SB_COMPLETED_CALLBACK                     0
 
 /* Run time and task stats gathering related definitions. */
-#define configGENERATE_RUN_TIME_STATS                       0
+#define configGENERATE_RUN_TIME_STATS                       1
 #define configUSE_TRACE_FACILITY                            1  // was 0
 #define configUSE_STATS_FORMATTING_FUNCTIONS                1  // was 0
+
+extern void     vConfigureTimerForRunTimeStats(void);
+extern uint32_t vGetTimerForRunTimeStats(void);
+#define portCONFIGURE_TIMER_FOR_RUN_TIME_STATS()  vConfigureTimerForRunTimeStats()
+#define portGET_RUN_TIME_COUNTER_VALUE()           vGetTimerForRunTimeStats()
 
 /* Co-routine related definitions. */
 #define configUSE_CO_ROUTINES                               0

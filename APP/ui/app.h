@@ -8,6 +8,7 @@
 #include "app_base.h"
 #include "settings.h"
 #include "calc.h"
+#include "utop.h"
 
 typedef struct app_mgr_t app_mgr_t;
 

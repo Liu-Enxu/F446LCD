@@ -13,7 +13,7 @@ u8 UPDATE_CNT = 0;
 u16 TIMER_CNT = 0;
 u32 ELAPSE = 0;
 
-void TIM2_Int_Init(u16 arr,u16 psc) // PCLK1 = HCLK / 4 = 45M, but  APB1 timer clocks if (APB1 presc = 1) x1 else x2 so 90Mhz
+void TIM2_Int_Init(u32 arr,u16 psc) // PCLK1 = HCLK / 4 = 45M, but  APB1 timer clocks if (APB1 presc = 1) x1 else x2 so 90Mhz
 {
   TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
 	NVIC_InitTypeDef NVIC_InitStructure;

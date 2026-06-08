@@ -378,9 +378,9 @@ calc_app_t* create_calc_app(void){
 	}
 	lv_memset_00(calc, sizeof(calc_app_t));
 
-	assert_param(strlen("Calculator") < sizeof(calc->app_base.app_name)-1);	// ensure name fits in buffer
+	assert_param(strlen("Calc") < sizeof(calc->app_base.app_name)-1);	// ensure name fits in buffer
 	assert_param(strlen("\xEF\x87\xAC") < sizeof(calc->app_base.app_icon)-1);	// ensure icon fits in buffer
-	strcpy(calc->app_base.app_name, "Calculator");
+	strcpy(calc->app_base.app_name, "Calc");
 	memcpy(calc->app_base.app_icon, "\xEF\x87\xAC", sizeof("\xEF\x87\xAC"));
 
 	calc->app_base.app_t_load = calc_app_load;

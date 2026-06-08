@@ -33,6 +33,7 @@
 /* Scheduler includes. */
 #include "FreeRTOS.h"
 #include "task.h"
+#include "timer.h"
 
 #ifndef __TARGET_FPU_VFP
     #error This port can only be used when the project options are configured to enable hardware floating point support.
@@ -949,3 +950,13 @@ void vApplicationMallocFailedHook(void)
 }
 #endif
 
+
+#ifdef configGENERATE_RUN_TIME_STATS
+void vConfigureTimerForRunTimeStats(void){
+    TIM2_Int_Init(0xFFFFFFFF, 89);
+}
+
+uint32_t vGetTimerForRunTimeStats(void){
+    return TIM2->CNT;
+}
+#endif

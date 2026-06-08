@@ -811,6 +811,11 @@
               <FileType>1</FileType>
               <FilePath>..\APP\ui\apps\settings.c</FilePath>
             </File>
+            <File>
+              <FileName>utop.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\APP\ui\apps\utop.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
