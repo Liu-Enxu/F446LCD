@@ -1,17 +1,25 @@
-#ifndef __FATSD_APP_H
-#define __FATSD_APP_H
+#ifndef __FILESYS_H
+#define __FILESYS_H
 
-#include "exfuns.h"
-#include "lcd.h"
-#include "delay.h"
-#include "malloc.h"
+#include "app_base.h"
+// #include "FreeRTOS.h"
+// #include "task.h"
+#include <lvgl/lvgl.h>
 #include "sys.h"
 
+#include "exfuns.h"
+#include <string.h>
 #include "stdio.h"
 #include "stdlib.h"
 
+typedef struct filesys_app_t filesys_app_t;
 
-
+typedef struct filesys_app_t {
+    app_t           app_base;
+    
+} filesys_app_t;
+ 
+filesys_app_t* create_filesys_app(void);
 
 extern u8 file_cnt;
 extern char* pathName;
@@ -32,5 +40,4 @@ void sd_info(void);
 
 u16 test_file(void);
 
-#endif
-
+#endif // __FILESYS_H

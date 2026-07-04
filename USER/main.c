@@ -34,8 +34,6 @@
 
 
 #define DISP_STACK 6*1024	// LOWER MIGHT CAUSE SCREEN NOT FOUND
-//static StackType_t demoTaskStackBuffer[DEMO_STACK];
-//static StaticTask_t demoTaskBuffer;
 TaskHandle_t dispTaskHandle;
 void disp_task(void *pvParameters){
 	pvParameters = pvParameters;
@@ -59,8 +57,6 @@ int main(void)
 //		u8 *p=0;
 //		// FATFS
 //		u16 res;
-//		// pic
-//		u8 frame_idx = 0;
 	
 	// must haves ------------------------
 	delay_init();	    	 //
@@ -76,8 +72,7 @@ int main(void)
 	lv_init();
 	
 	lv_port_disp_init();       
-//  lv_display_set_buffers(disp, buf_1_1, NULL, sizeof(buf_1_1), LV_DISPLAY_RENDER_MODE_PARTIAL); // MUST CALL THIS IN MAIN.C!!! WHY?? --- STACK SIZE NOT ENOUGH!!!!!!!!!!!!!!	
-	lv_port_indev_init();	// RTOS tasks resource racing??
+	lv_port_indev_init();
 	
 	printf("loop!\n");	
 	
@@ -98,12 +93,7 @@ int main(void)
 //		lv_timer_handler();
 //		vTaskDelay(5);
 //	}
-	
 
-	
-//	SPI1_Init();
-//	mem_init();
-	
 // FATFS----------------------------------------------------------------------
 //	fatsd_init();
 //	sd_info();
@@ -116,9 +106,6 @@ int main(void)
 	
 //	gui_init();gui_draw();
 
-//	lv_obj_t* switch_obj = lv_switch_create(lv_scr_act());
-//	lv_obj_set_size(switch_obj,50,25);
-//	lv_obj_align(switch_obj, LV_ALIGN_CENTER, 0, 0);
 //  while(1) 
 //	{			
 //		if(times%10==0)get_touchXY();

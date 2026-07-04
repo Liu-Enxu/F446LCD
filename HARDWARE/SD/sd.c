@@ -196,8 +196,8 @@ u8 SD_Initialize(void)
     u8 buf[4];  
 		u16 i;
 
-//	SD_SPI_Init();		//初始化IO
-// 	SD_SPI_SpeedLow();	//设置到低速模式 
+	SD_SPI_Init();		//初始化IO
+	SD_SPI_SpeedLow();	//设置到低速模式 
 	SD_CS = 1;
 	u8 res;
  	for(i=0;i<10;i++){

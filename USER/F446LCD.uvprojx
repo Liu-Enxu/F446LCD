@@ -732,9 +732,9 @@
               <FilePath>..\FATFS\src\option\syscall.c</FilePath>
             </File>
             <File>
-              <FileName>cc936.c</FileName>
+              <FileName>ccsbcs.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\FATFS\src\option\cc936.c</FilePath>
+              <FilePath>..\FATFS\src\option\ccsbcs.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -801,6 +801,11 @@
         <Group>
           <GroupName>APP/apps</GroupName>
           <Files>
+            <File>
+              <FileName>filesys.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\APP\ui\apps\filesys.c</FilePath>
+            </File>
             <File>
               <FileName>calc.c</FileName>
               <FileType>1</FileType>

@@ -8,6 +8,8 @@
 
 #include "LCD.h"
 
+#include "fatsd_app.h"
+
 
 
 /*
@@ -392,8 +394,30 @@ static scrn_load_t* create_screen_load(void) {
 /*  Main Screen	                                                      */
 /* ================================================================== */
 
-static void heap_label_cb(lv_timer_t *t) {
-    lv_label_set_text_fmt((lv_obj_t *)t->user_data, "][RAM: %u%%", xPortGetFreeHeapSize() * 100 / configTOTAL_HEAP_SIZE);
+static void label_update_cb(lv_timer_t *t) {
+	scrn_main_t *main = (scrn_main_t *)(t->user_data);
+    lv_label_set_text_fmt(main->ucHeap_l_obj, "][RAM: %u%%", xPortGetFreeHeapSize() * 100 / configTOTAL_HEAP_SIZE);
+	if(peri_status.SD == 0){
+		lv_obj_clear_flag(main->SDx_obj, LV_OBJ_FLAG_HIDDEN);
+	} else {
+		lv_obj_add_flag(main->SDx_obj, LV_OBJ_FLAG_HIDDEN);
+	}
+	if(peri_status.batt == 0){
+		lv_obj_clear_flag(main->battx_obj, LV_OBJ_FLAG_HIDDEN);
+	} else {
+		lv_obj_add_flag(main->battx_obj, LV_OBJ_FLAG_HIDDEN);
+	}
+	if(peri_status.volume == 0){
+		lv_obj_clear_flag(main->volx_obj, LV_OBJ_FLAG_HIDDEN);
+	} else {
+		lv_obj_add_flag(main->volx_obj, LV_OBJ_FLAG_HIDDEN);
+	}
+	if(peri_status.WIFI == 0){
+		lv_obj_clear_flag(main->wifix_obj, LV_OBJ_FLAG_HIDDEN);
+	} else {
+		lv_obj_add_flag(main->wifix_obj, LV_OBJ_FLAG_HIDDEN);
+	}
+
 }
 
 static void menu_toggle_cb(lv_event_t* e) {
@@ -638,7 +662,6 @@ static void scrn_main_t_enter(scrn_t* self){
 	lv_label_set_text(main->ucHeap_l_obj, "][RAM: __%");
 	lv_obj_add_style(main->ucHeap_l_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
 	lv_obj_add_flag(main->ucHeap_l_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
-	main->ucHeap_timer = lv_timer_create(heap_label_cb, 1000, main->ucHeap_l_obj);
 
 	//	tray obj
 	main->tray_obj = lv_obj_create(main->bar_obj);
@@ -683,32 +706,32 @@ static void scrn_main_t_enter(scrn_t* self){
 	lv_obj_add_flag(main->wifix_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
 	
 	// sound sym
-	main->sound_obj = lv_label_create(main->tray_obj);
-	lv_label_set_text(main->sound_obj, LV_SYMBOL_MUTE);
-	lv_obj_add_style(main->sound_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
-	lv_obj_add_style(main->sound_obj,&lv_app_styles.sym_font,LV_PART_MAIN | LV_STATE_DEFAULT);
-	lv_obj_add_flag(main->sound_obj , LV_OBJ_FLAG_EVENT_BUBBLE);
+	main->volume_obj = lv_label_create(main->tray_obj);
+	lv_label_set_text(main->volume_obj, LV_SYMBOL_MUTE);
+	lv_obj_add_style(main->volume_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_style(main->volume_obj,&lv_app_styles.sym_font,LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_flag(main->volume_obj , LV_OBJ_FLAG_EVENT_BUBBLE);
 	
 	// sound disconn slash
-	main->soundx_obj = lv_label_create(main->sound_obj);
-	lv_label_set_text(main->soundx_obj,"\xEF\x9C\x95");
-	lv_obj_add_style(main->soundx_obj,&lv_app_styles.char_color2, LV_PART_MAIN | LV_STATE_DEFAULT);
-	lv_obj_add_style(main->soundx_obj, &lv_app_styles.sym_font, LV_PART_MAIN | LV_STATE_DEFAULT);	// explicit, otherwise overwritten
-	lv_obj_add_flag(main->soundx_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+	main->volx_obj = lv_label_create(main->volume_obj);
+	lv_label_set_text(main->volx_obj,"\xEF\x9C\x95");
+	lv_obj_add_style(main->volx_obj,&lv_app_styles.char_color2, LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_style(main->volx_obj, &lv_app_styles.sym_font, LV_PART_MAIN | LV_STATE_DEFAULT);	// explicit, otherwise overwritten
+	lv_obj_add_flag(main->volx_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
 	
 	// battery
-	main->battery_obj = lv_label_create(main->tray_obj);
-	lv_label_set_text(main->battery_obj, LV_SYMBOL_BATTERY_EMPTY);
-	lv_obj_add_style(main->battery_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
-	lv_obj_add_style(main->battery_obj,&lv_app_styles.sym_font,LV_PART_MAIN | LV_STATE_DEFAULT);
-	lv_obj_add_flag(main->battery_obj , LV_OBJ_FLAG_EVENT_BUBBLE);
+	main->batt_obj = lv_label_create(main->tray_obj);
+	lv_label_set_text(main->batt_obj, LV_SYMBOL_BATTERY_EMPTY);
+	lv_obj_add_style(main->batt_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_style(main->batt_obj,&lv_app_styles.sym_font,LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_flag(main->batt_obj , LV_OBJ_FLAG_EVENT_BUBBLE);
 	
 	// battery disconn slash
-	main->batteryx_obj = lv_label_create(main->battery_obj);
-	lv_label_set_text(main->batteryx_obj,"\xEF\x9C\x95");
-	lv_obj_add_style(main->batteryx_obj,&lv_app_styles.char_color2, LV_PART_MAIN | LV_STATE_DEFAULT);
-	lv_obj_add_style(main->batteryx_obj, &lv_app_styles.sym_font, LV_PART_MAIN | LV_STATE_DEFAULT);	// explicit, otherwise overwritten
-	lv_obj_add_flag(main->batteryx_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+	main->battx_obj = lv_label_create(main->batt_obj);
+	lv_label_set_text(main->battx_obj,"\xEF\x9C\x95");
+	lv_obj_add_style(main->battx_obj,&lv_app_styles.char_color2, LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_style(main->battx_obj, &lv_app_styles.sym_font, LV_PART_MAIN | LV_STATE_DEFAULT);	// explicit, otherwise overwritten
+	lv_obj_add_flag(main->battx_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
 	
 	//	SD
 	main->SD_obj = lv_label_create(main->tray_obj);
@@ -723,7 +746,10 @@ static void scrn_main_t_enter(scrn_t* self){
 	lv_obj_add_style(main->SDx_obj,&lv_app_styles.char_color2, LV_PART_MAIN | LV_STATE_DEFAULT);
 	lv_obj_add_style(main->SDx_obj, &lv_app_styles.sym_font, LV_PART_MAIN | LV_STATE_DEFAULT);	// explicit, otherwise overwritten
 	lv_obj_add_flag(main->SDx_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
-	
+	if(peri_status.SD == 1){
+		lv_obj_add_flag(main->SDx_obj, LV_OBJ_FLAG_HIDDEN);
+	}
+
 	// ][
 	main->sta_obj = lv_label_create(main->tray_obj);
 	lv_label_set_text(main->sta_obj,"][");
@@ -732,6 +758,9 @@ static void scrn_main_t_enter(scrn_t* self){
 	
 	printf("Free heap main: %d\r\n", xPortGetFreeHeapSize());
 	lv_disp_load_scr(main->scrn_base.screen);
+
+	// label update timer
+	main->ucHeap_timer = lv_timer_create(label_update_cb, 1000, main);
 }
 
 static void scrn_main_t_exit(scrn_t* self)

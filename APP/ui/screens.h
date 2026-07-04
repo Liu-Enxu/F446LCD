@@ -90,10 +90,10 @@ struct scrn_main_t {	// inherit from scrn_t
 	lv_obj_t *end_obj;
 	lv_obj_t *wifi_obj;
 	lv_obj_t *wifix_obj;
-	lv_obj_t *sound_obj;
-	lv_obj_t *soundx_obj;
-	lv_obj_t *battery_obj;
-	lv_obj_t *batteryx_obj;
+	lv_obj_t *volume_obj;
+	lv_obj_t *volx_obj;
+	lv_obj_t *batt_obj;
+	lv_obj_t *battx_obj;
 	lv_obj_t *SD_obj;
 	lv_obj_t *SDx_obj;
 	lv_obj_t *sta_obj;

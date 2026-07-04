@@ -4,7 +4,7 @@
 void SPI1_Init(void){
 	
 	GPIO_InitTypeDef GPIO_InitStructure;
-  SPI_InitTypeDef  SPI_InitStructure;
+  	SPI_InitTypeDef  SPI_InitStructure;
 //	NVIC_InitTypeDef NVIC_InitStructure;
 	
 	// init gpio

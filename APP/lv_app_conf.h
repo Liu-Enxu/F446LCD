@@ -68,7 +68,7 @@ extern lv_cursor_pos_t lv_cursor_pos;
 typedef struct {
 	u8 WIFI;
 	u8 volume;
-	u8 signal;
+	u8 batt;
 	u8 SD;
 } peri_status_t;
 extern peri_status_t peri_status;

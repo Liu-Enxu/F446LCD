@@ -16,6 +16,7 @@ void start_app_mgr(void){
 		app_mgr_register((app_t*)create_settings_app());
 		app_mgr_register((app_t*)create_calc_app());
 		app_mgr_register((app_t*)create_utop_app());
+		app_mgr_register((app_t*)create_filesys_app());
 		started = 1;
 	} else {
 		printf("App manager already started!\r\n");

@@ -275,7 +275,7 @@ static void utop_app_exit(app_t* self) {
         lv_timer_del(utop->refresh_timer);
         utop->refresh_timer = NULL;
     }
-    lv_mem_free(self);
+    // lv_mem_free(self);
 }
  
 /* ================================================================== */
@@ -291,9 +291,9 @@ utop_app_t* create_utop_app(void) {
     lv_memset_00(utop, sizeof(utop_app_t));
  
     assert_param(strlen("uTop") < sizeof(utop->app_base.app_name));
-    assert_param(strlen("\xEF\x84\x88") < sizeof(utop->app_base.app_icon));
+    assert_param(strlen("\xEF\x82\x80") < sizeof(utop->app_base.app_icon));
     strcpy(utop->app_base.app_name, "uTop");
-    memcpy(utop->app_base.app_icon, "\xEF\x84\x88", 4);   /* U+F108 desktop monitor */
+    memcpy(utop->app_base.app_icon, "\xEF\x82\x80", sizeof("\xEF\x82\x80"));   /* U+F080 desktop monitor */
  
     utop->app_base.app_t_load = utop_app_load;
     utop->app_base.app_t_exit = utop_app_exit;

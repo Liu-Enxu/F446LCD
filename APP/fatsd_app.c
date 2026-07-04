@@ -1,19 +1,16 @@
 #include "fatsd_app.h"
+#include "lv_app_conf.h"
 
 u8 file_cnt = 0;
 char* pathName;
 
-void fatsd_init(void)
+u8 fatsd_init(void)
 {
 	u16 res;
 	exfuns_init();
 	res = f_mount(fs[0],"0:",1);
-	if(res){
-		LCD_ShowString(0,300,200,16,16,"                      ");
-		LCD_ShowNum(0,300,res,2,16);
-		LCD_ShowString(20,300,200,16,16,"Mount err!");	
-		while(1);
-	}
+	peri_status.SD = (res==0)?1:0;
+	return res;
 }
 
 u16 fatsd_open(const TCHAR *path)
