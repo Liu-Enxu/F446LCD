@@ -7,7 +7,8 @@
 #include <string.h>
 #include <stdio.h>
 
-#define UTOP_MAX_APPS   8
+#define MAX_TASK_ROWS   4
+#define MAX_APP_ROWS    3
 #define UTOP_TASK_BUF   256   /* buffer for vTaskList output */
  
 /* top half view */
@@ -40,15 +41,23 @@ typedef struct utop_app_t {
     lv_obj_t       *lbl_ram_val;
     lv_obj_t       *lbl_fls_bar;
     lv_obj_t       *lbl_fls_val;
+    lv_obj_t       *lbl_drv_bar;
+    lv_obj_t       *lbl_drv_val;
  
     /* net view */
     lv_obj_t       *net_container;
     lv_obj_t       *lbl_net;
  
     /* bottom section */
+    uint8_t        task_page_idx;
+    uint8_t        app_page_idx;
+    uint8_t        max_task_page_idx;
+    uint8_t        max_app_page_idx;
     lv_obj_t       *bot_container;
     lv_obj_t       *lbl_bot_toggle_tsk;
     lv_obj_t       *lbl_bot_toggle_app;
+    lv_obj_t       *btn_page_up;
+    lv_obj_t       *btn_page_down;
  
     /* task view */
     lv_obj_t       *tsk_container;
@@ -58,7 +67,7 @@ typedef struct utop_app_t {
     /* app view */
     lv_obj_t       *app_container;
     lv_obj_t       *lbl_app_header;
-    lv_obj_t       *lbl_app_rows[UTOP_MAX_APPS];
+    lv_obj_t       *lbl_app_rows[MAX_APP_ROWS];
  
     /* refresh timer */
     lv_timer_t     *refresh_timer;

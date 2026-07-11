@@ -9,9 +9,9 @@
 #include "settings.h"
 #include "calc.h"
 #include "utop.h"
+#include "filesys.h"
 
 typedef struct app_mgr_t app_mgr_t;
-
 
 struct app_mgr_t{
 	u8 app_registered;

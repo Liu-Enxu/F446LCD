@@ -16,7 +16,7 @@ void SD_SPI_SpeedLow(void)
 //SD卡正常工作的时候,可以高速了
 void SD_SPI_SpeedHigh(void)
 {
- 	SPI1_SetSpeed(SPI_BaudRatePrescaler_2);//设置到高速模式	
+ 	SPI1_SetSpeed(SPI_BaudRatePrescaler_8);//设置到高速模式	
 }
 //SPI硬件层初始化
 void SD_SPI_Init(void)

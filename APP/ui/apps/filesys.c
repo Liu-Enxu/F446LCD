@@ -9,15 +9,24 @@ u8 fatsd_init(void)
 	u16 res;
 	exfuns_init();
 	res = f_mount(fs[0],"0:",1);
+	if(res){
+		printf("f_mount failed: %d\r\n", res);
+	}else{
+		res = f_chdir("/");
+		if(res){
+			printf("f_chdir failed: %d\r\n", res);
+		}
+	}
 	peri_status.SD = (res==0)?1:0;
 	return res;
 }
 
+// Open a file for reading
 u16 fatsd_open(const TCHAR *path)
 {
 	u8 res;
 	res = f_open(file, path, FA_READ);
-	LCD_ShowString(0,300,200,16,16,"                      ");
+	// LCD_ShowString(0,300,200,16,16,"                      ");
 	// LCD_ShowNum(0,300,res,2,16);
 	if(res){	
 		// LCD_ShowString(20,300,200,16,16,"File open failure!");
@@ -27,6 +36,7 @@ u16 fatsd_open(const TCHAR *path)
 	return res;
 }
 
+// Read a specified number of bytes from the file into the buffer
 u16 fatsd_read(UINT length)
 {
 	u16 res;
@@ -44,6 +54,7 @@ u16 fatsd_read(UINT length)
 	return res;
 }
 
+// check or create folder
 u16 fatsd_dir(const TCHAR* path, u8 CHK0CRT1)
 {
 	u16 res;
@@ -68,7 +79,8 @@ u16 fatsd_dir(const TCHAR* path, u8 CHK0CRT1)
 	}
 	return res;
 }
-	
+
+// check or create file
 u16 fatsd_file(const TCHAR* path, u8 CHK0CRT1)
 {
 	u16 res;
@@ -108,8 +120,8 @@ void fatsd_stringAppend(char* chars1,char* chars2)
 	u8 len1 = (u8)my_strlen(chars1);
 	u8 len2 = (u8)my_strlen(chars2);
 	u8 len3 = len1+len2;
-	pathName = (char*)myrealloc(chars1,len3+1);
-	mymemcpy(pathName+len1,chars2,len2);
+	pathName = (char*)pvPortRealloc(chars1,len3+1);
+	memcpy(pathName+len1,chars2,len2);
 	pathName[len3] = '\0';
 	// LCD_ShowString(0,300,200,16,16,"                      ");
 	// LCD_ShowNum(0,300,len1,2,16);
@@ -122,60 +134,93 @@ void sd_info(void)
 {
 	u32 total,free;
 
-	// while(exf_getfree("0",&total,&free))	//得到SD卡的总容量和剩余容量
+    // while(exf_getfree("0:",&total,&free))    // Get SD total and free capacity
 	// {
 		// LCD_ShowString(0,300,200,16,16,"SD Card Fatfs Error!");
 		// delay_ms(200);
-		// LCD_ShowString(0,300,200,16,16,"Re-initializing!    ");	//清除显示			  
+		// LCD_ShowString(0,300,200,16,16,"Re-initializing!    ");	// Reinitialize SD card		  
 		// delay_ms(200);
 	// }
 	// LCD_ShowString(0,300,200,16,16,"FATFS OK!");	 
 	// LCD_ShowString(30,30,300,24,24,"SD Total Size:     MB");	 
 	// LCD_ShowString(30,60,300,24,24,"SD  Free Size:     MB"); 	    
- 	// LCD_ShowNum(30+12*14,30,total>>10,5,24);				//显示SD卡总容量 MB
- 	// LCD_ShowNum(30+12*14,60,free>>10,5,24);					//显示SD卡剩余容量 MB
+ 	// LCD_ShowNum(30+12*14,30,total>>10,5,24);				// Display SD total size in MB
+ 	// LCD_ShowNum(30+12*14,60,free>>10,5,24);					// Display SD free size in MB
 }
 
 u16 test_file(void)
 {
 	u16 res;
-	fatsd_dir("0:/test_folder",1);
+	static u8 err_cnt = 0;
+	res = fatsd_dir("/test_folder",1);
+	while(res){
+		err_cnt++;
+		printf("Failed to create test_folder, retrying...\r\n");
+		res = fatsd_dir("/test_folder",1);
+		if(err_cnt > 3){
+			printf("Failed to create test_folder after 5 attempts, giving up.\r\n");
+			return res;
+		}
+		vTaskDelay(10);
+	}
+	
+	
 		
-	if(f_stat("0:/test_folder/hello.txt",&fileinfo)){
-		res = f_open(file, "0:/test_folder/hello.txt", FA_CREATE_NEW | FA_WRITE);
+	if(f_stat("/test_folder/hello.txt",&fileinfo)){
+		res = f_open(file, "/test_folder/hello.txt", FA_CREATE_NEW | FA_WRITE);
 	}else{
-		res = f_open(file, "0:/test_folder/hello.txt", FA_WRITE);
+		res = f_open(file, "/test_folder/hello.txt", FA_WRITE);
 	}
 	if(res){
 		// LCD_ShowString(30,190,300,16,16,"File creation/write failure!");
-		while(1);
+		return res;
 	}
 	
 	f_write(file, "Hello, World!\r\n", 15, &bw);
 	if (bw != 15){
 		// LCD_ShowString(30,190,300,16,16,"File writing failure!");
-		while(1);
+		return 20;
 	}
 	f_close(file);
+	return 0;
 }
 
 
 static void filesys_app_load(app_t* self, lv_obj_t* parent) {
     filesys_app_t* filesys = (filesys_app_t*)self;
-    lv_obj_t* label = lv_label_create(parent);
-    lv_obj_set_size(label, 480, 270);
-    lv_obj_set_pos(label, 0, 0);
-    lv_obj_add_style(label, &lv_app_styles.char_color1, 0);
-    lv_obj_add_flag(label, LV_OBJ_FLAG_EVENT_BUBBLE);
-    if(0==peri_status.SD){   
-        if(0==fatsd_init()){
-            peri_status.SD = 1;
-            lv_label_set_text(label, "SD card initialized successfully.");
-        };
-    } else {
-        lv_label_set_text(label, "SD card already initialized.");
+
+	if(peri_status.SD == 0 || test_file()){
+		printf("SD not inited or test_file failed\r\n");
+	}
+	
+	// curr path
+	// strcpy(filesys->current_path, "0:/");
+	if(f_getcwd(filesys->current_path, FILESYS_PATH_MAX)){
+		strcpy(filesys->current_path, "unknown path error");
+	}
+    // file path label
+	filesys->path_label = lv_label_create(parent);
+	lv_label_set_text(filesys->path_label, filesys->current_path);
+
+	lv_obj_set_size(filesys->path_label, 480, 20);
+	lv_obj_set_style_align(filesys->path_label, LV_ALIGN_TOP_LEFT, 0);
+	lv_obj_set_y(filesys->path_label, 2);
+
+	lv_obj_add_style(filesys->path_label,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_flag(filesys->path_label, LV_OBJ_FLAG_EVENT_BUBBLE);
+
+	// fs view
+	filesys->fs_list_obj = lv_list_create(parent);
+	
+	lv_obj_set_size(filesys->fs_list_obj, 480, 250);
+	lv_obj_set_style_align(filesys->fs_list_obj, LV_ALIGN_TOP_LEFT, 0);
+	lv_obj_set_y(filesys->fs_list_obj, 22);
+
+	lv_obj_add_style(filesys->path_label,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_flag(filesys->fs_list_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+	if(peri_status.SD){   
+        
     }
-    
 }
 
 static void filesys_app_exit(app_t* self) {

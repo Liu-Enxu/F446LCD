@@ -12,11 +12,15 @@
 #include "stdio.h"
 #include "stdlib.h"
 
+#define FILESYS_PATH_MAX 128
+
 typedef struct filesys_app_t filesys_app_t;
 
 typedef struct filesys_app_t {
     app_t           app_base;
-    
+    char current_path[FILESYS_PATH_MAX];
+    lv_obj_t *path_label;
+    lv_obj_t *fs_list_obj;
 } filesys_app_t;
  
 filesys_app_t* create_filesys_app(void);

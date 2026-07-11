@@ -6,12 +6,6 @@
 #include "lcd.h"
 #include "usart.h"
 
-#include "spi.h"
-//#include "sd.h"
-//#include "malloc.h"
-//#include "ff.h"  
-//#include "exfuns.h" 
-//#include "adc.h"
 //#include "piclib.h"
 
 #include "timer.h"
@@ -25,20 +19,80 @@
 #include "RTOSmanager.h"
 
 //	App layer ----------------------------------------
-//#include "lvgl/lvgl.h"
 #include "lv_app_conf.h"
 #include "lv_port_disp_template.h"
 #include "lv_port_indev_template.h"
-//#include "lv_demos.h"
-//#include "myfatsd.h"
 
+#include "diskio.h"
 
+// ----------------------------------------
+// |----------- dummy task -------------|
+// ----------------------------------------
+TaskHandle_t dummyTaskHandle;
+void dummy_task(void *pvParameters){
+	pvParameters = pvParameters;
+	while(1){
+		vTaskDelay(pdMS_TO_TICKS(2000));
+	}
+}
+
+// ----------------------------------------
+// |----------- filesys task -------------|
+// ---------------------------------------- 
+// #define FILESYS_Q_LEN 10
+// QueueHandle_t xfilesysQueue = NULL;
+
+#define FILESYS_STACK 2*1024
+TaskHandle_t filesysTaskHandle;
+void filesys_task(void *pvParameters){
+	static u8 fail_cnt = 0;
+	static int res = 0; 
+	static DSTATUS dStatus = 0;
+
+	u32 total, free;
+	pvParameters = pvParameters;
+	while(1){
+		if(0==peri_status.SD){   
+			if(0==fatsd_init()){
+				peri_status.SD = 1;
+				dStatus = 0;
+			};
+		} else {
+			if(exf_getfree("0:", &total, &free) == 0) {
+                  fail_cnt = 0;
+				  dStatus = 0;
+            } else {
+                fail_cnt++;
+                if(fail_cnt >= 3) {
+                    peri_status.SD = 0;
+                    fail_cnt = 0;
+                    f_mount(NULL, "0:", 0);
+                    dStatus = STA_NODISK;
+                }
+            }
+		}
+
+		// if(xfilesysQueue){
+		// 	xQueueSend(xfilesysQueue, &dStatus, pdMS_TO_TICKS(10));
+		// }
+		vTaskDelay(1000);
+	}
+}
+
+// ----------------------------------------
+// |----------- display task -------------|
+// ---------------------------------------- 
+// QueueSetHandle_t XDispQueueSet = NULL;
 #define DISP_STACK 6*1024	// LOWER MIGHT CAUSE SCREEN NOT FOUND
 TaskHandle_t dispTaskHandle;
 void disp_task(void *pvParameters){
 	pvParameters = pvParameters;
+	// QueueSetMemberHandle_t xActivatedMember;
 	start_scrn_manager();
 	while(1){
+		// if(xQueueReceive(ui_evt_queue, &evt, 0) == pdTRUE){
+		// 	scrn_manager_ret_event_handler(&evt);
+		// }
 		lv_timer_handler();
 		vTaskDelay(5);
 	}
@@ -78,12 +132,30 @@ int main(void)
 	
 		
 	taskENTER_CRITICAL();
+	// xfilesysQueue = xQueueCreate(FILESYS_Q_LEN, sizeof(DSTATUS));
+	xTaskCreate(filesys_task,
+				"filesysTask",
+				FILESYS_STACK,
+				(void*)NULL,
+				2,
+				&filesysTaskHandle);
+
+	// XDispQueueSet = xQueueCreateSet(FILESYS_Q_LEN);
+	// xQueueAddToSet(xfilesysQueue, XDispQueueSet);
 	xTaskCreate(disp_task,
 				"dispTask",
             	DISP_STACK,
             	(void*)NULL,
             	3,
-            	&dispTaskHandle);
+           	 	&dispTaskHandle);
+	
+	xTaskCreate(dummy_task,
+				"dummyTask",
+				512,
+				(void*)NULL,
+				1,
+		   	 	&dummyTaskHandle);
+
 	taskEXIT_CRITICAL();
 							
 	vTaskStartScheduler();
