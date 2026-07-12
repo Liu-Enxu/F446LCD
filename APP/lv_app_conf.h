@@ -23,6 +23,8 @@ typedef struct {
 	lv_style_t no_deco;
 	lv_style_t btnm_main;
 	lv_style_t btn_lbl;
+	lv_style_t list_btn;
+	lv_style_t list_btn_pressed;
 	lv_style_t tab_item_default;
 	lv_style_t tab_item_checked;
 	lv_style_t btn_disabled;

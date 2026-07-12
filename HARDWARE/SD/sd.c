@@ -97,7 +97,8 @@ u8 SD_SendBlock(u8*buf,u8 cmd)
 	    SD_SPI_ReadWriteByte(0xFF);//忽略crc
 	    SD_SPI_ReadWriteByte(0xFF);
 		t=SD_SPI_ReadWriteByte(0xFF);//接收响应
-		if((t&0x1F)!=0x05)return 2;//响应错误									  					    
+		if((t&0x1F)!=0x05)return 2;//响应错误
+		if(SD_WaitReady() != 0) return 3;
 	}						 									  					    
     return 0;//写入成功
 }
@@ -258,7 +259,7 @@ u8 SD_Initialize(void)
 		}
 	}
 	SD_Deselect();//取消片选
-	SD_SPI_SpeedHigh();//高速
+	// SD_SPI_SpeedHigh();//高速
 	if(SD_Type){
 		return 0;
 	}else if(r1){

@@ -53,6 +53,20 @@ void lv_app_init(void){
 	lv_style_init(&lv_app_styles.btn_lbl);
 	lv_style_set_align(&lv_app_styles.btn_lbl, LV_ALIGN_CENTER);
 
+	/* Fixed-height-list button: equal share, centered content, app colors/font. */
+	lv_style_init(&lv_app_styles.list_btn);
+	lv_style_set_flex_main_place(&lv_app_styles.list_btn, LV_FLEX_ALIGN_CENTER);
+	lv_style_set_flex_cross_place(&lv_app_styles.list_btn, LV_FLEX_ALIGN_CENTER);
+	lv_style_set_flex_track_place(&lv_app_styles.list_btn, LV_FLEX_ALIGN_CENTER);
+	lv_style_set_bg_color(&lv_app_styles.list_btn, lv_app_styles.color2);
+	lv_style_set_text_color(&lv_app_styles.list_btn, lv_app_styles.color1);
+	lv_style_set_text_font(&lv_app_styles.list_btn, &awesomesyms);
+
+	/* Cancel the default theme's list-item growth while pressed. */
+	lv_style_init(&lv_app_styles.list_btn_pressed);
+	lv_style_set_transform_width(&lv_app_styles.list_btn_pressed, 0);
+	lv_style_set_transform_height(&lv_app_styles.list_btn_pressed, 0);
+
 	lv_style_init(&lv_app_styles.tab_item_default);
 	lv_style_set_bg_opa(&lv_app_styles.tab_item_default, LV_OPA_10);
 	lv_style_set_border_opa(&lv_app_styles.tab_item_default, LV_OPA_TRANSP);

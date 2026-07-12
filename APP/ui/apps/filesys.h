@@ -8,11 +8,24 @@
 #include "sys.h"
 
 #include "exfuns.h"
+#include <stdint.h>
 #include <string.h>
 #include "stdio.h"
 #include "stdlib.h"
 
 #define FILESYS_PATH_MAX 128
+#define FILESYS_VISIBLE_ROWS 7
+#define FILESYS_ROW_HEIGHT 35
+
+typedef enum {
+	FILESYS_OP_BACK = 0,
+	FILESYS_OP_UP,
+	FILESYS_OP_SELECT,
+	FILESYS_OP_DOWN,
+	FILESYS_OP_ADD_FOLDER,
+	FILESYS_OP_ADD_FILE,
+	FILESYS_OP_DELETE
+} filesys_op_t;
 
 typedef struct filesys_app_t filesys_app_t;
 
@@ -22,27 +35,20 @@ typedef struct filesys_app_t {
     lv_obj_t *path_label;
     lv_obj_t *fs_list_obj;
     lv_obj_t *list_op_btn;
+    lv_obj_t *selected_item;
+    u8 selected_is_dir;
 } filesys_app_t;
  
 filesys_app_t* create_filesys_app(void);
+
+// lv_obj_t* filesys_list_add_item(filesys_app_t* filesys,
+                                // const char* name,
+                                // u8 is_dir);
+// FRESULT filesys_list_update(filesys_app_t* filesys);
 
 extern u8 file_cnt;
 extern char* pathName;
 
 u8 fatsd_init(void);
-
-u16 fatsd_open(const TCHAR *path);
-
-u16 fatsd_read(UINT length);
-
-u16 fatsd_dir(const TCHAR* path, u8 CHK0CRT1);
-
-u16 fatsd_file(const TCHAR* path, u8 CHK0CRT1);
-
-void fatsd_stringAppend(char* chars1,char* chars2);
-
-void sd_info(void);
-
-u16 test_file(void);
 
 #endif // __FILESYS_H

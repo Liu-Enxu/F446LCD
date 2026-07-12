@@ -22,7 +22,7 @@ void SPI1_Init(void){
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5/*SCK*/|GPIO_Pin_6/*MISO*/|GPIO_Pin_7/*MOSI*/;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;    //ÍÆÍìÊä³ö
 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-  GPIO_InitStructure.GPIO_Speed = GPIO_High_Speed;
+  	GPIO_InitStructure.GPIO_Speed = GPIO_High_Speed;
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	GPIO_PinAFConfig(GPIOA,GPIO_PinSource5,GPIO_AF_SPI1);
 	GPIO_PinAFConfig(GPIOA,GPIO_PinSource6,GPIO_AF_SPI1);
