@@ -582,7 +582,7 @@ static void scrn_main_t_enter(scrn_t* self){
 	lv_obj_add_flag(main->folder_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
 	// folder label
 	main->folder_l_obj = lv_label_create(main->folder_obj);
-	lv_label_set_text(main->folder_l_obj,"\xEF\x81\xBC");
+	lv_label_set_text(main->folder_l_obj,"\xEF\x81\xBB");
 	lv_obj_set_pos(main->folder_l_obj, 0, 0);
 	lv_obj_set_size(main->folder_l_obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
 	lv_obj_add_style(main->folder_l_obj, &lv_app_styles.btn_lbl, LV_PART_MAIN | LV_STATE_DEFAULT);

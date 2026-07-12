@@ -185,42 +185,154 @@ u16 test_file(void)
 	return 0;
 }
 
+static void op_button_event_handler(lv_event_t* e) {
+	lv_event_code_t code = lv_event_get_code(e);
+	lv_obj_t* target = lv_event_get_target(e);
+	filesys_app_t* filesys = (filesys_app_t*)lv_event_get_user_data(e);
+
+	if (code == LV_EVENT_CLICKED) {
+		const char* btn_text = lv_list_get_btn_text(filesys->list_op_btn, target);
+		printf("Button clicked: %s\r\n", btn_text);
+		// Handle button click events here
+	}
+}
 
 static void filesys_app_load(app_t* self, lv_obj_t* parent) {
     filesys_app_t* filesys = (filesys_app_t*)self;
 
-	if(peri_status.SD == 0 || test_file()){
-		printf("SD not inited or test_file failed\r\n");
-	}
+	// if(peri_status.SD == 0 || test_file()){
+	// 	printf("SD not inited or test_file failed\r\n");
+	// }
 	
 	// curr path
 	// strcpy(filesys->current_path, "0:/");
-	if(f_getcwd(filesys->current_path, FILESYS_PATH_MAX)){
+	if(peri_status.SD == 0){
+		strcpy(filesys->current_path, "SD not inited");
+	} else if(f_getcwd(filesys->current_path, FILESYS_PATH_MAX)){
 		strcpy(filesys->current_path, "unknown path error");
 	}
+
     // file path label
 	filesys->path_label = lv_label_create(parent);
 	lv_label_set_text(filesys->path_label, filesys->current_path);
-
 	lv_obj_set_size(filesys->path_label, 480, 20);
-	lv_obj_set_style_align(filesys->path_label, LV_ALIGN_TOP_LEFT, 0);
 	lv_obj_set_y(filesys->path_label, 2);
-
+	
 	lv_obj_add_style(filesys->path_label,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_set_style_align(filesys->path_label, LV_ALIGN_TOP_LEFT, 0);
 	lv_obj_add_flag(filesys->path_label, LV_OBJ_FLAG_EVENT_BUBBLE);
 
-	// fs view
-	filesys->fs_list_obj = lv_list_create(parent);
+	// fs operation button list
+	filesys->list_op_btn = lv_list_create(parent);
+    lv_obj_set_size(filesys->list_op_btn, 100, 245);
+    lv_obj_set_flex_flow(filesys->list_op_btn, LV_FLEX_FLOW_COLUMN);
+	lv_obj_set_style_pad_all(filesys->list_op_btn, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_set_style_pad_row(filesys->list_op_btn, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
 	
-	lv_obj_set_size(filesys->fs_list_obj, 480, 250);
-	lv_obj_set_style_align(filesys->fs_list_obj, LV_ALIGN_TOP_LEFT, 0);
-	lv_obj_set_y(filesys->fs_list_obj, 22);
+	lv_obj_set_style_align(filesys->path_label, LV_ALIGN_TOP_LEFT, 0);
+	lv_obj_align(filesys->list_op_btn, LV_ALIGN_TOP_LEFT, 0, 25);
+	lv_obj_add_style(filesys->list_op_btn, &lv_app_styles.color_combo1, LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_style(filesys->list_op_btn, &lv_app_styles.sym_font, LV_PART_MAIN | LV_STATE_DEFAULT);
+	// lv_obj_set_style_bg_opa(filesys->list_op_btn, 0, LV_PART_MAIN | LV_STATE_DEFAULT); // by default
+	// lv_style_set_border_width(filesys->list_op_btn, 0);
 
-	lv_obj_add_style(filesys->path_label,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
-	lv_obj_add_flag(filesys->fs_list_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
-	if(peri_status.SD){   
+	lv_obj_clear_flag(filesys->list_op_btn, LV_OBJ_FLAG_SCROLLABLE);
+	lv_obj_add_flag(filesys->list_op_btn, LV_OBJ_FLAG_EVENT_BUBBLE);
+
+	lv_obj_t* btn = NULL;
+	// last folder button
+	btn = lv_list_add_btn(filesys->list_op_btn, NULL, "\xEF\x81\xA0"); // left arrow F060
+	lv_obj_set_style_transform_width(btn, 0, LV_PART_MAIN | LV_STATE_PRESSED);
+	lv_obj_set_style_transform_height(btn, 0, LV_PART_MAIN | LV_STATE_PRESSED);
+	lv_obj_set_flex_align(btn, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
+	lv_obj_set_height(btn, 0);
+	lv_obj_set_flex_grow(btn, 1);
+	lv_obj_add_event_cb(btn, op_button_event_handler, LV_EVENT_ALL, filesys);
+	lv_obj_add_style(btn, &lv_app_styles.color_combo1, LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_style(btn, &lv_app_styles.sym_font, LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_flag(btn, LV_OBJ_FLAG_EVENT_BUBBLE);
+	// up button
+	btn = lv_list_add_btn(filesys->list_op_btn, NULL, "\xEF\x81\xA2"); // up arrow F062
+	lv_obj_set_style_transform_width(btn, 0, LV_PART_MAIN | LV_STATE_PRESSED);
+	lv_obj_set_style_transform_height(btn, 0, LV_PART_MAIN | LV_STATE_PRESSED);
+	lv_obj_set_flex_align(btn, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
+	lv_obj_set_height(btn, 0);
+	lv_obj_set_flex_grow(btn, 1);
+    lv_obj_add_event_cb(btn, op_button_event_handler, LV_EVENT_ALL, filesys);
+	lv_obj_add_style(btn, &lv_app_styles.color_combo1, LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_style(btn, &lv_app_styles.sym_font, LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_flag(btn, LV_OBJ_FLAG_EVENT_BUBBLE);
+	// select button
+	btn = lv_list_add_btn(filesys->list_op_btn, NULL, "\xEF\x81\xA6"); // F066
+	lv_obj_set_style_transform_width(btn, 0, LV_PART_MAIN | LV_STATE_PRESSED);
+	lv_obj_set_style_transform_height(btn, 0, LV_PART_MAIN | LV_STATE_PRESSED);
+	lv_obj_set_flex_align(btn, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
+	lv_obj_set_height(btn, 0);
+	lv_obj_set_flex_grow(btn, 1);
+	lv_obj_add_event_cb(btn, op_button_event_handler, LV_EVENT_ALL, filesys);
+	lv_obj_add_style(btn, &lv_app_styles.color_combo1, LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_style(btn, &lv_app_styles.sym_font, LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_flag(btn, LV_OBJ_FLAG_EVENT_BUBBLE);
+	// down button
+	btn = lv_list_add_btn(filesys->list_op_btn, NULL, "\xEF\x81\xA3"); // down arrow F063
+	lv_obj_set_style_transform_width(btn, 0, LV_PART_MAIN | LV_STATE_PRESSED);
+	lv_obj_set_style_transform_height(btn, 0, LV_PART_MAIN | LV_STATE_PRESSED);
+	lv_obj_set_flex_align(btn, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
+	lv_obj_set_height(btn, 0);
+	lv_obj_set_flex_grow(btn, 1);
+	lv_obj_add_event_cb(btn, op_button_event_handler, LV_EVENT_ALL, filesys);
+	lv_obj_add_style(btn, &lv_app_styles.color_combo1, LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_style(btn, &lv_app_styles.sym_font, LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_flag(btn, LV_OBJ_FLAG_EVENT_BUBBLE);
+	// add folder button
+	btn = lv_list_add_btn(filesys->list_op_btn, NULL, "\xEF\x81\xBC"); // folder icon F07C
+	lv_obj_set_style_transform_width(btn, 0, LV_PART_MAIN | LV_STATE_PRESSED);
+	lv_obj_set_style_transform_height(btn, 0, LV_PART_MAIN | LV_STATE_PRESSED);
+	lv_obj_set_flex_align(btn, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
+	lv_obj_set_height(btn, 0);
+	lv_obj_set_flex_grow(btn, 1);
+	lv_obj_add_event_cb(btn, op_button_event_handler, LV_EVENT_ALL, filesys);
+	lv_obj_add_style(btn, &lv_app_styles.color_combo1, LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_style(btn, &lv_app_styles.sym_font, LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_flag(btn, LV_OBJ_FLAG_EVENT_BUBBLE);
+	// add file button
+	btn = lv_list_add_btn(filesys->list_op_btn, NULL, "\xEF\x85\x9C"); // file icon F15C
+	lv_obj_set_style_transform_width(btn, 0, LV_PART_MAIN | LV_STATE_PRESSED);
+	lv_obj_set_style_transform_height(btn, 0, LV_PART_MAIN | LV_STATE_PRESSED);
+	lv_obj_set_flex_align(btn, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
+	lv_obj_set_height(btn, 0);
+	lv_obj_set_flex_grow(btn, 1);
+	lv_obj_add_event_cb(btn, op_button_event_handler, LV_EVENT_ALL, filesys);
+	lv_obj_add_style(btn, &lv_app_styles.color_combo1, LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_style(btn, &lv_app_styles.sym_font, LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_flag(btn, LV_OBJ_FLAG_EVENT_BUBBLE);
+	// delete button
+	btn = lv_list_add_btn(filesys->list_op_btn, NULL, "\xEF\x87\xB8"); // trashcan icon F068
+	lv_obj_set_style_transform_width(btn, 0, LV_PART_MAIN | LV_STATE_PRESSED);
+	lv_obj_set_style_transform_height(btn, 0, LV_PART_MAIN | LV_STATE_PRESSED);
+	lv_obj_set_flex_align(btn, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
+	lv_obj_set_height(btn, 0);
+	lv_obj_set_flex_grow(btn, 1);
+	lv_obj_add_event_cb(btn, op_button_event_handler, LV_EVENT_ALL, filesys);
+	lv_obj_add_style(btn, &lv_app_styles.color_combo1, LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_style(btn, &lv_app_styles.sym_font, LV_PART_MAIN | LV_STATE_DEFAULT);
+	lv_obj_add_flag(btn, LV_OBJ_FLAG_EVENT_BUBBLE);
+
+
+
+
+	// // fs view
+	// filesys->fs_list_obj = lv_list_create(parent);
+	
+	// lv_obj_set_size(filesys->fs_list_obj, lv_pct(80), lv_obj_get_content_height(parent) - 22);
+	// lv_obj_align(filesys->fs_list_obj, LV_ALIGN_TOP_RIGHT, 0, 22);
+
+	// lv_obj_add_style(filesys->fs_list_obj,&lv_app_styles.char_color1,LV_PART_MAIN | LV_STATE_DEFAULT);
+	// lv_obj_set_style_align(filesys->fs_list_obj, LV_ALIGN_LEFT_MID, 0);
+	// lv_obj_add_flag(filesys->fs_list_obj, LV_OBJ_FLAG_EVENT_BUBBLE);
+	// if(peri_status.SD){   
         
-    }
+    // }
 }
 
 static void filesys_app_exit(app_t* self) {
